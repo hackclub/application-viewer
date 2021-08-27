@@ -1,13 +1,14 @@
 
 
 
-export const Application = ({ content }) => <>
-	{content.map( section => <>
-		<div>Header: {section.header}</div>
-		{section.items.map(item => <>
-			<div>Key: {item.key}</div>
-			<div>Label: {item.label}</div>
-			<div>Answer:</div>
-		</>)}
-	</>)}
+export const Application = ({ template, content }) => <>
+	{template.map( (section, i) => <div className="section" key={i}>
+		<div className="section-title">Header: {section.header}</div>
+		{section.items.map((item, i) => <div key={i} className="item">
+			<div className="question">{item.label}</div>
+			<div>{content[item.key]}</div>
+			<div className="item-key">Key: {item.key}</div>
+
+		</div>)}
+	</div>)}
 </>

@@ -1,42 +1,33 @@
-import styles from '../styles/Home.module.css';
 import { Application } from "../components/Application.jsx";
-import applicationContent from "../js/application-content.js";
+import applicationTemplate from "../js/application-template.js";
 
-export default function Home() {
+export default function Home({ query, application, leaders }) {
+  console.log(query, application, leaders);
+
   return <>
-    <Application content={applicationContent.clubs} />
+    <Application template={applicationTemplate.clubs} content={application}/>
+    {leaders.map( (leader, i) => <Application key={i} template={applicationTemplate.leaders} content={leader}/>)}
   </>
 }
 
-export async function getServerSideProps({ res, req, params }) {
-  const {
-    prospectiveLeadersAirtable,
-    applicationsAirtable
-  } = require('../../../lib/airtable')
-  const cookies = nookies.get({ req })
-  if (cookies.authToken) {
-    try {
-      const leaderRecord = await prospectiveLeadersAirtable.find(
-        'rec' + params.leader
-      )
-      const applicationsRecord = await applicationsAirtable.find(
-        'rec' + params.application
-      )
-      if (leaderRecord.fields['Accepted Tokens'].includes(cookies.authToken)) {
-        return { props: { params, applicationsRecord, leaderRecord } }
-      } else {
-        res.statusCode = 302
-        res.setHeader('Location', `/`)
-        return
-      }
-    } catch (e) {
-      res.statusCode = 302
-      res.setHeader('Location', `/`)
-      return
-    }
-  } else {
-    res.statusCode = 302
-    res.setHeader('Location', `/`)
-    return
+export async function getServerSideProps({ res, req, query }) {
+  const { base } = require('/js/airtable.js')
+
+  // add authentication
+
+  try {
+
+    let application = (await base("Applications").find(query.app)).fields;
+    // console.log(application);
+    let leaders = await Promise.all(application["Prospective Leaders"].map(
+      async (id) => (await base("Prospective Leaders").find(id)).fields
+    ))
+
+    return { props: { query, application, leaders } }
+  } catch (e) {
+    // console.log(e)
+    // res.statusCode = 302
+    // res.setHeader('Location', `/`)
+    return { props: { query, application: {}, leaders: {} } }
   }
 }
