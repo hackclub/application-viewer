@@ -1,4 +1,4 @@
-import { Application } from "../components/Application.jsx";
+import { Application } from "../js/components/Application.jsx";
 import applicationTemplate from "../js/application-template.js";
 import { useState } from "react";
 
