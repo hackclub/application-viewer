@@ -6,7 +6,10 @@ export default function Home({ query, application, leaders }) {
 
   return <>
     <Application template={applicationTemplate.clubs} content={application}/>
-    {leaders.map( (leader, i) => <Application key={i} template={applicationTemplate.leaders} content={leader}/>)}
+    {leaders.map( (leader, i) => <div key={i}>
+      <hr/>
+      <Application template={applicationTemplate.leaders} content={leader}/>
+    </div>)}
   </>
 }
 
