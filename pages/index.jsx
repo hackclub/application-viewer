@@ -1,14 +1,27 @@
 import { Application } from "../components/Application.jsx";
 import applicationTemplate from "../js/application-template.js";
+import { useState } from "react";
+
+const ApplicationDropDown = ({ template, content, name }) => {
+  const [open, setOpen] = useState(false);
+
+  return <>
+    <div className="application-link" onClick={() => setOpen(!open)}>
+      <span>{name}</span>
+      <span className="app-link-arrow noselect">{open ? "▽" : "▷"}</span>
+    </div>
+    { open && <Application template={template} content={content}/> }
+  </>
+}
 
 export default function Home({ query, application, leaders }) {
   console.log(query, application, leaders);
 
   return <>
-    <Application template={applicationTemplate.clubs} content={application}/>
+    <ApplicationDropDown template={applicationTemplate.clubs} content={application} name={"Club"}/>
     {leaders.map( (leader, i) => <div key={i}>
       <hr/>
-      <Application template={applicationTemplate.leaders} content={leader}/>
+      <ApplicationDropDown template={applicationTemplate.leaders} content={leader} name={`Leader ${i}`}/>
     </div>)}
   </>
 }
@@ -31,6 +44,6 @@ export async function getServerSideProps({ res, req, query }) {
     // console.log(e)
     // res.statusCode = 302
     // res.setHeader('Location', `/`)
-    return { props: { query, application: {}, leaders: {} } }
+    return { props: { query, application: {}, leaders: [] } }
   }
 }
