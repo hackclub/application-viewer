@@ -36,7 +36,17 @@ export async function getServerSideProps({ res, req, query }) {
     let application = (await base("Application Database").find(query.app)).fields;
     // console.log(application);
     let leaders = await Promise.all(application["Prospective Leaders"].map(
-      async (id) => (await base("Prospective Leaders").find(id)).fields
+      async (id) => {
+        const leader = (await base("Prospective Leaders").find(id)).fields;
+        delete leader["Accepted Tokens"];
+        delete leader["Application"];
+        delete leader["Application ID"];
+        delete leader["ID"];
+        delete leader["Log In Path"];
+        delete leader["Logins"];
+
+        return leader;
+      }
     ))
 
     return { props: { query, application, leaders } }
