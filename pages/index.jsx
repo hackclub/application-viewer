@@ -33,17 +33,22 @@ export async function getServerSideProps({ res, req, query }) {
 
   try {
 
-    let application = (await base("Application Database").find(query.app)).fields;
+    const application = {};
+    const applicationRaw = (await base("Application Database").find(query.app)).fields;
+    const includedKeys = applicationTemplate.clubs.map(x => x.items.map(x => x.key)).flat();
+    for (const key in applicationRaw) {
+      if (includedKeys.includes(key)) application[key] = applicationRaw[key];
+    }
     // console.log(application);
-    let leaders = await Promise.all(application["Prospective Leaders"].map(
+    let leaders = await Promise.all(applicationRaw["Prospective Leaders"].map(
       async (id) => {
-        const leader = (await base("Prospective Leaders").find(id)).fields;
-        delete leader["Accepted Tokens"];
-        delete leader["Application"];
-        delete leader["Application ID"];
-        delete leader["ID"];
-        delete leader["Log In Path"];
-        delete leader["Logins"];
+        const leader = {};
+        const leaderRaw = (await base("Prospective Leaders").find(id)).fields;
+        const includedKeys = applicationTemplate.leaders.map(x => x.items.map(x => x.key)).flat();
+
+        for (const key in leaderRaw) {
+          if (includedKeys.includes(key)) leader[key] = leaderRaw[key];
+        }
 
         return leader;
       }
