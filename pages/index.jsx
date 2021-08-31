@@ -33,7 +33,7 @@ export async function getServerSideProps({ res, req, query }) {
 
   try {
 
-    let application = (await base("Application database").find(query.app)).fields;
+    let application = (await base("Application Database").find(query.app)).fields;
     // console.log(application);
     let leaders = await Promise.all(application["Prospective Leaders"].map(
       async (id) => (await base("Prospective Leaders").find(id)).fields
