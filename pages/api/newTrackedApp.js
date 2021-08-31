@@ -27,18 +27,18 @@ export default async function handler(req, res) {
       // newTrackedApp.ambassador = application["Prospective Leaders"], // india or not
     };
 
-    const postCreate = (err, records) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-      // records.forEach(function (record) {
-      //   console.log(record.getId());
-      // });
-    }
+    // const postCreate = (err, records) => {
+    //   if (err) {
+    //     console.error(err);
+    //     return;
+    //   }
+    //   // records.forEach(function (record) {
+    //   //   console.log(record.getId());
+    //   // });
+    // }
 
-    const tracked = await base("Application Tracker");
-    tracked.create(newTrackedApp, postCreate);
+    // const tracked = await base("Application Tracker");
+    // tracked.create(newTrackedApp, postCreate);
 
     res.status(200).json(newTrackedApp);
   } catch (e) {
