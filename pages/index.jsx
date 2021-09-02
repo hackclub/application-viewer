@@ -19,7 +19,7 @@ const ActionsDropDown = ({ status }) => {
 
   return <>
     <div className="application-link" onClick={() => setOpen(!open)}>
-      <span>Actions</span>
+      <span>IN PROGRESS: Actions</span>
       <span className="app-link-arrow noselect">{open ? "▽" : "▷"}</span>
     </div>
     { open && <>
