@@ -10,8 +10,8 @@ export default async function handler(req, res) {
     var month = dateObj.getUTCMonth() + 1; //months from 1-12
     var day = dateObj.getUTCDate();
     var year = dateObj.getUTCFullYear();
-    const newdate = `${day}/${month}/${year}`;
-    
+    const newdate = `${year}-${month}-${day}`;
+
     const newTrackedApp = {
       "Venue": application["School Name"],
       "Location": application["School Address"],
