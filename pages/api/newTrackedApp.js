@@ -1,5 +1,3 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-
 export default async function handler(req, res) {
   const { base } = require('/js/airtable.js')
 
@@ -12,8 +10,8 @@ export default async function handler(req, res) {
     var month = dateObj.getUTCMonth() + 1; //months from 1-12
     var day = dateObj.getUTCDate();
     var year = dateObj.getUTCFullYear();
-
-    const newdate = year + "/" + month + "/" + day;
+    const newdate = `${day}/${month}/${year}`;
+    
     const newTrackedApp = {
       "Venue": application["School Name"],
       "Location": application["School Address"],

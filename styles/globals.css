@@ -68,3 +68,44 @@ a {
 .question {
   font-weight: 800;
 }
+
+.actions-buttons {
+  display: flex;
+  /*flex-direction: column;*/
+  place-content: center;
+  place-items: center;
+}
+
+.action-button {
+  box-sizing: border-box;
+  padding: 10px;
+  margin: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  color: white;
+  width: 30%;
+}
+
+.action-button:hover {
+  opacity: .5;
+}
+
+.accept {
+  background: #33d6a6;
+}
+
+.reject {
+  background: #ec3750;
+}
+
+.teacher {
+  background: #f1c40f;
+}
+
+
+
+
+
+
+
