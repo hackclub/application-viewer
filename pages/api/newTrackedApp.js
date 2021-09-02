@@ -1,3 +1,14 @@
+
+function getDate() {
+  const dateObj = new Date();
+  const month = dateObj.getUTCMonth() + 1; //months from 1-12
+  const day = dateObj.getUTCDate();
+  const year = dateObj.getUTCFullYear();
+  const newdate = `${year}-${month}-${day}`;
+
+  return newdate;
+}
+
 export default async function handler(req, res) {
   const { base } = require('/js/airtable.js')
 
@@ -6,18 +17,12 @@ export default async function handler(req, res) {
   try {
     const application = (await base("Application Database").find(req.query.app)).fields;
 
-    var dateObj = new Date();
-    var month = dateObj.getUTCMonth() + 1; //months from 1-12
-    var day = dateObj.getUTCDate();
-    var year = dateObj.getUTCFullYear();
-    const newdate = `${year}-${month}-${day}`;
-
     const newTrackedApp = {
       "Venue": application["School Name"],
       "Location": application["School Address"],
       "Leaders": application["Full Name"].join(","),
       "Leaders' Emails": application["Leaders Emails"].join(","),
-      "Applied": newdate,
+      "Applied": getDate(),
       "Status": "applied",
       "Application": `https://application-viewer.hackclub.dev/?app=${req.query.app}`,
       "App ID": req.query.app,

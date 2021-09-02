@@ -29,13 +29,21 @@ const ActionsDropDown = ({ status }) => {
           <button className="action-button reject">reject</button>
           <button className="action-button teacher">teacher</button>
         </div> 
-        <div className="item-key"><b>accept:</b> sends acceptance email, creates slack channel and invites leaders</div>
-        <div className="item-key"><b>reject:</b> sends rejection email</div>
-        <div className="item-key"><b>teacher:</b> sends teacher rejection email</div>
+        <div className="item-key">
+          <b>accept:</b> sends acceptance email, creates slack channel and invites leaders, changes status to accepted
+        </div>
+        <div className="item-key"><b>reject:</b> sends rejection email, changes status to rejected</div>
+        <div className="item-key"><b>teacher:</b> sends teacher rejection email, changes status to rejected, adds "teacher" to note</div>
       </>
     }
   </>
 }
+
+// email should include link to give to bouncer on slack which will mark slack account as leader
+// will automatically add them to leader channel
+// will give them leader permissions?
+// can they make leaders
+// should they make their own club channel
 
 export default function Home({ query, application, leaders, status }) {
   console.log(query, application, leaders, status);
@@ -55,7 +63,7 @@ async function airtableGet(key, value) {
   const { base } = require('/js/airtable.js')
 
   const appTracker = await base('Application Tracker')
-  const gridView = await appTracker.select({view: "Grid view"})
+  const gridView = await appTracker.select({view: "Main"})
   const all = await gridView.all();
   const matches = all.filter( record => record.get(key) === value);
 

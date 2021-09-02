@@ -13,7 +13,7 @@ export default async function handler(req, res) {
 
   try {
     const submitted =  await getAll("Application Database", "Submitted");
-    const tracked = await getAll("Application Tracker", "Grid view");
+    const tracked = await getAll("Application Tracker", "Main");
     const schools = tracked.map(x => x[1]["Venue"]);
 
     const untracked = submitted.filter( x => !schools.includes(x[1]["School Name"]) )
