@@ -1,8 +1,7 @@
-import { Application } from "/js/components/Application.jsx";
-import { ActionsDropDown } from "/js/components/ActionsDropDown.jsx";
-import applicationTemplate from "/js/application-template.js";
+import { Application } from "../js/components/Application.jsx";
+import { ActionsDropDown } from "../js/components/ActionsDropDown.jsx";
+import applicationTemplate from "../js/application-template.js";
 import { useState } from "react";
-import { accept } from "/js/emails/accept.js";
 
 
 const ApplicationDropDown = ({ template, content, name }) => {
