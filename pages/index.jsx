@@ -1,6 +1,9 @@
 import { Application } from "../js/components/Application.jsx";
+import { ActionsDropDown } from "../js/components/ActionsDropDown.jsx";
 import applicationTemplate from "../js/application-template.js";
 import { useState } from "react";
+import { accept } from "/js/emails/accept.js";
+
 
 const ApplicationDropDown = ({ template, content, name }) => {
   const [open, setOpen] = useState(false);
@@ -14,39 +17,8 @@ const ApplicationDropDown = ({ template, content, name }) => {
   </>
 }
 
-const ActionsDropDown = ({ status }) => {
-  const [open, setOpen] = useState(false);
-
-  return <>
-    <div className="application-link" onClick={() => setOpen(!open)}>
-      <span>IN PROGRESS: Actions</span>
-      <span className="app-link-arrow noselect">{open ? "▽" : "▷"}</span>
-    </div>
-    { open && <>
-        <div className="item-key"><b>Current Status:</b> {status}</div>
-        <div className="actions-buttons">
-          <button className="action-button accept">accept</button>
-          <button className="action-button reject">reject</button>
-          <button className="action-button teacher">teacher</button>
-        </div> 
-        <div className="item-key">
-          <b>accept:</b> sends acceptance email, creates slack channel and invites leaders, changes status to accepted
-        </div>
-        <div className="item-key"><b>reject:</b> sends rejection email, changes status to rejected</div>
-        <div className="item-key"><b>teacher:</b> sends teacher rejection email, changes status to rejected, adds "teacher" to note</div>
-      </>
-    }
-  </>
-}
-
-// email should include link to give to bouncer on slack which will mark slack account as leader
-// will automatically add them to leader channel
-// will give them leader permissions?
-// can they make leaders
-// should they make their own club channel
-
-export default function Home({ query, application, leaders, status }) {
-  console.log(query, application, leaders, status);
+export default function Home({ query, application, leaders, trackedEntry }) {
+  console.log(query, application, leaders, trackedEntry);
 
   return <>
     <ApplicationDropDown template={applicationTemplate.clubs} content={application} name={"Club"}/>
@@ -55,7 +27,7 @@ export default function Home({ query, application, leaders, status }) {
       <ApplicationDropDown template={applicationTemplate.leaders} content={leader} name={`Leader ${i}`}/>
     </div>)}
     <hr/>
-    <ActionsDropDown status={status}/>
+    <ActionsDropDown id={trackedEntry[0]} entry={trackedEntry[1]}/>
   </>
 }
 
@@ -67,7 +39,7 @@ async function airtableGet(key, value) {
   const all = await gridView.all();
   const matches = all.filter( record => record.get(key) === value);
 
-  return matches.map(record => record.fields);
+  return matches.map(record => [ record.id, record.fields ]);
 }
 
 export async function getServerSideProps({ res, req, query }) {
@@ -82,7 +54,7 @@ export async function getServerSideProps({ res, req, query }) {
     for (const key in applicationRaw) {
       if (includedKeys.includes(key)) application[key] = applicationRaw[key];
     }
-    // console.log(application);
+
     let leaders = await Promise.all(applicationRaw["Prospective Leaders"].map(
       async (id) => {
         const leader = {};
@@ -97,17 +69,15 @@ export async function getServerSideProps({ res, req, query }) {
       }
     ))
 
-
-    // const tracked = (await base("Application Database").find(query.app)).fields;
-    let status = "unknown";
+    let trackedEntry = {};
     try {
-      const matches = await airtableGet("Venue", application["School Name"]);
-      status = matches.length > 0 ? matches[0]["Status"] : "unknown";
+      const matches = await airtableGet("App ID", query.app);
+      trackedEntry = matches.length > 0 ? matches[0] : {};
     } catch (err) {
-      status = "no record"
+      console.log(err);
     }
 
-    return { props: { query, application, leaders, status } }
+    return { props: { query, application, leaders, trackedEntry } }
   } catch (e) {
     // console.log(e)
     // res.statusCode = 302

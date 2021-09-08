@@ -20,7 +20,7 @@ export default async function handler(req, res) {
     const newTrackedApp = {
       "Venue": application["School Name"],
       "Location": application["School Address"],
-      "Leaders": application["Full Name"].join(","),
+      "Leader(s)": application["Full Name"].map(x => x.split(" ").join("+")).join(","),
       "Leaders' Emails": application["Leaders Emails"].join(","),
       "Applied": getDate(),
       "Status": "applied",
