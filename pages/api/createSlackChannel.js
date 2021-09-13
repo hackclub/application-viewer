@@ -6,7 +6,6 @@ const safeChannelName = (name) => {
 }
 
 const createUniqueChannel = async (name, retrying=false) => {
-  // (msw) I tried using postData() helper for this, but was getting strange errors from Slack, so switching back to fetch
   let attemptName = name;
 
   if (retrying) {
@@ -16,6 +15,7 @@ const createUniqueChannel = async (name, retrying=false) => {
     console.log(`Trying to create a Slack channel with the name: '${attemptName}'...`);
   }
 
+  // (msw) I tried using postData() helper for this, but was getting strange errors from Slack, so switching back to fetch
   const channelData = await fetch('https://slack.com/api/conversations.create', {
     method: 'POST',
     headers: {
