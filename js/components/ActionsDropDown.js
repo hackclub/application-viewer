@@ -29,31 +29,33 @@ export const ActionsDropDown = ({ id, entry }) => {
   
   const setModal = (open, type) => {
     setResponseModal({ open, type });
-    setResponseEmail(type !== "" ? EMAILS[type](entry["Leader(s)"], "sweet-code-19") : "");
+    setResponseEmail(type !== "" ? EMAILS[type](entry["Leader(s)"]) : "");
   }
 
   const submitResponse = async () => {
     // if accept, create channel, generate invite link
     // for all send response email
+    const results = {}
+
+    await Promise.all([
+      postData("/api/createCheckinPass", { recordID: id }).then(r => results.checkInPassword = r.password),
+      postData("/api/createSlackChannel", { recordID: id }).then(r => results.channelURL = r.channelURL)
+    ])
+
+    const modifiedContent = responseEmail.replace('%SLACK_URL%', results.channelURL).replace('%PASSWORD%', results.checkInPassword)
     // update status
     await postData("/api/sendResponse", { 
       type: responseModal.type, 
-      emailContent: responseEmail, 
+      emailContent: modifiedContent, 
       emailSubject: EMAILS_SUBJECTS[responseModal.type],
       emailAdresses: entry["Leaders' Emails"].split(",").map(x => x.split(" ").join("+")),
       newStatus: NEW_STATUS[responseModal.type],
       newNote: (entry["Notes"] ? `${entry["Notes"]}\n` : "") + `Updated with webhook: ${responseModal.type}`,
-      // slackChannel
-      // bouncer key
+      slackChannel: results.channelURL,
+      bouncerKey: results.checkInPassword,
       id 
     });
 
-    // await postData("/api/createCheckinPass", {
-    //   id
-    // })
-    await postData("/api/createSlackChannel", {
-      recordID: id
-    })
     setResponseModal({ open: false, type: ""})
   }
 

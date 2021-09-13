@@ -1,6 +1,6 @@
 
 
-export const accept = (names, code) => `Hey ${names},
+export const accept = (names) => `Hey ${names},
 
 We just reviewed your application and I'm happy to say *you're in!*
 
@@ -13,7 +13,7 @@ The 4 Steps of joining Hack Club:
 
 If you are not already in Slack then sign up [here](https://hackclub.com/slack/). 
 
-Once you join type: **@bouncer check-in-${code}**
+Once you join, go to [your newly created club channel](%SLACK_URL%) and type: **@bouncer %PASSWORD%**
 
 This will check you in as a leader and let us know that you're ready for your onboarding call.
 
