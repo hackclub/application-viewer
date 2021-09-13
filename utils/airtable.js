@@ -6,29 +6,22 @@ const limiter = new Bottleneck({
   minTime: 500
 })
 
-const getBaseID = function(baseID = 'Club Applications') {
-  return {
-    'Club Applications': 'appSUAc40CDu6bDAp',
-    'Operations': 'apptEEFG5HTfGQE7h'
-  }[baseID]
-}
+const baseID = 'appSUAc40CDu6bDAp'
 
 const get = async (table, options) => {
   const ts = Date.now()
-  const {base, ...otherOptions} = options
-  const baseID = getBaseID(base)
   try {
     const airtable = new AirtablePlus({
       baseID,
       apiKey: process.env.AIRTABLE,
       tableName: table,
     })
-    console.log(`[${ts}] Airtable GET '${table}' with the following options:`, otherOptions)
-    const results = await airtable.read(otherOptions)
+    console.log(`[${ts}] Airtable GET '${table}' with the following options:`, options)
+    const results = await airtable.read(options)
     console.log(`[${ts}] Found ${results.length} records(s)`)
     return results
   } catch (err) {
-    console.log(err)
+    console.log(`[${ts}]`, err)
   }
 }
 
@@ -47,7 +40,7 @@ const patch = async (table, recordID, fields) => {
   try {
     console.log(`[${ts}] Airtable PATCH '${table} ID ${recordID}' with the following fields:`, fields)
     const airtable = new AirtablePlus({
-      baseID: getBaseID('Slash-z'),
+      baseID,
       apiKey: process.env.AIRTABLE,
       tableName: table,
     })
@@ -55,7 +48,7 @@ const patch = async (table, recordID, fields) => {
     console.log(`[${ts}] Airtable PATCH successful!`)
     return result
   } catch (err) {
-    console.log(err)
+    console.log(`[${ts}]`, err)
   }
 }
 
@@ -64,7 +57,7 @@ const create = async (table, fields) => {
   try {
     console.log(`[${ts}] Airtable CREATE '${table}' with the following fields:`, fields)
     const airtable = new AirtablePlus({
-      baseID: getBaseID('Slash-z'),
+      baseID,
       apiKey: process.env.AIRTABLE,
       tableName: table,
     })
@@ -72,7 +65,7 @@ const create = async (table, fields) => {
     console.log(`[${ts}] Airtable created my record with these fields: ${{results}}`)
     return results
   } catch (err) {
-    console.log(err)
+    console.log(`[${ts}]`, err)
   }
 }
 
