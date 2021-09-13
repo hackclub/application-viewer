@@ -47,6 +47,13 @@ export const ActionsDropDown = ({ id, entry }) => {
       // bouncer key
       id 
     });
+
+    // await postData("/api/createCheckinPass", {
+    //   id
+    // })
+    await postData("/api/createSlackChannel", {
+      recordID: id
+    })
     setResponseModal({ open: false, type: ""})
   }
 

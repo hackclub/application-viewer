@@ -1,0 +1,5 @@
+- [ ] Generate & send a bouncer code to users on acceptance
+    - [ ] Generate a club channel
+- [ ] On DM or message in channel, check if it matches code
+- [ ] Link record on valid code 
+- [ ] Handle invalid codes/cases
