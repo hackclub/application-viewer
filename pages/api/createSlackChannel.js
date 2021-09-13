@@ -10,7 +10,7 @@ const createUniqueChannel = async (name, retrying=false) => {
   let attemptName = name;
 
   if (retrying) {
-    attemptName = attemptName + '_' + Math.random().toString(16).slice(2,6);
+    attemptName = attemptName.slice(0, 74) + '_' + Math.random().toString(16).slice(2,6);
     console.log(`...failed, retrying with the name: '${attemptName}'`);
   } else {
     console.log(`Trying to create a Slack channel with the name: '${attemptName}'...`);
