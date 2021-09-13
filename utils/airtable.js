@@ -33,6 +33,11 @@ const get = async (table, options) => {
 }
 
 const find = async (table, options) => {
+  if (typeof options === 'string') {
+    options = {
+      filterByFormula: `RECORD_ID()='${options}'`
+    }
+  }
   const results = await get(table, {...options, maxRecords: 1})
   return results[0]
 }

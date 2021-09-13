@@ -5,6 +5,37 @@ const safeChannelName = (name) => {
   return name.replace(/[^a-z0-9]/gi, "_").slice(0, 80).toLowerCase();
 }
 
+const createUniqueChannel = async (name, retrying=false) => {
+  // (msw) I tried using postData() helper for this, but was getting strange errors from Slack, so switching back to fetch
+  let attemptName = name;
+
+  if (retrying) {
+    attemptName = attemptName + '_' + Math.random().toString(16).slice(2,6);
+    console.log(`...failed, retrying with the name: '${attemptName}'`);
+  } else {
+    console.log(`Trying to create a Slack channel with the name: '${attemptName}'...`);
+  }
+
+  const channelData = await fetch('https://slack.com/api/conversations.create', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${process.env.BOUNCER_SLACK_TOKEN}`
+    },
+    body: JSON.stringify({
+      name: safeChannelName(attemptName),
+    })
+  }).then(r => r.json());
+
+  if (channelData.ok) {
+    return channelData
+  } else if (!channelData.ok && channelData.error === 'name_taken') {
+    return await createUniqueChannel(name, true)
+  } else {
+    return channelData
+  }
+}
+
 export default async (req, res) => {
   // given an application recordID, create a slack channel & save it
   try {
@@ -15,20 +46,13 @@ export default async (req, res) => {
     const application = await airtable.find('Application Tracker', recordID);
 
     console.log({fields: application.fields})
-    if (!application.fields['Slack Channel'] || application.fields['Slack Channel'].length == 0) {
-      const channelData = await fetch('https://slack.com/api/conversations.create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.BOUNCER_SLACK_TOKEN}`
-        },
-        body: JSON.stringify({
-          name: safeChannelName(application.fields['Venue'] + '_' + recordID.slice(3, 7)),
-        })
-      }).then(r => r.json());
 
-      await airtable.update('Application Tracker', recordID, {
-        'Slack Channel': `https://app.slack.com/client/T0266FRGM/${channelData.id}`,
+    if (!application.fields['Slack Channel'] || application.fields['Slack Channel'].length == 0) {
+
+      const responseData = await createUniqueChannel(application.fields['Venue'])
+
+      await airtable.patch('Application Tracker', recordID, {
+        'Slack Channel': `https://app.slack.com/client/T0266FRGM/${responseData.channel.id}`,
       });
       res.send(200);
       return;
