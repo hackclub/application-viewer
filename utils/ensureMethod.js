@@ -1,9 +1,7 @@
 export default ({req, methods = [], method = ''}) => {
-  console.log('ensureMethod', methods, method)
-  if (method !== '') {
+  if (method.length > 0 && methods.length == 0) {
     methods = [method];
   }
-  console.log('ensureMethod2', methods, method)
   switch (req.method.toUpperCase()) {
     case 'OPTIONS':
       // OPTIONS should always be allowed

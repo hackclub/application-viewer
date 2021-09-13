@@ -43,9 +43,19 @@ export default async (req, res) => {
 
     const { recordID } = req.body;
 
+    if (!recordID) {
+      const err = new Error('No recordID in body')
+      err.status = 404
+      throw err
+    }
+
     const application = await airtable.find('Application Tracker', recordID);
 
-    console.log({fields: application.fields})
+    if (!application) {
+      const err = new Error('No application found with that recordID')
+      err.status = 404
+      throw err
+    }
 
     if (!application.fields['Slack Channel'] || application.fields['Slack Channel'].length == 0) {
 
