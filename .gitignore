@@ -12,5 +12,5 @@ yarn-error.log*
 # macOS-specific files
 .DS_Store
 
-# process.env
-js/airtable.js
+# secrets
+.env
