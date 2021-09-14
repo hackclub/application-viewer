@@ -33,10 +33,10 @@ export default async (req, res) => {
         return;
         break;
       case 'event_callback':
-        const bouncer_channels = [
-          // 'CM08L302G', // #bouncer-checkin
-          'C0P5NE354', // #bot-spam
-        ]
+        const bouncerChannels = ['C0P5NE354' /* #bot-spam */]
+        if (process.env.NODE_ENV == 'production') {
+          bouncerChannels.push('CM08L302G' /* #bouncer-checkin */)
+        }
 
         const { event } = req.body
 
