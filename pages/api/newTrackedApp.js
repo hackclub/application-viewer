@@ -1,53 +1,39 @@
+import airtable from '../../utils/airtable';
+import ensureMethod from '../../utils/ensureMethod';
 
-function getDate() {
-  const dateObj = new Date();
-  const month = dateObj.getUTCMonth() + 1; //months from 1-12
-  const day = dateObj.getUTCDate();
-  const year = dateObj.getUTCFullYear();
-  const newdate = `${year}-${month}-${day}`;
-
-  return newdate;
-}
-
-export default async function handler(req, res) {
-  const { base } = require('/js/airtable.js')
-
-  // add authentication
+export default async (req, res) => {
+  ensureMethod({ req, method: 'POST' })
 
   try {
-    const application = (await base("Application Database").find(req.query.app)).fields;
 
-    const newTrackedApp = {
-      "Venue": application["School Name"],
-      "Location": application["School Address"],
-      "Leader(s)": application["Full Name"].map(x => x.split(" ").join("+")).join(","),
-      "Leaders' Emails": application["Leaders Emails"].join(","),
+    const { dbRecordID } = req.body
+
+    const appDB = await airtable.find('Application Database', dbRecordID)
+    const possibleDuplicateTracker = await airtable.find('Application Tracker', `{App ID}='${dbRecordID}'`)
+    if (possibleDuplicateTracker) {
+      // uh oh... we're not in kansas anymore
+
+      //(msw) I expect this record to not
+      // already exist. if it does, something weird happened and I don't want this
+      // script running by itself without human oversight– let's just skip and
+      // return a 200
+
+      res.send(200)
+      return
+    }
+    const appTracked = await airtable.create('Application Tracker', {
+      "Venue": appDB["School Name"],
+      "Location": appDB["School Address"],
+      "Leader(s)": appDB["Full Name"].map(x => x.split(" ").join("+")).join(","),
+      "Leaders' Emails": appDB["Leaders Emails"].join(","),
       "Applied": new Date().toISOString().slice(0, 10),
       "Status": "applied",
       "Application": `https://application-viewer.hackclub.dev/?app=${req.query.app}`,
       "App ID": req.query.app,
-      // newTrackedApp.duplicate = application["Prospective Leaders"], // need to check current clubs
-      // newTrackedApp.ambassador = application["Prospective Leaders"], // india or not
-    };
-
-    // const postCreate = (err, records) => {
-    //   if (err) {
-    //     console.error(err);
-    //     return;
-    //   }
-    //   // records.forEach(function (record) {
-    //   //   console.log(record.getId());
-    //   // });
-    // }
-
-    // const tracked = await base("Application Tracker");
-    // tracked.create(newTrackedApp, postCreate);
-
-    res.status(200).json(newTrackedApp);
-  } catch (e) {
-    // console.log(e)
-    // res.statusCode = 302
-    // res.setHeader('Location', `/`)
-    res.status(404);
+    })
+    res.send(200)
+  } catch (err) {
+    console.error(err)
+    res.send(err).status(500)
   }
 }
