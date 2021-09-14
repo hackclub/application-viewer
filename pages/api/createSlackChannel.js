@@ -57,11 +57,11 @@ export default async (req, res) => {
       throw err
     }
 
-    if (!application.fields['Slack Channel'] || application.fields['Slack Channel'].length == 0) {
+    if (!application.fields['Slack Channel ID'] || application.fields['Slack Channel ID'].length == 0) {
       const responseData = await createUniqueChannel(application.fields['Venue'])
 
       await airtable.patch('Application Tracker', recordID, {
-        'Slack Channel': `https://app.slack.com/client/T0266FRGM/${responseData.channel.id}`,
+        'Slack Channel ID': responseData.channel.id,
       });
       res.send({
         channelURL: `https://app.slack.com/client/T0266FRGM/${responseData.channel.id}`
