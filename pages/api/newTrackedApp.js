@@ -8,7 +8,7 @@ export default async (req, res) => {
 
     const { dbRecordID } = req.body
 
-    const appDB = await airtable.find('Application Database', dbRecordID)
+    const appDB = (await airtable.find('Application Database', dbRecordID)).fields;
     const possibleDuplicateTracker = await airtable.find('Application Tracker', `{App ID}='${dbRecordID}'`)
     if (possibleDuplicateTracker) {
       // uh oh... we're not in kansas anymore
