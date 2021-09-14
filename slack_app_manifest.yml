@@ -1,0 +1,13 @@
+_metadata:
+  major_version: 1
+  minor_version: 1
+display_information:
+  name: bouncer
+oauth_config:
+  scopes:
+    user:
+      - channels:write
+settings:
+  org_deploy_enabled: false
+  socket_mode_enabled: false
+  token_rotation_enabled: false
