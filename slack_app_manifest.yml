@@ -6,8 +6,14 @@ display_information:
 oauth_config:
   scopes:
     user:
+      - channels:history
       - channels:write
+      - chat:write
 settings:
+  event_subscriptions:
+    request_url: https://47976168e491.ngrok.io/api/slack/events
+    user_events:
+      - message.channels
   org_deploy_enabled: false
   socket_mode_enabled: false
   token_rotation_enabled: false
