@@ -11,7 +11,7 @@ oauth_config:
       - chat:write
 settings:
   event_subscriptions:
-    request_url: https://47976168e491.ngrok.io/api/slack/events
+    request_url: https://application-viewer.hackclub.dev/api/slack/events
     user_events:
       - message.channels
   org_deploy_enabled: false
