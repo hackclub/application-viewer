@@ -22,7 +22,7 @@ export default async function handler(req, res) {
       "Location": application["School Address"],
       "Leader(s)": application["Full Name"].map(x => x.split(" ").join("+")).join(","),
       "Leaders' Emails": application["Leaders Emails"].join(","),
-      "Applied": getDate(),
+      "Applied": new Date().toISOString().slice(0, 10),
       "Status": "applied",
       "Application": `https://application-viewer.hackclub.dev/?app=${req.query.app}`,
       "App ID": req.query.app,
