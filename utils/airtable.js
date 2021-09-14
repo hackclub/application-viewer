@@ -27,8 +27,14 @@ const get = async (table, options) => {
 
 const find = async (table, options) => {
   if (typeof options === 'string') {
-    options = {
-      filterByFormula: `RECORD_ID()='${options}'`
+    if (options.startsWith('rec')) {
+      options = {
+        filterByFormula: `RECORD_ID()='${options}'`
+      }
+    } else {
+      options = {
+        filterByFormula: options
+      }
     }
   }
   const results = await get(table, {...options, maxRecords: 1})
