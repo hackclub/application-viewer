@@ -1,6 +1,7 @@
 import airtable from "../../utils/airtable";
 import ensureMethod from "../../utils/ensureMethod";
 import sendEmail from "../../utils/sendEmail";
+import slackReact from "../../utils/slackReact";
 
 export default async (req, res) => {
   const { recordID, teacher, email } = req.body
