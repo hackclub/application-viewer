@@ -20,7 +20,7 @@ const sample = (arr) => {
 const loadTranscript = () => {
   try {
     const doc = yaml.load(
-      fs.readFileSync(path.resolve(__dirname, '../transcript.yml'), 'utf8')
+      fs.readFileSync(path.resolve(__dirname, './transcript.yml'), 'utf8')
     )
     return doc
   } catch (e) {
