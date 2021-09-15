@@ -1,6 +1,8 @@
 const yaml = require('js-yaml')
 const fs = require('fs')
 const path = require('path')
+import getConfig from 'next/config'
+const { serverRuntimeConfig } = getConfig()
 
 const pluralize = (word, count) => {
   // want to use this method? make sure to add your word to transcript.yml under 'plurals'
@@ -20,7 +22,7 @@ const sample = (arr) => {
 const loadTranscript = () => {
   try {
     const doc = yaml.load(
-      fs.readFileSync(path.resolve(__dirname, './transcript.yml'), 'utf8')
+      fs.readFileSync(path.join(serverRuntimeConfig.PROJECT_ROOT, './utils/transcript.yml'), 'utf8')
     )
     return doc
   } catch (e) {
