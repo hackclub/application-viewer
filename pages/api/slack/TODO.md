@@ -1,4 +1,4 @@
- - [ ] Applications are posted to application-committee
+ - [x] Applications are posted to application-committee
  - [ ] Application thread recorded in Airtable
  - [ ] Email sending should be editable by everyone
     - currently attached to Leo's email
