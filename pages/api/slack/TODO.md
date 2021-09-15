@@ -5,7 +5,7 @@
     - look into postal.hackclub.com for this
 - [ ] Extra field in "logins" table "locale with slash" should be cleaned up
 - [ ] Remove point of contact with plus sign field
-- [ ] Standardize airtable usage
+- [x] Standardize airtable usage
 
 ---
 
