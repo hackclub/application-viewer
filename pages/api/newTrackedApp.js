@@ -39,7 +39,11 @@ export default async (req, res) => {
       url: appTracked.fields["Application"],
       location: appTracked.fields["Location"],
     })
-    await slackPostMessage({ channel, text })
+    const slackMessage = await slackPostMessage({ channel, text })
+
+    await airtable.patch('Application Tracker', {
+      "Application Committee Timestamp": slackMessage.ts
+    })
 
     res.send(200)
   } catch (err) {
