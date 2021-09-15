@@ -1,5 +1,5 @@
  - [x] Applications are posted to application-committee
- - [ ] Application thread recorded in Airtable
+ - [x] Application thread recorded in Airtable
  - [ ] Email sending should be editable by everyone
     - currently attached to Leo's email
     - look into postal.hackclub.com for this
