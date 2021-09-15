@@ -41,7 +41,7 @@ export default async (req, res) => {
     })
     const slackMessage = await slackPostMessage({ channel, text })
 
-    await airtable.patch('Application Tracker', {
+    await airtable.patch('Application Tracker', appTracked.id, {
       "Application Committee Timestamp": slackMessage.ts
     })
 
