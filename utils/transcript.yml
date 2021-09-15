@@ -6,7 +6,7 @@ application-committee:
     - Go to school
     - Drink lots of water
   new-application: |
-    Hey fools! We got a new application that just came in! _Wanna take charge of onboarding this A-Team???_ **[Check it out](${this.url})**.
+    Hey fools! We got a new application that just came in! _Wanna take charge of onboarding this A-Team???_ <${this.url}|*Check it out*>
     Their address is \`${this.location}\`
     That's it for now. Remember: _${this.t('application-committee.flavor')}_
 bouncer-checkin:

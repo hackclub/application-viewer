@@ -7,9 +7,8 @@ export default async ({ channel, text }) => {
       'Authorization': `Bearer ${process.env.BOUNCER_SLACK_TOKEN}`
     },
     body: JSON.stringify({
-      mrkdwn: true,
       channel,
-      text
+      text,
     })
   }).then(r => r.json()).catch(err => {
     console.error(err)
