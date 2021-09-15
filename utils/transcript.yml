@@ -10,6 +10,8 @@ application-committee:
     Hey fools! We got a new application that just came in! _Wanna take charge of onboarding this A-Team???_ <${this.url}|*Check it out*>
     Their address is \`${this.location}\`
     That's it for now. Remember: _${this.t('application-committee.flavor')}_
+  accepted: Hoo rah! This team was just accepted. I've invited them to setup shop in <#${this.channel}>.
+  rejected: Ooof, this team was just rejected. I pity the fool.
 bouncer-checkin:
   found: consider yourself present <@${this.user}>, now run along and join your team in <#${this.channel}>
   not-found: what kinda crazy mumbo-jumbo nonsense is this?? I could find a solid _nobody_ in our applications database with the registration passphrase "${this.pass}". try again, fool.
