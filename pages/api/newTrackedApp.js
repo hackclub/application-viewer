@@ -36,7 +36,7 @@ export default async (req, res) => {
     // const channel = 'GLG8GQAKU' /* #application-committee */
     const channel = 'C02F9GD407J' /* #application-conspiracy */
     const text = transcript('application-committee.new-application', {
-      url: appTracked.fields["Application"],
+      url: appTracked.fields["Application Link"],
       location: appTracked.fields["Location"],
     })
     const slackMessage = await slackPostMessage({ channel, text })
