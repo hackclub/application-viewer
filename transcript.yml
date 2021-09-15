@@ -1,0 +1,10 @@
+application-committee:
+  flavor:
+    - Don't do drugs
+    - Drink your milk
+    - Go to school
+    - Drink lots of water
+  new-application: |
+    Hey fools! We got a new application that just came in! _Wanna take charge of onboarding this A-Team???_ Check it out at ${this.url}.
+    Their address is '_${this.location}_'
+    That's it for now. Remember: _${this.t('application-committee.flavor')}_
