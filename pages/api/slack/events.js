@@ -24,7 +24,7 @@ export default async (req, res) => {
         const { event } = req.body
 
         const mentionSubstring = '<@ULG7GRP0A>' // @bouncer
-        if (bouncer_channels.includes(event.channel) && event.type == 'message' && event.text.startsWith(mentionSubstring)) {
+        if (bouncerChannels.includes(event.channel) && event.type == 'message' && event.text.startsWith(mentionSubstring)) {
           console.log('...responding!')
           const { user, text, channel, ts } = event
           await slackReact({ channel, timestamp: ts, name: 'beachball' })
