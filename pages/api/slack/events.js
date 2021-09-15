@@ -1,6 +1,7 @@
 import airtable from "../../../utils/airtable";
 import ensureMethod from "../../../utils/ensureMethod";
 import slackPostMessage from "../../../utils/slackPostMessage";
+import transcript from "../../../utils/transcript";
 
 export default async (req, res) => {
   ensureMethod({ req, method: 'POST' })
@@ -30,11 +31,15 @@ export default async (req, res) => {
           const cleanedText = text.replace(mentionSubstring, '').trim()
           const club = await airtable.find('Application Tracker', `{Check-In Pass}='${cleanedText}'`)
           if (club) {
-            await slackPostMessage({ channel, text: `you got it <@${user}>, run along and join your team in <#${club.fields['Slack Channel ID']}>` })
-            await slackReact({ channel, timestamp: ts, name: 'white_check_mark' })
+            await Promise.all([
+              slackReact({ channel, timestamp: ts, name: 'white_check_mark' }),
+              slackPostMessage({ channel, text: transcript('bouncer-checkin.found', {pass: cleanedText, channel: club.fields['Slack Channel ID'], user}) })
+            ])
           } else {
-            await slackPostMessage({ channel, text: `what kinda crazy mumbo-jumbo nonsense is this?? I could find a solid _nobody_ in our applications database with the registration passphrase "${cleanedText}". try again, fool.` })
-            await slackReact({ channel, timestamp: ts, name: 'thonk' })
+            await Promise.all([
+              slackReact({ channel, timestamp: ts, name: 'thonk' }),
+              slackPostMessage({ channel, text: transcript('bouncer-checkin.not-found', {pass: cleanedText, user}) })
+            ])
           }
           await slackReact({ channel, timestamp: ts, name: 'beachball', addOrRemove: 'remove' })
         } else {
