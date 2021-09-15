@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "airtable": "^0.11.1",
     "airtable-plus": "^1.0.4",
     "bottleneck": "^2.19.5",
     "cors": "^2.8.5",
