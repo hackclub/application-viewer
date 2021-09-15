@@ -10,3 +10,7 @@
 ---
 
 /* what breaks without leaders */
+
+- toolbox.hackclub.com
+- map.hackclub.com (club addresses)
+- orpheus commands (search for 'Δ' on the README of https://github.com/hackclub/orpheus-bot)
