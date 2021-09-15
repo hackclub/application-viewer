@@ -1,5 +1,5 @@
-const AirtablePlus = require('airtable-plus')
-const Bottleneck = require('bottleneck')
+import Bottleneck from 'bottleneck'
+import AirtablePlus from 'airtable-plus'
 
 const limiter = new Bottleneck({
   maxConcurrent: 3,
