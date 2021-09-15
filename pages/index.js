@@ -17,8 +17,8 @@ const ApplicationDropDown = ({ template, content, name }) => {
   </>
 }
 
-export default function Home({ query, application, leaders, trackedEntry }) {
-  console.log(query, application, leaders, trackedEntry);
+export default function Home({ query, application, leaders, trackedApp}) {
+  console.log(query, application, leaders, trackedApp);
 
   return <>
     <ApplicationDropDown template={applicationTemplate.clubs} content={application} name={"Club"}/>
@@ -27,18 +27,18 @@ export default function Home({ query, application, leaders, trackedEntry }) {
       <ApplicationDropDown template={applicationTemplate.leaders} content={leader} name={`Leader ${i}`}/>
     </div>)}
     <hr/>
-    <ActionsDropDown id={trackedEntry[0]} entry={trackedEntry[1]}/>
+    <ActionsDropDown id={trackedApp.id} entry={trackedApp.fields}/>
   </>
 }
 
 export async function getServerSideProps({ res, req, query }) {
-  const recordID = query.id;
+  const recordID = query.app;
 
   // add authentication
 
   try {
     const application = {};
-    const applicationRaw = (await airtable.find(recordID)).fields;
+    const applicationRaw = (await airtable.find('Application Database', recordID)).fields;
     const includedKeys = applicationTemplate.clubs.map(x => x.items.map(x => x.key)).flat();
     for (const key in applicationRaw) {
       if (includedKeys.includes(key)) application[key] = applicationRaw[key];
@@ -58,15 +58,14 @@ export async function getServerSideProps({ res, req, query }) {
       }
     ))
 
-    let trackedEntry = {};
+    let trackedApp = {}
     try {
-      const match = await airtable.find('Application Tracker', `{App ID}='${recordID}'`)
-      trackedEntry = match.fields
+      trackedApp = await airtable.find('Application Tracker', `{App ID}='${recordID}'`)
     } catch (err) {
       console.log(err);
     }
 
-    return { props: { query, application, leaders, trackedEntry } }
+    return { props: { query, application, leaders, trackedApp } }
   } catch (e) {
     // console.log(e)
     // res.statusCode = 302
