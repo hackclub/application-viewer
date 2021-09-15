@@ -60,7 +60,7 @@ export const ActionsDropDown = ({ id, entry }) => {
 
   return <>
     <div className="application-link" onClick={() => setOpen(!open)}>
-      <span>IN PROGRESS: Actions</span>
+      <span>Actions</span>
       <span className="app-link-arrow noselect">{open ? "▽" : "▷"}</span>
     </div>
     { open && <>
