@@ -4,7 +4,7 @@ export default async ({ channel, text, timestamp }) => {
   const body = { channel, text }
 
   if (timestamp) {
-    body.reply_ts = timestamp
+    body.thread_ts = timestamp
   }
 
   const result = await fetch('https://slack.com/api/chat.postMessage', {
