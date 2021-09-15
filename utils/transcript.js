@@ -1,8 +1,4 @@
-const yaml = require('js-yaml')
-const fs = require('fs')
-const path = require('path')
-import getConfig from 'next/config'
-const { serverRuntimeConfig } = getConfig()
+import loadTranscript from 'yaml-loader!./transcript.yml'
 
 const pluralize = (word, count) => {
   // want to use this method? make sure to add your word to transcript.yml under 'plurals'
@@ -19,16 +15,6 @@ const sample = (arr) => {
   return arr[Math.floor(Math.random() * arr.length)]
 }
 
-const loadTranscript = () => {
-  try {
-    const doc = yaml.load(
-      fs.readFileSync(path.join(serverRuntimeConfig.PROJECT_ROOT, './utils/transcript.yml'), 'utf8')
-    )
-    return doc
-  } catch (e) {
-    console.error(e)
-  }
-}
 const recurseTranscript = (searchArr, transcriptObj, fallback) => {
   const searchCursor = searchArr.shift()
   const targetObj = transcriptObj[searchCursor]
@@ -75,7 +61,7 @@ const transcript = (search, vars, fallback) => {
     console.log(`I'm searching for words in my yaml file under "${search}"`)
   }
   const searchArr = search.split('.')
-  const transcriptObj = loadTranscript()
+  const transcriptObj = loadTranscript
   const dehydratedTarget = recurseTranscript(searchArr, transcriptObj, fallback)
   return hydrateObj(dehydratedTarget, vars)
 }
