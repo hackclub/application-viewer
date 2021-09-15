@@ -33,7 +33,8 @@ export default async (req, res) => {
       "App ID": dbRecordID,
     })
 
-    const channel = 'GLG8GQAKU' /* #application-committee */
+    // const channel = 'GLG8GQAKU' /* #application-committee */
+    const channel = 'C02F9GD407J' /* #application-conspiracy */
     const text = transcript('application-committee.new-application', {
       url: appTracked.fields["Application"],
       location: appTracked.fields["Location"],
