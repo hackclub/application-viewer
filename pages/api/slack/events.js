@@ -25,14 +25,18 @@ export default async (req, res) => {
         const mentionSubstring = '<@ULG7GRP0A>' // @bouncer
         if (bouncer_channels.includes(event.channel) && event.type == 'message' && event.text.startsWith(mentionSubstring)) {
           console.log('...responding!')
-          const { user, text, channel } = event
+          const { user, text, channel, ts } = event
+          await slackReact({ channel, timestamp: ts, name: 'beachball' })
           const cleanedText = text.replace(mentionSubstring, '').trim()
           const club = await airtable.find('Application Tracker', `{Check-In Pass}='${cleanedText}'`)
           if (club) {
             await slackPostMessage({ channel, text: `you got it <@${user}>, run along and join your team in <#${club.fields['Slack Channel ID']}>` })
+            await slackReact({ channel, timestamp: ts, name: 'white_check_mark' })
           } else {
             await slackPostMessage({ channel, text: `what kinda crazy mumbo-jumbo nonsense is this?? I could find a solid _nobody_ in our applications database with the registration passphrase "${cleanedText}". try again, fool.` })
+            await slackReact({ channel, timestamp: ts, name: 'thonk' })
           }
+          await slackReact({ channel, timestamp: ts, name: 'beachball', addOrRemove: 'remove' })
         } else {
           console.log('...ignoring!')
           // just ignore the message if it wasn't in a channel bouncer listens to
