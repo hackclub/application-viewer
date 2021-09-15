@@ -5,6 +5,7 @@ application-committee:
     - Drink your milk
     - Go to school
     - Drink lots of water
+    - Treat your mother right
   new-application: |
     Hey fools! We got a new application that just came in! _Wanna take charge of onboarding this A-Team???_ <${this.url}|*Check it out*>
     Their address is \`${this.location}\`
