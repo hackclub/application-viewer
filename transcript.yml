@@ -1,0 +1,13 @@
+application-committee:
+  flavor:
+    - Don't do drugs
+    - Drink your milk
+    - Go to school
+    - Drink lots of water
+  new-application: |
+    Hey fools! We got a new application that just came in! _Wanna take charge of onboarding this A-Team???_ Check it out at ${this.url}.
+    Their address is '_${this.location}_'
+    That's it for now. Remember: _${this.t('application-committee.flavor')}_
+bouncer-checkin:
+  found: consider yourself present <@${this.user}>, now run along and join your team in <#${this.channel}>
+  not-found: what kinda crazy mumbo-jumbo nonsense is this?? I could find a solid _nobody_ in our applications database with the registration passphrase "${this.pass}". try again, fool.

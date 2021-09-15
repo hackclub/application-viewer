@@ -1,22 +1,7 @@
 import airtable from "../../../utils/airtable";
 import ensureMethod from "../../../utils/ensureMethod";
-
-const slackPostMessage = async ({ channel, text }) => {
-  console.log(`Posting in CHANNEL '${channel}' TEXT '${text}'`)
-  return await fetch('https://slack.com/api/chat.postMessage', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${process.env.BOUNCER_SLACK_TOKEN}`
-    },
-    body: JSON.stringify({
-      channel,
-      text
-    })
-  }).then(r => r.json()).catch(err => {
-    console.error(err)
-  });
-}
+import slackPostMessage from "../../../utils/slackPostMessage";
+import transcript from "../../../utils/transcript";
 
 export default async (req, res) => {
   ensureMethod({ req, method: 'POST' })
@@ -41,14 +26,22 @@ export default async (req, res) => {
         const mentionSubstring = '<@ULG7GRP0A>' // @bouncer
         if (bouncer_channels.includes(event.channel) && event.type == 'message' && event.text.startsWith(mentionSubstring)) {
           console.log('...responding!')
-          const { user, text, channel } = event
+          const { user, text, channel, ts } = event
+          await slackReact({ channel, timestamp: ts, name: 'beachball' })
           const cleanedText = text.replace(mentionSubstring, '').trim()
           const club = await airtable.find('Application Tracker', `{Check-In Pass}='${cleanedText}'`)
           if (club) {
-            await slackPostMessage({ channel, text: `you got it <@${user}>, run along and join your team in <#${club.fields['Slack Channel ID']}>` })
+            await Promise.all([
+              slackReact({ channel, timestamp: ts, name: 'white_check_mark' }),
+              slackPostMessage({ channel, text: transcript('bouncer-checkin.found', {pass: cleanedText, channel: club.fields['Slack Channel ID'], user}) })
+            ])
           } else {
-            await slackPostMessage({ channel, text: `what kinda crazy mumbo-jumbo nonsense is this?? I could find a solid _nobody_ in our applications database with the registration passphrase "${cleanedText}". try again, fool.` })
+            await Promise.all([
+              slackReact({ channel, timestamp: ts, name: 'thonk' }),
+              slackPostMessage({ channel, text: transcript('bouncer-checkin.not-found', {pass: cleanedText, user}) })
+            ])
           }
+          await slackReact({ channel, timestamp: ts, name: 'beachball', addOrRemove: 'remove' })
         } else {
           console.log('...ignoring!')
           // just ignore the message if it wasn't in a channel bouncer listens to
@@ -59,7 +52,7 @@ export default async (req, res) => {
         break;
     }
   } catch (err) {
-
+    console.error(err)
   }
 
   // (msw) Slack will temporarily turn off our app if they see other status

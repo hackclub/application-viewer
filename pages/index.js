@@ -2,6 +2,7 @@ import { Application } from "../js/components/Application.js";
 import { ActionsDropDown } from "../js/components/ActionsDropDown.js";
 import applicationTemplate from "../js/application-template.js";
 import { useState } from "react";
+import airtable from "../utils/airtable";
 
 
 const ApplicationDropDown = ({ template, content, name }) => {
@@ -16,8 +17,8 @@ const ApplicationDropDown = ({ template, content, name }) => {
   </>
 }
 
-export default function Home({ query, application, leaders, trackedEntry }) {
-  console.log(query, application, leaders, trackedEntry);
+export default function Home({ query, application, leaders, trackedApp}) {
+  console.log(query, application, leaders, trackedApp);
 
   return <>
     <ApplicationDropDown template={applicationTemplate.clubs} content={application} name={"Club"}/>
@@ -26,29 +27,18 @@ export default function Home({ query, application, leaders, trackedEntry }) {
       <ApplicationDropDown template={applicationTemplate.leaders} content={leader} name={`Leader ${i}`}/>
     </div>)}
     <hr/>
-    <ActionsDropDown id={trackedEntry[0]} entry={trackedEntry[1]}/>
+    <ActionsDropDown id={trackedApp.id} entry={trackedApp.fields}/>
   </>
 }
 
-async function airtableGet(key, value) {
-  const { base } = require('/js/airtable.js')
-
-  const appTracker = await base('Application Tracker')
-  const gridView = await appTracker.select({view: "Main"})
-  const all = await gridView.all();
-  const matches = all.filter( record => record.get(key) === value);
-
-  return matches.map(record => [ record.id, record.fields ]);
-}
-
 export async function getServerSideProps({ res, req, query }) {
-  const { base } = require('/js/airtable.js')
+  const recordID = query.app;
 
   // add authentication
 
   try {
     const application = {};
-    const applicationRaw = (await base("Application Database").find(query.app)).fields;
+    const applicationRaw = (await airtable.find('Application Database', recordID)).fields;
     const includedKeys = applicationTemplate.clubs.map(x => x.items.map(x => x.key)).flat();
     for (const key in applicationRaw) {
       if (includedKeys.includes(key)) application[key] = applicationRaw[key];
@@ -57,7 +47,7 @@ export async function getServerSideProps({ res, req, query }) {
     let leaders = await Promise.all(applicationRaw["Prospective Leaders"].map(
       async (id) => {
         const leader = {};
-        const leaderRaw = (await base("Prospective Leaders").find(id)).fields;
+        const leaderRaw = (await airtable.find('Prospective Leaders', id)).fields;
         const includedKeys = applicationTemplate.leaders.map(x => x.items.map(x => x.key)).flat();
 
         for (const key in leaderRaw) {
@@ -68,15 +58,14 @@ export async function getServerSideProps({ res, req, query }) {
       }
     ))
 
-    let trackedEntry = {};
+    let trackedApp = {}
     try {
-      const matches = await airtableGet("App ID", query.app);
-      trackedEntry = matches.length > 0 ? matches[0] : {};
+      trackedApp = await airtable.find('Application Tracker', `{App ID}='${recordID}'`)
     } catch (err) {
       console.log(err);
     }
 
-    return { props: { query, application, leaders, trackedEntry } }
+    return { props: { query, application, leaders, trackedApp } }
   } catch (e) {
     // console.log(e)
     // res.statusCode = 302
