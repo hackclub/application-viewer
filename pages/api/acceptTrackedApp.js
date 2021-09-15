@@ -2,7 +2,7 @@ import airtable from "../../utils/airtable";
 import ensureMethod from "../../utils/ensureMethod";
 import createSlackChannel from "../../utils/createSlackChannel";
 import sendEmail from "../../utils/sendEmail";
-
+import slackReact from "../../utils/slackReact";
 
 export default async (req, res) => {
   const { recordID, email } = req.body
@@ -12,7 +12,9 @@ export default async (req, res) => {
 
     const channelID = await createSlackChannel(recordID);
 
-    const currentEntryNote = (await airtable.find('Application Tracker', recordID)).fields["Notes"];
+    const trackedApp = await airtable.find('Application Tracker', recordID)
+
+    const currentEntryNote = trackedApp.fields["Notes"];
 
     const note = currentEntryNote
       ? `${currentEntryNote}\nUpdated with webhook: accept`
@@ -31,6 +33,11 @@ export default async (req, res) => {
 
     // send email
     await sendEmail(email);
+
+    // update slack thread
+    const channel = 'C02F9GD407J' /* #application-conspiracy */
+    const timestamp = trackedApp.fields["Application Committee Timestamp"];
+    console.log(await slackReact({channel, timestamp, name: 'white_check_mark'}))
 
     res.send({ ok: true })
 
