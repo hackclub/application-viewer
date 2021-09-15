@@ -1,5 +1,7 @@
 import airtable from '../../utils/airtable';
 import ensureMethod from '../../utils/ensureMethod';
+import slackPostMessage from '../../utils/slackPostMessage';
+import transcript from '../../utils/transcript';
 
 export default async (req, res) => {
   ensureMethod({ req, method: 'POST' })
@@ -31,6 +33,14 @@ export default async (req, res) => {
       "Application": `https://application-viewer.hackclub.dev/?app=${dbRecordID}`,
       "App ID": dbRecordID,
     })
+
+    const channel = 'GLG8GQAKU' /* #application-committee */
+    const text = transcript('application-committee.new-application', {
+      url: appTracked.fields["Application"],
+      location: appTracked.fields["Location"],
+    })
+    await slackPostMessage({ channel, text })
+
     res.send(200)
   } catch (err) {
     console.error(err)
