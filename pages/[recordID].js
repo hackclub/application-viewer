@@ -33,8 +33,6 @@ export default function Home({ query, application, leaders, trackedApp}) {
 
 export async function getServerSideProps({ query }) {
   const { recordID } = query;
-  let notFound = false;
-
   // add authentication
 
   try {
@@ -61,7 +59,7 @@ export async function getServerSideProps({ query }) {
       }
     ))
 
-    return { props: { query, application, leaders, trackedApp }, notFound }
+    return { props: { query, application, leaders, trackedApp }, notFound: false }
   } catch (e) {
     // console.log(e)
     // res.statusCode = 302

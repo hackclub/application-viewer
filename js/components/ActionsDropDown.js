@@ -31,23 +31,28 @@ export const ActionsDropDown = ({ id, entry }) => {
     // if accept, create channel, generate invite link
     // for all send response email
 
+    console.log({ responseModal });
+
     if (responseModal.type === "accept") {
+      console.log("model is open to accept")
       const results = {}
 
+      console.log({ id });
+
       await Promise.all([
-        postData("/api/createCheckinPass", { recordID: id }).then(r => results.checkInPassword = r.password),
+        // postData("/api/createCheckinPass", { recordID: id }).then(r => results.checkInPassword = r.password),
         postData("/api/createSlackChannel", { recordID: id }).then(r => results.channelID = r.channelID)
       ])
 
       const modifiedContent = responseEmail
         .replace('%SLACK_URL%', `https://app.slack.com/client/T0266FRGM/${results.channelID}`)
-        .replace('%PASSWORD%', results.checkInPassword)
+        // .replace('%PASSWORD%', results.checkInPassword)
 
       // update record
       await airtable.patch('Application Tracker', id, {
         "Notes": (entry["Notes"] ? `${entry["Notes"]}\n` : "") + `Updated with webhook: ${responseModal.type}`,
         "Status": "awaiting onboarding",
-        'Check-In Pass': results.checkInPassword,
+        // 'Check-In Pass': results.checkInPassword,
         'Slack Channel ID': results.channelID,
       })
 

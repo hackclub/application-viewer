@@ -60,6 +60,8 @@ export default async (req, res) => {
     if (!application.fields['Slack Channel ID'] || application.fields['Slack Channel ID'].length == 0) {
       const responseData = await createUniqueChannel(application.fields['Venue'])
 
+      console.log("token", process.env.BOUNCER_SLACK_TOKEN);
+      console.log({ responseData })
       res.send({ channelID: responseData.channel.id });
       return;
     } else {

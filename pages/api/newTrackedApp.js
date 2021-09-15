@@ -30,7 +30,6 @@ export default async (req, res) => {
       "Leaders' Emails": appDB["Leaders Emails"].join(","),
       "Applied": new Date().toISOString().slice(0, 10),
       "Status": "applied",
-      "Application": `https://application-viewer.hackclub.dev/?app=${dbRecordID}`,
       "App ID": dbRecordID,
     })
 

@@ -4,21 +4,21 @@ export const accept = (names) => `Hey ${names},
 
 We just reviewed your application and I'm happy to say *you're in!*
 
-The 4 Steps of joining Hack Club:
+The 5 Steps of joining Hack Club:
 
 - Apply
 - **Join Slack** *(you are here)*
+- Join Your Club Channel
 - Onboarding Call
 - First Meeting!
 
 If you are not already in Slack then sign up [here](https://hackclub.com/slack/). 
 
-Once you join, go to [your newly created club channel](%SLACK_URL%) and type: **@bouncer %PASSWORD%**
+Once you join, go to [your newly created club channel](%SLACK_URL%).
 
-This will check you in as a leader and let us know that you're ready for your onboarding call.
+This will let us know that you're ready for your onboarding call.
 
 We're looking forward to meeting you and helping you create an amazing coding club!
-
 
 See you soon,
 
