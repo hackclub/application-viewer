@@ -7,7 +7,7 @@ application-committee:
     - Drink lots of water
   new-application: |
     Hey fools! We got a new application that just came in! _Wanna take charge of onboarding this A-Team???_ Check it out at ${this.url}.
-    Their address is '_${this.location}_'
+    Their address is \`${this.location}\`
     That's it for now. Remember: _${this.t('application-committee.flavor')}_
 bouncer-checkin:
   found: consider yourself present <@${this.user}>, now run along and join your team in <#${this.channel}>
