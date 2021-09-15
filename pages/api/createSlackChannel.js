@@ -60,18 +60,11 @@ export default async (req, res) => {
     if (!application.fields['Slack Channel ID'] || application.fields['Slack Channel ID'].length == 0) {
       const responseData = await createUniqueChannel(application.fields['Venue'])
 
-      await airtable.patch('Application Tracker', recordID, {
-        'Slack Channel ID': responseData.channel.id,
-      });
-      res.send({
-        channelURL: `https://app.slack.com/client/T0266FRGM/${responseData.channel.id}`
-      });
+      res.send({ channelID: responseData.channel.id });
       return;
     } else {
       console.log('Slack channel already exists, not creating a new one');
-      res.send({
-        channelURL: application.fields['Slack Channel']
-      });
+      res.send({ channelID: application.fields['Slack Channel ID'] });
       return;
     }
   } catch (err) {

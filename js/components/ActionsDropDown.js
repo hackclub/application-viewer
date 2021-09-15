@@ -3,6 +3,7 @@ import { accept } from "/js/emails/accept.js";
 import { reject } from "/js/emails/reject.js";
 import { teacher } from "/js/emails/teacher.js";
 import { postData } from "/js/postData.js";
+import airtable from "../../utils/airtable";
 
 const EMAILS = {
   accept,
@@ -32,29 +33,34 @@ export const ActionsDropDown = ({ id, entry }) => {
     setResponseEmail(type !== "" ? EMAILS[type](entry["Leader(s)"]) : "");
   }
 
-  const submitResponse = async () => {
+  const onAccept = async () => {
     // if accept, create channel, generate invite link
     // for all send response email
     const results = {}
 
     await Promise.all([
       postData("/api/createCheckinPass", { recordID: id }).then(r => results.checkInPassword = r.password),
-      postData("/api/createSlackChannel", { recordID: id }).then(r => results.channelURL = r.channelURL)
+      postData("/api/createSlackChannel", { recordID: id }).then(r => results.channelID = r.channelID)
     ])
 
-    const modifiedContent = responseEmail.replace('%SLACK_URL%', results.channelURL).replace('%PASSWORD%', results.checkInPassword)
-    // update status
+    const modifiedContent = responseEmail
+      .replace('%SLACK_URL%', `https://app.slack.com/client/T0266FRGM/${results.channelID}`)
+      .replace('%PASSWORD%', results.checkInPassword)
+    
+    // send email
     await postData("/api/sendResponse", { 
-      type: responseModal.type, 
       emailContent: modifiedContent, 
       emailSubject: EMAILS_SUBJECTS[responseModal.type],
       emailAdresses: entry["Leaders' Emails"].split(",").map(x => x.split(" ").join("+")),
-      newStatus: NEW_STATUS[responseModal.type],
-      newNote: (entry["Notes"] ? `${entry["Notes"]}\n` : "") + `Updated with webhook: ${responseModal.type}`,
-      slackChannel: results.channelURL,
-      bouncerKey: results.checkInPassword,
-      id 
     });
+
+    // update record
+    await airtable.patch('Application Tracker', id, {
+      "Notes": (entry["Notes"] ? `${entry["Notes"]}\n` : "") + `Updated with webhook: ${responseModal.type}`,
+      "Status": NEW_STATUS[responseModal.type],
+      'Check-In Pass': results.checkInPassword,
+      'Slack Channel ID': results.channelID,
+    })
 
     setResponseModal({ open: false, type: ""})
   }
@@ -97,7 +103,7 @@ export const ActionsDropDown = ({ id, entry }) => {
           <button 
             className="action-button"
             style={{ background: "blue" }}
-            onClick={submitResponse}>
+            onClick={onAccept}>
             send
           </button>
           <button 
