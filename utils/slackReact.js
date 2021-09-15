@@ -4,7 +4,7 @@ export default async ({ channel, timestamp, name, addOrRemove='add' }) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${process.env.SLACK_TOKEN}`,
+      'Authorization': `Bearer ${process.env.BOUNCER_SLACK_TOKEN}`,
     },
     body: JSON.stringify({ channel, name, timestamp })
   }).then(r => r.json()).catch(err => {
