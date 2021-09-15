@@ -8,7 +8,9 @@ export default async (req, res) => {
   try {
     ensureMethod({ req, method: 'POST' })
 
-    const currentEntryNote = (await airtable.find('Application Tracker', recordID)).fields["Notes"];
+    const trackedApp = await airtable.find('Application Tracker', recordID)
+
+    const currentEntryNote = trackedApp.fields["Notes"];
 
     const note = currentEntryNote
       ? `${currentEntryNote}\nUpdated with webhook: ${teacher ? "teacher" : "reject"}`
@@ -23,7 +25,14 @@ export default async (req, res) => {
     // send email
     await sendEmail(email);
 
+    // update slack thread
+    const channel = 'C02F9GD407J' /* #application-conspiracy */
+    const timestamp = trackedApp.fields["Application Committee Timestamp"];
+    console.log(await slackReact({channel, timestamp, name: 'no_entry'}))
+    console.log(await slackReact({channel, timestamp, name: 'white_check_mark', addOrRemove: 'remove'}))
+
     res.send({ ok: true })
+
   } catch (err) {
     console.error(err);
     res.status(err.status || 500).send(err);

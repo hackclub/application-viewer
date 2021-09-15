@@ -38,6 +38,7 @@ export default async (req, res) => {
     const channel = 'C02F9GD407J' /* #application-conspiracy */
     const timestamp = trackedApp.fields["Application Committee Timestamp"];
     console.log(await slackReact({channel, timestamp, name: 'white_check_mark'}))
+    console.log(await slackReact({channel, timestamp, name: 'no_entry', addOrRemove: 'remove'}))
 
     res.send({ ok: true })
 
