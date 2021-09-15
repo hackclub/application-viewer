@@ -17,12 +17,6 @@ const EMAILS_SUBJECTS = {
   teacher: "Hack Club Regrets to Inform You",
 }
 
-const NEW_STATUS = {
-  accept: "awaiting onboarding",
-  reject: "rejected",
-  teacher: "rejected",
-}
-
 export const ActionsDropDown = ({ id, entry }) => {
   const [open, setOpen] = useState(false);
   const [responseModal, setResponseModal] = useState({ open: false, type: "" });
@@ -33,35 +27,51 @@ export const ActionsDropDown = ({ id, entry }) => {
     setResponseEmail(type !== "" ? EMAILS[type](entry["Leader(s)"]) : "");
   }
 
-  const onAccept = async () => {
+  const onRespond = async () => {
     // if accept, create channel, generate invite link
     // for all send response email
-    const results = {}
 
-    await Promise.all([
-      postData("/api/createCheckinPass", { recordID: id }).then(r => results.checkInPassword = r.password),
-      postData("/api/createSlackChannel", { recordID: id }).then(r => results.channelID = r.channelID)
-    ])
+    if (responseModal.type === "accept") {
+      const results = {}
 
-    const modifiedContent = responseEmail
-      .replace('%SLACK_URL%', `https://app.slack.com/client/T0266FRGM/${results.channelID}`)
-      .replace('%PASSWORD%', results.checkInPassword)
+      await Promise.all([
+        postData("/api/createCheckinPass", { recordID: id }).then(r => results.checkInPassword = r.password),
+        postData("/api/createSlackChannel", { recordID: id }).then(r => results.channelID = r.channelID)
+      ])
+
+      const modifiedContent = responseEmail
+        .replace('%SLACK_URL%', `https://app.slack.com/client/T0266FRGM/${results.channelID}`)
+        .replace('%PASSWORD%', results.checkInPassword)
+
+      // update record
+      await airtable.patch('Application Tracker', id, {
+        "Notes": (entry["Notes"] ? `${entry["Notes"]}\n` : "") + `Updated with webhook: ${responseModal.type}`,
+        "Status": "awaiting onboarding",
+        'Check-In Pass': results.checkInPassword,
+        'Slack Channel ID': results.channelID,
+      })
+
+      // send email
+      await postData("/api/sendResponse", { 
+        emailContent: modifiedContent, 
+        emailSubject: EMAILS_SUBJECTS[responseModal.type],
+        emailAdresses: entry["Leaders' Emails"],
+      });
+
+    } else { // reject | teacher
+      await airtable.patch('Application Tracker', id, {
+        "Notes": (entry["Notes"] ? `${entry["Notes"]}\n` : "") + `Updated with webhook: ${responseModal.type}`,
+        "Status": "rejected",
+      })
+
+      // send email
+      await postData("/api/sendResponse", { 
+        emailContent: responseEmail, 
+        emailSubject: EMAILS_SUBJECTS[responseModal.type],
+        emailAdresses: entry["Leaders' Emails"],
+      });
+    }
     
-    // send email
-    await postData("/api/sendResponse", { 
-      emailContent: modifiedContent, 
-      emailSubject: EMAILS_SUBJECTS[responseModal.type],
-      emailAdresses: entry["Leaders' Emails"].split(",").map(x => x.split(" ").join("+")),
-    });
-
-    // update record
-    await airtable.patch('Application Tracker', id, {
-      "Notes": (entry["Notes"] ? `${entry["Notes"]}\n` : "") + `Updated with webhook: ${responseModal.type}`,
-      "Status": NEW_STATUS[responseModal.type],
-      'Check-In Pass': results.checkInPassword,
-      'Slack Channel ID': results.channelID,
-    })
-
     setResponseModal({ open: false, type: ""})
   }
 
@@ -103,7 +113,7 @@ export const ActionsDropDown = ({ id, entry }) => {
           <button 
             className="action-button"
             style={{ background: "blue" }}
-            onClick={onAccept}>
+            onClick={onRespond}>
             send
           </button>
           <button 
