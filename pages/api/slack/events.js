@@ -52,7 +52,7 @@ export default async (req, res) => {
         break;
     }
   } catch (err) {
-
+    console.error(err)
   }
 
   // (msw) Slack will temporarily turn off our app if they see other status
