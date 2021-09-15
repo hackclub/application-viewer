@@ -31,8 +31,9 @@ export default function Home({ query, application, leaders, trackedApp}) {
   </>
 }
 
-export async function getServerSideProps({ res, req, query }) {
-  const recordID = query.app;
+export async function getServerSideProps({ query }) {
+  const { recordID } = query;
+  let notFound = false;
 
   // add authentication
 
@@ -43,6 +44,8 @@ export async function getServerSideProps({ res, req, query }) {
     for (const key in applicationRaw) {
       if (includedKeys.includes(key)) application[key] = applicationRaw[key];
     }
+
+    let trackedApp = await airtable.find('Application Tracker', `{App ID}='${recordID}'`)
 
     let leaders = await Promise.all(applicationRaw["Prospective Leaders"].map(
       async (id) => {
@@ -58,18 +61,12 @@ export async function getServerSideProps({ res, req, query }) {
       }
     ))
 
-    let trackedApp = {}
-    try {
-      trackedApp = await airtable.find('Application Tracker', `{App ID}='${recordID}'`)
-    } catch (err) {
-      console.log(err);
-    }
-
-    return { props: { query, application, leaders, trackedApp } }
+    return { props: { query, application, leaders, trackedApp }, notFound }
   } catch (e) {
     // console.log(e)
     // res.statusCode = 302
     // res.setHeader('Location', `/`)
-    return { props: { query, application: {}, leaders: [] } }
+    console.error(e)
+    return { notFound: true }
   }
 }
