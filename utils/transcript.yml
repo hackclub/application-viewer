@@ -12,7 +12,10 @@ application-committee:
     - Don't do school
   new-application: |
     Hey fools! We got a new application that just came in! _Wanna take charge of onboarding this A-Team???_ <${this.url}|*Check it out*>
-    Their address is \`${this.location}\`
+    Their address is
+    \`\`\`
+    ${this.location}
+    \`\`\`
     That's it for now. Remember: _${this.t('application-committee.flavor')}_
   accepted: Hoo rah! This team was just accepted. I've invited them to setup shop in <#${this.channel}>.
   rejected: Ooof, this team was just rejected. I pity the fool.
