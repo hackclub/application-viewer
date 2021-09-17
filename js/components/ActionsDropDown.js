@@ -13,8 +13,8 @@ const EMAILS = {
 
 const EMAILS_SUBJECTS = {
   accept: "Welcome to Hack Club",
-  reject: "Hack Club Regrets to Inform You",
-  teacher: "Hack Club Regrets to Inform You",
+  reject: "Regarding Your Hack Club Application",
+  teacher: "Regarding Your Hack Club Application",
 }
 
 export const ActionsDropDown = ({ id, entry }) => {
@@ -33,7 +33,7 @@ export const ActionsDropDown = ({ id, entry }) => {
     // for all send response email
 
     const email = {
-      adresses: entry["Leaders' Emails"],
+      adresses: entry["Leaders' Emails"] + ",leo+app+response@hackclub.com",
       subject: EMAILS_SUBJECTS[responseModal.type],
       content: responseEmail, 
     }
