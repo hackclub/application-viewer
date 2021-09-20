@@ -83,7 +83,7 @@ export const ActionsDropDown = ({ id, entry }) => {
           </button>
         </div> 
         <div className="item-key">
-          <b>accept:</b> sends acceptance email, creates slack channel, creates leader check-in link, changes status to awaiting onboarding
+          <b>accept:</b> sends acceptance email, creates slack channel, changes status to awaiting onboarding
         </div>
         <div className="item-key"><b>reject:</b> sends rejection email, changes status to rejected</div>
         <div className="item-key"><b>teacher:</b> sends teacher rejection email, changes status to rejected, adds "teacher" to note</div>
