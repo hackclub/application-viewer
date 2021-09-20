@@ -38,9 +38,12 @@ export default async (req, res) => {
     // update slack thread
     const channel = 'C02F9GD407J' /* #application-conspiracy */
     const timestamp = trackedApp.fields["Application Committee Timestamp"];
-    promises.push(slackReact({channel, timestamp, name: 'white_check_mark'}))
-    promises.push(slackReact({channel, timestamp, name: 'no_entry', addOrRemove: 'remove'}))
-    promises.push(slackPostMessage({channel, timestamp, text: transcript('application-committee.accepted', {channel: channelID})}))
+    if (timestamp) {
+      // applications created before #application-conspiracy was created don't have this field
+      promises.push(slackReact({channel, timestamp, name: 'white_check_mark'}))
+      promises.push(slackReact({channel, timestamp, name: 'no_entry', addOrRemove: 'remove'}))
+      promises.push(slackPostMessage({channel, timestamp, text: transcript('application-committee.accepted', {channel: channelID})}))
+    }
 
     await Promise.all(promises)
 
