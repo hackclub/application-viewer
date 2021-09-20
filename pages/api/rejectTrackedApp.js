@@ -31,9 +31,12 @@ export default async (req, res) => {
 
     const channel = 'C02F9GD407J' /* #application-conspiracy */
     const timestamp = trackedApp.fields["Application Committee Timestamp"];
-    promises.push(slackReact({channel, timestamp, name: 'no_entry'}))
-    promises.push(slackReact({channel, timestamp, name: 'white_check_mark', addOrRemove: 'remove'}))
-    promises.push(slackPostMessage({channel, timestamp, text: transcript('application-committee.rejected')}))
+    if (timestamp) {
+      // applications created before #application-conspiracy were created don't have this field
+      promises.push(slackReact({channel, timestamp, name: 'no_entry'}))
+      promises.push(slackReact({channel, timestamp, name: 'white_check_mark', addOrRemove: 'remove'}))
+      promises.push(slackPostMessage({channel, timestamp, text: transcript('application-committee.rejected')}))
+    }
 
     await Promise.all(promises)
 
