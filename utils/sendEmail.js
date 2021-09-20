@@ -1,6 +1,13 @@
 // this is sensative information
 const airtableHook = process.env.EMAIL_HOOK;
 
+// email has
+// {
+//   to:
+//   subject:
+//   content:
+// }
+
 const handler = async (email) => {
   console.log("I'm trying to send an email", email);
   

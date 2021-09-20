@@ -33,7 +33,7 @@ export const ActionsDropDown = ({ id, entry }) => {
     // for all send response email
 
     const email = {
-      adresses: entry["Leaders' Emails"] + ",clubs@hackclub.com",
+      to: entry["Leaders' Emails"] + ",clubs@hackclub.com",
       subject: EMAILS_SUBJECTS[responseModal.type],
       content: responseEmail, 
     }
