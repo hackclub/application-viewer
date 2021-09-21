@@ -1,4 +1,5 @@
 import AWS from 'aws-sdk'
+import {Converter} from 'showdown'
 
 AWS.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -10,6 +11,8 @@ const ses = new AWS.SES({ apiVersion: '2010-12-01' })
 
 export const sendEmail = ({ from, to, cc, bcc, message, subject }) => (
   new Promise((resolve, reject) => {
+    const html = new Converter().makeHtml(message)
+
     const Destination = {}
     if (to) {
       const ToAddresses = Array.isArray(to) ? to : [to]
@@ -29,7 +32,7 @@ export const sendEmail = ({ from, to, cc, bcc, message, subject }) => (
         Body: {
           Html: {
             Charset: 'UTF-8',
-            Data: message,
+            Data: html,
           }
         },
         Subject: {
