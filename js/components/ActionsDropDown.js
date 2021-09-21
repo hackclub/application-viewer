@@ -27,7 +27,6 @@ export const ActionsDropDown = ({ id, entry }) => {
   const [cc, setCc] = useStickyState('cc', 'clubs@hackclub.com')
   const [from, setFrom] = useStickyState('from', 'clubs@hackclub.com')
 
-  
   const setModal = (open, type) => {
     setResponseModal({ open, type });
     setResponseEmail(type !== "" ? EMAILS[type](entry["Leader(s)"]) : "");
@@ -107,12 +106,25 @@ export const ActionsDropDown = ({ id, entry }) => {
       </>
     }
     { responseModal.open && <div className="response-modal">
+        <fieldset>
+          <legend>Email settings</legend>
+          <label for="to">Recipients (comma seperated</label>
+          <input name="to" className="to" placeholder="to (comma seperated)" type="text" value={to} onInput={e => setTo(e.target.value)}/>
+          <br />
+          <label for="from">Sender email</label>
+          <input name="from" className="from" placeholder="from" type="email" value={from} onInput={e => setFrom(e.target.value)}/>
+          <br />
+          <label for="cc">CC (comma seperated)</label>
+          <input name="cc" className="cc" placeholder="cc (comma seperated)" type="text" value={cc} onInput={e => setCc(e.target.value)}/>
+          <br />
+          <label for="bcc">BCC (comma seperated)</label>
+          <input className="bcc" placeholder="BCC (comma seperated)" type="text" value={bcc} onInput={e => setBcc(e.target.value)}/>
+        </fieldset>
+        <fieldset>
+          <legend>Message</legend>
         Here is the <b>{responseModal.type}</b> email you will respond with:
-        <input className="to" placeholder="to (comma seperated)" type="text" value={to} onInput={e => setTo(e.target.value)}/>
-        <input className="from" placeholder="from" type="email" value={from} onInput={e => setFrom(e.target.value)}/>
-        <input className="cc" placeholder="cc (comma seperated)" type="text" value={cc} onInput={e => setCc(e.target.value)}/>
-        <input className="bcc" placeholder="bcc (comma seperated)" type="text" value={bcc} onInput={e => setBcc(e.target.value)}/>
         <textarea className="response-email" value={responseEmail} onInput={(e) => setResponseEmail(e.target.value)}></textarea>
+        </fieldset>
         <div className="response-modal-buttons">
           <button 
             className="action-button"
