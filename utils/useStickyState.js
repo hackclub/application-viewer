@@ -1,18 +1,13 @@
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 
 export default function useStickyState(key, defaultValue) {
-  const [hasMounted, setHasMounted] = useState(false)
-
-  useEffect(() => {
-    setHasMounted(true);
-  }, [])
 
   const [value, setValue] = useState(() => {
-    if (!hasMounted) {
-      return defaultValue
-    } else {
+    if (typeof window !== 'undefined') {
       const stickyValue = window.localStorage.getItem(key)
       return stickyValue !== null ? JSON.parse(stickyValue) : defaultValue
+    } else {
+      return defaultValue
     }
   })
 
