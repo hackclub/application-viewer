@@ -4,12 +4,19 @@ import sendEmail from "../../utils/sendEmail";
 import slackReact from "../../utils/slackReact";
 import slackPostMessage from "../../utils/slackPostMessage";
 import transcript from "../../utils/transcript";
+import { checkEmail } from "../../utils/ses";
 
 export default async (req, res) => {
   const { recordID, teacher, email } = req.body
 
   try {
     ensureMethod({ req, method: 'POST' })
+
+    const emailVerified = await checkEmail({ email: email.from })
+    if (!emailVerified) {
+      res.send({ ok: false, err: 'verify email', email: email.from})
+      return
+    }
 
     const trackedApp = await airtable.find('Application Tracker', recordID)
 

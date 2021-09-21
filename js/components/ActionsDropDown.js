@@ -1,9 +1,9 @@
 import { useState } from "react";
+import useStickyState from "../../utils/useStickyState";
 import { accept } from "/js/emails/accept.js";
 import { reject } from "/js/emails/reject.js";
 import { teacher } from "/js/emails/teacher.js";
 import { postData } from "/js/postData.js";
-import airtable from "../../utils/airtable";
 
 const EMAILS = {
   accept,
@@ -20,8 +20,13 @@ const EMAILS_SUBJECTS = {
 export const ActionsDropDown = ({ id, entry }) => {
   const [appStatus, setAppStatus] = useState(entry["Status"]);
   const [open, setOpen] = useState(false);
+  const [to, setTo] = useState(entry["Leaders' Emails"], 'to')
   const [responseModal, setResponseModal] = useState({ open: false, type: "" });
   const [responseEmail, setResponseEmail] = useState("")
+  const [bcc, setBcc] = useStickyState('bcc', '')
+  const [cc, setCc] = useStickyState('cc', 'clubs@hackclub.com')
+  const [from, setFrom] = useStickyState('from', 'clubs@hackclub.com')
+
   
   const setModal = (open, type) => {
     setResponseModal({ open, type });
@@ -32,30 +37,42 @@ export const ActionsDropDown = ({ id, entry }) => {
     // if accept, create channel, generate invite link
     // for all send response email
 
+    // check if the "from" field is verified on amazon SES
     const email = {
-      to: entry["Leaders' Emails"] + ",clubs@hackclub.com",
+      to: to.split(","),
+      from,
+      cc,
+      bcc,
       subject: EMAILS_SUBJECTS[responseModal.type],
-      content: responseEmail, 
+      message: responseEmail, 
     }
 
+    let res, pendingStatus
     if (responseModal.type === "accept") {
-      const res = await postData("/api/acceptTrackedApp", { 
+      res = await postData("/api/acceptTrackedApp", { 
         recordID: id,
         email
       })
-
-      setAppStatus("awaiting onboarding");
+      pendingStatus = "awaiting onboarding"
     } else { // reject | teacher
-      await postData("/api/rejectTrackedApp", { 
+      res = await postData("/api/rejectTrackedApp", { 
         recordID: id,
         teacher: responseModal.type === "teacher",
         email
       })
-
-      setAppStatus("rejected");
+      pendingStatus = "rejected"
     }
-    
-    setResponseModal({ open: false, type: ""})
+
+    if (!res.ok) {
+      if (res.err === "verify email") {
+        alert(`We sent you a verification link to ${res.email}, once you click it, come back here and press send again.`)
+      } else {
+        alert('Something went wrong. Please grab an adult.')
+      }
+    } else {
+      setAppStatus(pendingStatus)
+      setResponseModal({ open: false, type: ""})
+    }
   }
 
   return <>
@@ -91,6 +108,10 @@ export const ActionsDropDown = ({ id, entry }) => {
     }
     { responseModal.open && <div className="response-modal">
         Here is the <b>{responseModal.type}</b> email you will respond with:
+        <input className="to" placeholder="to (comma seperated)" type="text" value={to} onInput={e => setTo(e.target.value)}/>
+        <input className="from" placeholder="from" type="email" value={from} onInput={e => setFrom(e.target.value)}/>
+        <input className="cc" placeholder="cc (comma seperated)" type="text" value={cc} onInput={e => setCc(e.target.value)}/>
+        <input className="bcc" placeholder="bcc (comma seperated)" type="text" value={bcc} onInput={e => setBcc(e.target.value)}/>
         <textarea className="response-email" value={responseEmail} onInput={(e) => setResponseEmail(e.target.value)}></textarea>
         <div className="response-modal-buttons">
           <button 
