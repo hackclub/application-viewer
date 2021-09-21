@@ -39,7 +39,6 @@ _Put these in your `.env` file!_
 
 ```sh
 AIRTABLE=REPLACEME # airtable api key
-EMAIL_HOOK=REPLACEME # webhook url for email sending through airtable automation
 BOUNCER_SLACK_TOKEN=REPLACEME # slack user token for running bouncer
 NODE_ENV=REPLACEME # either 'development' or 'production'
 AWS_REGION=REPLACEME # we use eu-west-1
