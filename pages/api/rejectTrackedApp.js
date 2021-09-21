@@ -3,7 +3,7 @@ import ensureMethod from "../../utils/ensureMethod";
 import slackReact from "../../utils/slackReact";
 import slackPostMessage from "../../utils/slackPostMessage";
 import transcript from "../../utils/transcript";
-import { checkEmail, sendVerification, sendEmail } from "../../utils/ses";
+import { checkEmail, sendVerification, sendEmail } from "../../utils/email";
 
 export default async (req, res) => {
   const { recordID, teacher, email } = req.body
@@ -11,9 +11,9 @@ export default async (req, res) => {
   try {
     ensureMethod({ req, method: 'POST' })
 
-    const emailVerified = await checkEmail({ email: email.from })
+    const emailVerified = await checkEmail({ address: email.from })
     if (!emailVerified) {
-      await sendVerification({ email: email.from })
+      await sendVerification({ address: email.from })
       res.send({ ok: false, err: 'verify email', email: email.from})
       return
     }
