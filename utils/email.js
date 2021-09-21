@@ -54,25 +54,25 @@ export const sendEmail = ({ from, to, cc, bcc, message, subject }) => (
   })
 )
 
-export const checkEmail = ({ email }) => (
+export const checkEmail = ({ address }) => (
   new Promise((resolve, reject) => {
     ses.getIdentityVerificationAttributes({
-      Identities: [email]
+      Identities: [address]
     }, (err, data) => {
       if (err) {
         reject(err)
       } else {
-        const status = data?.VerificationAttributes[email]?.VerificationStatus
+        const status = data?.VerificationAttributes[address]?.VerificationStatus
         resolve(status === 'Success')
       }
     })
   })
 )
 
-export const sendVerification = ({ email }) => (
+export const sendVerification = ({ address }) => (
   new Promise((resolve, reject) => {
     ses.verifyEmailIdentity({
-      EmailAddress: email
+      EmailAddress: address
     }, (err, data) => {
       if (err) {
         reject(err)
