@@ -20,6 +20,7 @@ const EMAILS_SUBJECTS = {
 export const ActionsDropDown = ({ id, entry }) => {
   const [appStatus, setAppStatus] = useState(entry["Status"]);
   const [open, setOpen] = useState(false);
+  const [formStatus, setFormStatus] = useState("ready");
   const [to, setTo] = useState(entry["Leaders' Emails"], 'to')
   const [responseModal, setResponseModal] = useState({ open: false, type: "" });
   const [responseEmail, setResponseEmail] = useState("")
@@ -35,6 +36,9 @@ export const ActionsDropDown = ({ id, entry }) => {
   const onRespond = async () => {
     // if accept, create channel, generate invite link
     // for all send response email
+
+    // disable the send button
+    setFormStatus("loading")
 
     // check if the "from" field is verified on amazon SES
     const email = {
@@ -72,6 +76,7 @@ export const ActionsDropDown = ({ id, entry }) => {
       setAppStatus(pendingStatus)
       setResponseModal({ open: false, type: ""})
     }
+    setFormStatus("ready")
   }
 
   return <>
@@ -128,13 +133,15 @@ export const ActionsDropDown = ({ id, entry }) => {
         <div className="response-modal-buttons">
           <button 
             className="action-button"
-            style={{ background: "blue" }}
+            style={{ background: formStatus=="loading" ? "#333" : "blue" }}
+            disabled={formStatus!=="ready"}
             onClick={onRespond}>
             send
           </button>
           <button 
             className="action-button"
-            style={{ background: "grey" }}
+            style={{ background: formStatus=="loading" ? "#333" : "grey" }}
+            disabled={formStatus!=="ready"}
             onClick={() => setResponseModal({ open: false, type: ""})}>
             cancel
           </button>
