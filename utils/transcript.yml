@@ -6,10 +6,15 @@ application-committee:
     - Go to school
     - Drink lots of water
     - Treat your mother right
+    - Brush your drugs
     - Brush your teeth
     - Drink your teeth
     - Go to drugs
     - Don't do school
+    - It takes a smart man to play dumb
+    - It takes a dumb man to play smart
+    - I believe in the Golden Rule - The Man with the Gold... Rules
+    - I got no time for the jibba-jabba
   new-application: |
     Hey fools! We got a new application that just came in! _Wanna take charge of onboarding this A-Team???_ <${this.url}|*Check it out*>
     Their address is
