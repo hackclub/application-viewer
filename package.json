@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "airtable-plus": "^1.0.4",
+    "aws-sdk": "^2.991.0",
     "bottleneck": "^2.19.5",
     "cors": "^2.8.5",
     "next": "11.1.0",

@@ -1,25 +1,12 @@
-// this is sensative information
-const airtableHook = process.env.EMAIL_HOOK;
+import { checkEmail, sendEmail, sendVerification } from "./ses"
 
-// email has
-// {
-//   to:
-//   subject:
-//   content:
-// }
-
-const handler = async (email) => {
-  console.log("I'm trying to send an email", email);
-  
-  const response = await fetch(airtableHook, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(email)
-  }).then(r => r.json());
-  
-  return response;
+export default async ({ from, to, cc, bcc, message, subject }) => {
+  const verifiedSender = await checkEmail({ email: from })
+  if (!verifiedSender) {
+    await sendVerification({ email: from })
+    return 'verifying'
+  } else {
+    await sendEmail({ from, to, cc, bcc, message, subject })
+    return 'sent'
+  }
 }
-
-
-
-export default handler;

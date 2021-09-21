@@ -42,4 +42,7 @@ AIRTABLE=REPLACEME # airtable api key
 EMAIL_HOOK=REPLACEME # webhook url for email sending through airtable automation
 BOUNCER_SLACK_TOKEN=REPLACEME # slack user token for running bouncer
 NODE_ENV=REPLACEME # either 'development' or 'production'
+AWS_REGION=REPLACEME # we use eu-west-1
+AWS_ACCESS_KEY_ID=REPLACEME # AWS IAMA user w/ full SES read/write permissions
+AWS_SECRET_ACCESS_KEY=REPLACEME # AWS IAMA user w/ full SES read/write permissions
 ```

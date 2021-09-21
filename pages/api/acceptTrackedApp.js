@@ -5,12 +5,19 @@ import sendEmail from "../../utils/sendEmail";
 import slackReact from "../../utils/slackReact";
 import slackPostMessage from "../../utils/slackPostMessage";
 import transcript from "../../utils/transcript";
+import { checkEmail } from "../../utils/ses";
 
 export default async (req, res) => {
   const { recordID, email } = req.body
 
   try {
     ensureMethod({ req, method: 'POST' })
+
+    const emailVerified = await checkEmail({ email: email.from })
+    if (!emailVerified) {
+      res.send({ ok: false, err: 'verify email', email: email.from})
+      return
+    }
 
     const channelID = await createSlackChannel(recordID);
 
@@ -22,7 +29,7 @@ export default async (req, res) => {
       ? `${currentEntryNote}\nUpdated with webhook: accept`
       : `Updated with webhook: accept`
 
-    email.content = email.content
+    email.message = email.message
       .replace('%SLACK_URL%', `https://app.slack.com/client/T0266FRGM/${channelID}`)
 
     const promises = []
