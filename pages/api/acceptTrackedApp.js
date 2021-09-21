@@ -1,11 +1,10 @@
 import airtable from "../../utils/airtable";
 import ensureMethod from "../../utils/ensureMethod";
 import createSlackChannel from "../../utils/createSlackChannel";
-import sendEmail from "../../utils/sendEmail";
 import slackReact from "../../utils/slackReact";
 import slackPostMessage from "../../utils/slackPostMessage";
 import transcript from "../../utils/transcript";
-import { checkEmail } from "../../utils/ses";
+import { checkEmail, sendEmail, sendVerification } from "../../utils/ses";
 
 export default async (req, res) => {
   const { recordID, email } = req.body
@@ -15,6 +14,7 @@ export default async (req, res) => {
 
     const emailVerified = await checkEmail({ email: email.from })
     if (!emailVerified) {
+      await sendVerification({ email: email.from })
       res.send({ ok: false, err: 'verify email', email: email.from})
       return
     }
