@@ -17,6 +17,7 @@
     "next-connect": "^0.10.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "showdown": "^1.9.1",
     "yaml-loader": "^0.6.0"
   },
   "devDependencies": {
