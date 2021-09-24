@@ -2,20 +2,15 @@
 
 import '../styles/globals.css';
 import { Provider } from 'next-auth/client';
-import { signIn } from 'next-auth/dist/client';
+import { ThemeProvider } from '@theme-ui/theme-provider';
+import theme from '../js/theme/index';
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
-  try {
-    if (window) {
-      signIn();
-    }
-  } catch (err) {
-    console.log('some error');
-  }
-
   return (
     <Provider session={session}>
-      <Component {...pageProps} />{' '}
+      <ThemeProvider theme={theme}>
+        <Component {...pageProps} />
+      </ThemeProvider>
     </Provider>
   );
 }
