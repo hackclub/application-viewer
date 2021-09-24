@@ -1,15 +1,24 @@
 /** @format */
 
-import { getSession } from 'next-auth/client';
+import { ThemeProvider } from '@theme-ui/theme-provider';
+import { getSession, signOut } from 'next-auth/client';
 import { signIn } from 'next-auth/dist/client';
+import Auth from '../js/components/Auth';
+
+import theme from '../js/theme/index';
 
 const Test = ({ ses }) => {
   console.log('session is', ses);
+
   try {
-    if (!ses && window) {
-      signIn('slack', { callbackUrl: 'https://9073-59-91-109-162.io/sign' });
-    }
   } catch (err) {}
+
+  if (!ses)
+    return (
+      <ThemeProvider theme={theme}>
+        <Auth />
+      </ThemeProvider>
+    );
 
   return <div>yay</div>;
 };
