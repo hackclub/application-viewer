@@ -8,7 +8,9 @@ import theme from '../js/theme/index';
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <Provider session={session}>
-      <Component {...pageProps} />
+      <ThemeProvider theme={theme}>
+        <Component {...pageProps} />
+      </ThemeProvider>
     </Provider>
   );
 }

@@ -1,5 +1,6 @@
 /** @format */
 
+import { Button } from '@theme-ui/components';
 import { ThemeProvider } from '@theme-ui/theme-provider';
 import { getSession, signOut } from 'next-auth/client';
 import { signIn } from 'next-auth/dist/client';
@@ -20,7 +21,11 @@ const Test = ({ ses }) => {
       </ThemeProvider>
     );
 
-  return <div>yay</div>;
+  return (
+    <div>
+      yay <Button onClick={signOut}>Sign Out</Button>{' '}
+    </div>
+  );
 };
 
 export const getServerSideProps = async (ctx) => {
