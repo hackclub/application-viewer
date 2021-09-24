@@ -5,9 +5,13 @@ import { ActionsDropDown } from '../js/components/ActionsDropDown.js';
 import applicationTemplate from '../js/application-template.js';
 import { useState } from 'react';
 import airtable from '../utils/airtable';
+import { getSession } from 'next-auth/client';
+import Auth from '../js/components/Auth';
 
-const ApplicationDropDown = ({ template, content, name }) => {
+const ApplicationDropDown = ({ template, content, name, ses }) => {
   const [open, setOpen] = useState(false);
+
+  if (!ses) return <Auth />;
 
   return (
     <>
@@ -46,9 +50,11 @@ export default function Home({ query, application, leaders, trackedApp }) {
   );
 }
 
-export async function getServerSideProps({ req, query }) {
+export async function getServerSideProps(ctx) {
+  const { req, query } = ctx;
   const { recordID } = query;
   // add authentication
+  const session = await getSession(ctx);
 
   try {
     const application = {};
@@ -87,6 +93,7 @@ export async function getServerSideProps({ req, query }) {
     return {
       props: { query, application, leaders, trackedApp },
       notFound: false,
+      ses: session,
     };
   } catch (e) {
     // console.log(e)
