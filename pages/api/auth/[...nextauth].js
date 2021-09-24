@@ -1,11 +1,13 @@
-import NextAuth from "next-auth"
-import SlackProvider from `next-auth/providers/slack`
+/** @format */
+
+import NextAuth from 'next-auth';
+import { Slack } from 'next-auth/providers';
 
 export default NextAuth({
-	providers: [
-		SlackProvider({
-			clientId: process.env.SLACK_CLIENT_ID,
-			clientSecret: process.env.SLACK_CLIENT_SECRET
-		})
-	]
-})
+  providers: [
+    Slack({
+      clientId: process.env.SLACK_CLIENT_ID,
+      clientSecret: process.env.SLACK_CLIENT_SECRET,
+    }),
+  ],
+});
