@@ -8,10 +8,8 @@ import airtable from '../utils/airtable';
 import { getSession } from 'next-auth/client';
 import Auth from '../js/components/Auth';
 
-const ApplicationDropDown = ({ template, content, name, ses }) => {
+const ApplicationDropDown = ({ template, content, name }) => {
   const [open, setOpen] = useState(false);
-
-  if (!ses) return <Auth />;
 
   return (
     <>
@@ -24,8 +22,16 @@ const ApplicationDropDown = ({ template, content, name, ses }) => {
   );
 };
 
-export default function Home({ query, application, leaders, trackedApp }) {
+export default function Home({
+  query,
+  application,
+  leaders,
+  trackedApp,
+  authenticated,
+}) {
   console.log(query, application, leaders, trackedApp);
+
+  if (!authenticated) return <Auth />;
 
   return (
     <>
@@ -91,9 +97,14 @@ export async function getServerSideProps(ctx) {
     );
 
     return {
-      props: { query, application, leaders, trackedApp },
+      props: {
+        query,
+        application,
+        leaders,
+        trackedApp,
+        authenticated: session,
+      },
       notFound: false,
-      ses: session,
     };
   } catch (e) {
     // console.log(e)
