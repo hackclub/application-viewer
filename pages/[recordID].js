@@ -24,7 +24,7 @@ export default function Home({ query, application, leaders, trackedApp}) {
     <ApplicationDropDown template={applicationTemplate.clubs} content={application} name={"Club"}/>
     {leaders.map( (leader, i) => <div key={i}>
       <hr/>
-      <ApplicationDropDown template={applicationTemplate.leaders} content={leader} name={`${leader['Leader']['Full Name']} (Leader)`}/>
+      <ApplicationDropDown template={applicationTemplate.leaders} content={leader} name={`Leader ${i}`}/>
     </div>)}
     <hr/>
     <ActionsDropDown id={trackedApp.id} entry={trackedApp.fields}/>
