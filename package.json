@@ -15,6 +15,7 @@
     "cors": "^2.8.5",
     "next": "11.1.0",
     "next-connect": "^0.10.2",
+    "node-geocoder": "^3.27.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "showdown": "^1.9.1",
