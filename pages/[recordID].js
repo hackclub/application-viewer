@@ -1,5 +1,5 @@
-import { Application } from "../js/components/Application.js";
-import { ActionsDropDown } from "../js/components/ActionsDropDown.js";
+import { Application } from "../js/components/Application.jsx";
+import { ActionsDropDown } from "../js/components/ActionsDropDown.jsx";
 import applicationTemplate from "../js/application-template.js";
 import { useState } from "react";
 import airtable from "../utils/airtable";

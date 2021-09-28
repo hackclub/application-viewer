@@ -148,10 +148,10 @@ a {
   padding-bottom: 6px;
   background-color: white;
 }
-
-
-
-
-
-
+  
+.response-modal input {
+  width: 100%;
+  padding: 3px;
+  margin-bottom: 5px;
+}
 
