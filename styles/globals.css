@@ -104,7 +104,7 @@ a {
 }
 
 .response-modal {
-  position: fixed;
+  position: absolute;
   border-radius: 10px;
   background: lightgrey;
   left: 50%;
