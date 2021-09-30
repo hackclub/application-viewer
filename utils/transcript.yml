@@ -26,4 +26,4 @@ application-committee:
   rejected: Ooof, this team was just rejected. I pity the fool.
 bouncer-checkin:
   found: consider yourself present <@${this.user}>, now run along and join your team in <#${this.channel}>
-  not-found: what kinda crazy mumbo-jumbo nonsense is this?? I could find a solid _nobody_ in our applications database with the registration passphrase "${this.pass}". try again, fool.
+  not-found: listen up fool - we closed up this here checkin joint. If for some reason you've been directed to post this code in here, someone on our A-team made a mistake. Send that code on over to clubs@hackclub.com instead and those suckers will patch it right up.
