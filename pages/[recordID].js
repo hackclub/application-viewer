@@ -1,5 +1,3 @@
-/** @format */
-
 import { Application } from '../js/components/Application.js';
 import { ActionsDropDown } from '../js/components/ActionsDropDown.js';
 import applicationTemplate from '../js/application-template.js';

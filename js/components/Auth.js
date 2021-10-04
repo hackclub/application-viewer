@@ -1,10 +1,3 @@
-/**
- * @format
- * @jsxImportSource theme-ui
- */
-
-/** @format */
-
 import { signIn } from 'next-auth/client';
 import { Container, Button, Flex } from 'theme-ui';
 
