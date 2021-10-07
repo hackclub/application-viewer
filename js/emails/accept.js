@@ -13,7 +13,7 @@ meet other club leaders and stay up-to-date on everything going on at Hack Club.
 2. Schedule a 30-minute onboarding call with us. 
 These calls are a way to get to know each other and familiarize you with some 
 tools to help run a great club. 
-Please respond to this email with three weekday times that 
+Please respond to this email with three weekday times (with your time zone) that 
 work for you in the next week or so and we’ll get that scheduled right away. 
 
 Can’t wait to meet, talk soon!
