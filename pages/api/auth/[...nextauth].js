@@ -7,7 +7,8 @@ const options = {
   providers: [
     Providers.Email({
       server: process.env.EMAIL_SERVER,
-      from: process.env.EMAIL_FROM
+      from: process.env.EMAIL_FROM,
+      maxAge: 10 * 24 * 60 * 60 // 10 days
     })
   ],
   callbacks: {
