@@ -12,8 +12,7 @@ const options = {
   ],
   callbacks: {
     async signIn({ email }) {
-      // return email.endsWith('@hackclub.com')
-      return true
+      return email.endsWith('@hackclub.com')
     }
   },
 
