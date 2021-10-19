@@ -95,7 +95,7 @@ export async function getServerSideProps(ctx) {
     )
 
     return {
-      props: { query, application, leaders, trackedApp, session },
+      props: { query, application, leaders, trackedApp, session: true },
       notFound: false
     }
   } catch (e) {
