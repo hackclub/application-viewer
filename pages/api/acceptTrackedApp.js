@@ -32,7 +32,8 @@ export default async (req, res) => {
       "apac": "APAC"
     }
 
-    const emailFromExtension = email.from.split("+")[1];
+    const testRegEx = new RegExp(/\+(hq|apac|brasil)\@/gm);
+    const emailFromExtension = testRegEx.test(email.from) ? testRegEx.exec(email.from)[1] : "";
     const ambassador = (emailFromExtension in possibleAmbassadors) 
       ? possibleAmbassadors[emailFromExtension] 
       : "";
