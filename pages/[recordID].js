@@ -29,7 +29,7 @@ export default function Home({
 }) {
   console.log(query, application, leaders, trackedApp)
 
-  return session ? (
+  return true ? ( // was session
     <>
       <ApplicationDropDown
         template={applicationTemplate.clubs}

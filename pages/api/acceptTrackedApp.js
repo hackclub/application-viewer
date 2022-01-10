@@ -33,10 +33,14 @@ export default async (req, res) => {
     }
 
     const testRegEx = new RegExp(/\+(hq|apac|brasil)\@/gm);
-    const emailFromExtension = testRegEx.test(email.from) ? testRegEx.exec(email.from)[1] : "";
+    const emailFromExtension = /\+(hq|apac|brasil)\@/gm.test(email.from) 
+      ? /\+(hq|apac|brasil)\@/gm.exec(email.from)[1] 
+      : "";
+
     const ambassador = (emailFromExtension in possibleAmbassadors) 
       ? possibleAmbassadors[emailFromExtension] 
       : "";
+
 
     // email.message = email.message
     //   .replace('%SLACK_URL%', `https://app.slack.com/client/T0266FRGM/${channelID}`)
