@@ -1,15 +1,12 @@
 export const reject = () => `
 Hello,
 
-Thanks for applying to start a Hack Club. After reviewing your application, we've decided not to move forward with your club.
+Thanks for applying to start a Hack Club. (Because of these reasons) we've decided not to move forward with your club.
+It is important to note that we reject applications, not people. We'd recommend you (do these things) then we encourage you to apply again!
 
-It is important to note that we reject applications, not people. 
-You are always welcome to submit another application. 
-We highly recommend taking active steps toward setting up your club beforehand, such as collecting signups, running marketing campaigns, designing activities, or holding meetings.
-
-If we can answer any questions about your application, feel free to reply to this email and we'll get back to you.
+We’d love to answer any questions you have, just reply to this email.
 
 Thank you for your interest!
 
-— Hack Club HQ
+— Holly @ Hack Club HQ
 `
