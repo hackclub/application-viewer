@@ -3,22 +3,26 @@ export const accept = (names) => `Hey ${names},
 
 Welcome to Hack Club! 
 
-There are just two more steps to complete before you’re officially *in*: 
+There’s only 2 things left to do:
 
 1. [Join us on Slack!](https://hackclub.com/slack/) 
-This is our community’s main communication platform and where you’ll get to
-meet other club leaders and stay up-to-date on everything going on at Hack Club. 
+If you’re not already on our Slack, you should _definitely_ be on our Slack. 
+This is one of the best parts of being part of Hack Club! It’s **_the best_**place to:
+* Meet other teenagers like you!
+* Get help if you’re stuck!
+* Get invites to events!
+* Get inspired! 
+* Get involved in cool projects!
+* Stay up-to-date on everything going on at Hack Club!
 
-2. Schedule a 30-minute onboarding call with us. 
-These calls are a way to get to know each other and familiarize you with some 
-tools to help run a great club. 
-Please respond to this email with three weekday times that 
-work for you in the next week or so (write your time zone too) and we’ll get that scheduled right away. 
+2. Schedule a 30-minute welcome call with me! 
+We’ll meet to make sure you have everything you need to run an amazing club!
+
+**Please respond to this email with three weekday times that work for you in the next week or 
+so (include your time zone!) and I’ll be happy to schedule a meeting together.**
 
 Can’t wait to meet, talk soon!
 
 Best,
 
-Hack Club HQ
-
-`
+Holly @ Hack Club HQ
