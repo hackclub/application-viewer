@@ -25,4 +25,4 @@ Can’t wait to meet, talk soon!
 
 Best,
 
-Holly @ Hack Club HQ
+Holly @ Hack Club HQ`
