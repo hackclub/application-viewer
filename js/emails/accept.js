@@ -14,6 +14,7 @@ This is one of the best parts of being part of Hack Club! It’s **_the best_** 
     * Get inspired! 
     * Get involved in cool projects!
     * Stay up-to-date on everything going on at Hack Club!
+
 2.Schedule a 30-minute Welcome Call with me! 
 We’ll meet over Zoom to make sure you have everything you need to run an amazing club!
 
