@@ -2,7 +2,7 @@
 export const accept = (names) => `Hey ${names},
 
 Welcome to Hack Club! We loved your application and we're so excited to welcome you into a community of teens like you. 
-As a Hack Club Leader, you'll inspire others to make things they're proud of and you'll learn a lot yourself. We'll be here for you every step of the way!
+As a Hack Club Leader, you'll inspire others to make things they're proud. You'll learn a lot and we'll be here for you every step of the way!
 
 There’s only 2 things left to do:
 
