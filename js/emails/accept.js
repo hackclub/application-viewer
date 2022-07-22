@@ -24,10 +24,19 @@ Holly
 
 Best,
 
-Holly Delisle
-Club Operations Lead
+**Holly Delisle**
 
-![Flag](https://assets.hackclub.com/flag-standalone.svg)
+Club Operations Lead, Hack Club
+
+Hack Club Slack: [@Holly](https://hackclub.slack.com/team/U03M1H014CX) (join the Slack [here](https://hackclub.com/slack/) )
+
+Call/Text: +1(802)238-7261
+
+Email: [holly@hackclub.com](holly@hackclub.com)
+
+
+![Flag](https://ci4.googleusercontent.com/proxy/_EapwiDLGkbLYw0g9PRWgpCXSqBHr_6nME7TOtgKTTiVRFkqux_2cjaXaQVzI1ywvkSoZvZhjsIpK4g1_Kj3d2Dw08RW2d3KM0KArr2ZBm7rsXZ8Hpa96Q=s0-d-e1-ft#https://cloud-1aqxnvtf2-hack-club-bot.vercel.app/0flag-standalone.png)
+
 Hack Club is an [open source](https://github.com/hackclub/hackclub) and [financially transparent](https://bank.hackclub.com/hq/) 501(c)(3) nonprofit. Our EIN is 81-2908499. By the students, for the students.
 
 [Clubs](https://hackclub.com/) • [Slack](https://hackclub.com/slack/) • [Bank](https://hackclub.com/bank/) • [Hackathons](https://hackathons.hackclub.com/)`
