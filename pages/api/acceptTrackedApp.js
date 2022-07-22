@@ -42,15 +42,15 @@ export default async (req, res) => {
       : "";
 
 
-    email.message = email.message
-      .replace('%SLACK_URL%', `https://app.slack.com/client/T0266FRGM/${channelID}`)
+    // email.message = email.message
+      // .replace('%SLACK_URL%', `https://app.slack.com/client/T0266FRGM/${channelID}`)
 
     const promises = []
     promises.push(airtable.patch('Application Tracker', recordID, {
       "Notes": note,
       "Status": "awaiting onboarding",
       "Ambassador": ambassador,
-      "Slack Channel ID": channelID,
+      // "Slack Channel ID": channelID,
       "Date Responded": new Date().toISOString().slice(0, 10)
     }))
 
