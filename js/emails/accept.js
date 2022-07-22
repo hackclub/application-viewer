@@ -5,7 +5,7 @@ First, I just want to say thank you - I really enjoyed reading the application y
 
 To introduce myself, I’m Holly from Hack Club HQ in Vermont, and I’m going to be your point of contact at HQ. My job is to be here for you, where you can reach out to me for anything including over text or call (my number is 802-238-7261).
 
-<img src="https://cloud-hmy4h29vf-hack-club-bot.vercel.app/0img-0020.jpg" alt="Holly Waving" width="600px" />
+<img src="https://cloud-hmy4h29vf-hack-club-bot.vercel.app/0img-0020.jpg" alt="Holly Waving" width="240px" />
 
 You can come to me for everything from marketing advice to thinking about starting a hackathon (like [Assemble](https://assemble.hackclub.com/), which was run by [@sampoder](https://hackclub.slack.com/team/USNPNJXNX), 17, from Singapore). My goal is to be your best friend inside of Hack Club, and to do everything I can to support you and your team.
 
