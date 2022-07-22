@@ -5,7 +5,7 @@ First, I just want to say thank you - I really enjoyed reading the application y
 
 To introduce myself, I’m Holly from Hack Club HQ in Vermont, and I’m going to be your point of contact at HQ. My job is to be here for you, where you can reach out to me for anything including over text or call (my number is 802-238-7261).
 
-![Holly Waving](https://mail.google.com/mail/u/0?ui=2&ik=839e921c5d&attid=0.1&permmsgid=msg-a:r6262172848995221536&th=182226f40497fca7&view=fimg&fur=ip&sz=s0-l75-ft&attbid=ANGjdJ8J_1u27RH8geIqCpM7Sk_mWfV6ep_IMfuSgcYkleiOsujRCLOcThh6jKPJZAajxNBiY3jgXhl82m81zhpnBfdiMPbfyDjYEX_F-3z-nGGMvr2b3gkuAHWUQCM&disp=emb&realattid=ii_l5vanevx0)
+<img src="https://cloud-hmy4h29vf-hack-club-bot.vercel.app/0img-0020.jpg" alt="Holly Waving" width="600px" />
 
 You can come to me for everything from marketing advice to thinking about starting a hackathon (like [Assemble](https://assemble.hackclub.com/), which was run by [@sampoder](https://hackclub.slack.com/team/USNPNJXNX), 17, from Singapore). My goal is to be your best friend inside of Hack Club, and to do everything I can to support you and your team.
 
@@ -27,15 +27,11 @@ Best,
 **Holly Delisle**
 
 Club Operations Lead, Hack Club
-
 Hack Club Slack: [@Holly](https://hackclub.slack.com/team/U03M1H014CX) (join the Slack [here](https://hackclub.com/slack/) )
-
 Call/Text: +1(802)238-7261
-
 Email: [holly@hackclub.com](holly@hackclub.com)
 
-
-![Flag](https://ci4.googleusercontent.com/proxy/_EapwiDLGkbLYw0g9PRWgpCXSqBHr_6nME7TOtgKTTiVRFkqux_2cjaXaQVzI1ywvkSoZvZhjsIpK4g1_Kj3d2Dw08RW2d3KM0KArr2ZBm7rsXZ8Hpa96Q=s0-d-e1-ft#https://cloud-1aqxnvtf2-hack-club-bot.vercel.app/0flag-standalone.png)
+<img src="https://assets.hackclub.com/flag-standalone.png" alt="Hack Club Flag" width="160px" />
 
 Hack Club is an [open source](https://github.com/hackclub/hackclub) and [financially transparent](https://bank.hackclub.com/hq/) 501(c)(3) nonprofit. Our EIN is 81-2908499. By the students, for the students.
 
