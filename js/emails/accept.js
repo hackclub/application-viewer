@@ -26,9 +26,9 @@ Holly
 
 **Holly Delisle**
 
-Club Operations Lead, Hack Club
-Hack Club Slack:[@Holly](https://hackclub.slack.com/team/U03M1H014CX) (join the Slack [here](https://hackclub.com/slack/))
-Call/Text: +1(802)238-7261
+Club Operations Lead, Hack Club  
+Hack Club Slack:[@Holly](https://hackclub.slack.com/team/U03M1H014CX) (join the Slack [here](https://hackclub.com/slack/))  
+Call/Text: +1(802)238-7261  
 Email: [holly@hackclub.com](holly@hackclub.com)
 
 <img src="https://assets.hackclub.com/flag-standalone.png" alt="Hack Club Flag" width="100px" />
