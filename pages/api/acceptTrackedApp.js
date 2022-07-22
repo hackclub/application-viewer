@@ -57,7 +57,7 @@ export default async (req, res) => {
     promises.push(sendEmail(email));
 
     update slack thread
-    const channel = 'C02F9GD407J' * #application-conspiracy *;
+    const channel = 'C02F9GD407J' #application-conspiracy;
     const timestamp = trackedApp.fields["Application Committee Timestamp"];
     if (timestamp) {
       applications created before #application-conspiracy was created don't have this field
