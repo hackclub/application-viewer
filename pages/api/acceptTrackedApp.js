@@ -42,28 +42,28 @@ export default async (req, res) => {
       : "";
 
 
-    // email.message = email.message
-    //   .replace('%SLACK_URL%', `https://app.slack.com/client/T0266FRGM/${channelID}`)
+    email.message = email.message
+      .replace('%SLACK_URL%', `https://app.slack.com/client/T0266FRGM/${channelID}`)
 
     const promises = []
     promises.push(airtable.patch('Application Tracker', recordID, {
       "Notes": note,
       "Status": "awaiting onboarding",
       "Ambassador": ambassador,
-      // "Slack Channel ID": channelID,
+      "Slack Channel ID": channelID,
       "Date Responded": new Date().toISOString().slice(0, 10)
     }))
 
     promises.push(sendEmail(email));
 
-    // update slack thread
-    const channel = 'C02F9GD407J' /* #application-conspiracy */
+    update slack thread
+    const channel = 'C02F9GD407J' * #application-conspiracy *
     const timestamp = trackedApp.fields["Application Committee Timestamp"];
     if (timestamp) {
-      // applications created before #application-conspiracy was created don't have this field
+      applications created before #application-conspiracy was created don't have this field
       promises.push(slackReact({channel, timestamp, name: 'white_check_mark'}))
       promises.push(slackReact({channel, timestamp, name: 'no_entry', addOrRemove: 'remove'}))
-      // promises.push(slackPostMessage({channel, timestamp, text: transcript('application-committee.accepted', {channel: channelID})}))
+      promises.push(slackPostMessage({channel, timestamp, text: transcript('application-committee.accepted', {channel: channelID})}))
     }
 
     await Promise.all(promises)
