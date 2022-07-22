@@ -22,16 +22,16 @@ Holly
 
 (p.s. I just put a package with stickers in the mail to both of you, should arrive in 2-3 days! DM me on Slack when you get it!)
 
-Best,
+--
 
 **Holly Delisle**
 
 Club Operations Lead, Hack Club
-Hack Club Slack: [@Holly](https://hackclub.slack.com/team/U03M1H014CX) (join the Slack [here](https://hackclub.com/slack/) )
+Hack Club Slack:[@Holly](https://hackclub.slack.com/team/U03M1H014CX) (join the Slack [here](https://hackclub.com/slack/))
 Call/Text: +1(802)238-7261
 Email: [holly@hackclub.com](holly@hackclub.com)
 
-<img src="https://assets.hackclub.com/flag-standalone.png" alt="Hack Club Flag" width="160px" />
+<img src="https://assets.hackclub.com/flag-standalone.png" alt="Hack Club Flag" width="100px" />
 
 Hack Club is an [open source](https://github.com/hackclub/hackclub) and [financially transparent](https://bank.hackclub.com/hq/) 501(c)(3) nonprofit. Our EIN is 81-2908499. By the students, for the students.
 
