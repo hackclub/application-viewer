@@ -59,11 +59,7 @@ export default async (req, res) => {
       promises.push(slackReact({channel, timestamp, name: 'no_entry', addOrRemove: 'remove'}))
     }
 
-    await (await Promise.all(promises)).catch(err => {
-      console.log(err)
-      res.send({ ok: false, err })
-    })
-
+    await Promise.all(promises)
     res.send({ ok: true })
 
   } catch (err) {
