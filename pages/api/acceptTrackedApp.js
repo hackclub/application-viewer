@@ -35,15 +35,18 @@ export default async (req, res) => {
     const emailFromExtension = email.from.split("+")[1];
     const ambassador = (emailFromExtension in possibleAmbassadors) 
       ? possibleAmbassadors[emailFromExtension] 
-      : "";
+      : null;
 
     const promises = []
-    promises.push(airtable.patch('Application Tracker', recordID, {
+    let fields = {
       "Notes": note,
       "Status": "awaiting onboarding",
-      "Ambassador": ambassador,
       "Date Responded": new Date().toISOString().slice(0, 10)
-    }))
+    }
+    if (ambassador) {
+      fields["Ambassador"] = ambassador
+    }
+    promises.push(airtable.patch('Application Tracker', recordID, fields))
 
     promises.push(sendEmail(email));
 
