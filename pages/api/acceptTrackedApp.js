@@ -26,16 +26,22 @@ export default async (req, res) => {
       ? `${currentEntryNote}\nUpdated with webhook: accept`
       : `Updated with webhook: accept`
 
-    const possibleAmbassadors = {
-      "hq": "HQ",
-      "brasil": "Brasil",
-      "apac": "APAC"
+    const ambassadorFromPlus = (email) => {
+      const [_, plus] = email.split('@')[0].split('+').toLowerCase()
+      return {
+        "hq": "HQ",
+        "brasil": "Brasil",
+        "apac": "APAC"
+      }[plus]
     }
 
-    const emailFromExtension = email.from.split("+")[1];
-    const ambassador = (emailFromExtension in possibleAmbassadors) 
-      ? possibleAmbassadors[emailFromExtension] 
-      : null;
+    const ambassadorFromAddress = (email) => {
+      return {
+        "holly@hackclub.com": 'HQ'
+      }[email.toLowerCase()]
+    }
+
+    const ambassador = ambassadorFromPlus(email.from) || ambassadorFromAddress(email.from)
 
     const promises = []
     let fields = {
@@ -55,8 +61,8 @@ export default async (req, res) => {
     const timestamp = trackedApp.fields["Application Committee Timestamp"];
     if (timestamp) {
       // applications created before #application-conspiracy was created don't have this field
-      promises.push(slackReact({channel, timestamp, name: 'white_check_mark'}))
-      promises.push(slackReact({channel, timestamp, name: 'no_entry', addOrRemove: 'remove'}))
+      promises.push(slackReact({ channel, timestamp, name: 'white_check_mark' }))
+      promises.push(slackReact({ channel, timestamp, name: 'no_entry', addOrRemove: 'remove' }))
     }
 
     await Promise.all(promises)
