@@ -41,7 +41,7 @@ export default async (req, res) => {
       }[email.toLowerCase()]
     }
 
-    const ambassador = email.from.map(from => ambassadorFromPlus(from) || ambassadorFromAddress(from))[0]
+    const ambassador = ambassadorFromPlus(email.from) || ambassadorFromAddress(email.from)
 
     const promises = []
     let fields = {
