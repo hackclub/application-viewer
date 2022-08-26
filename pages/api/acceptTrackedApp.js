@@ -27,12 +27,12 @@ export default async (req, res) => {
       : `Updated with webhook: accept`
 
     const ambassadorFromPlus = (email) => {
-      const [_, plus] = email.split('@')[0].split('+').toLowerCase()
+      const [_, plus] = email.split('@')[0].split('+')
       return {
         "hq": "HQ",
         "brasil": "Brasil",
         "apac": "APAC"
-      }[plus]
+      }[plus.toLowerCase()]
     }
 
     const ambassadorFromAddress = (email) => {
