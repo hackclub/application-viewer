@@ -32,13 +32,13 @@ export default async (req, res) => {
         "hq": "HQ",
         "brasil": "Brasil",
         "apac": "APAC"
-      }[plus.toLowerCase()]
+      }[plus?.toLowerCase()]
     }
 
     const ambassadorFromAddress = (email) => {
       return {
         "holly@hackclub.com": 'HQ'
-      }[email.toLowerCase()]
+      }[email?.toLowerCase()]
     }
 
     const ambassador = ambassadorFromPlus(email.from) || ambassadorFromAddress(email.from)
