@@ -9,7 +9,7 @@ I’m Holly from Hack Club HQ in Vermont, and I’ll be your point of contact at
 
 Let's set up a call for us to meet over Zoom. We'll get to know each other, I'll set you up with all of the different Hack Club resources, and we'll talk through the next steps for your club.
 
-**Can you send me 3 times over the next week that work for a 45 minute Zoom call?** I’m online Monday - Friday, and am typically available until 8 PM Eastern / 5 PM Pacific on Mondays and Tuesdays, and until 5 PM Eastern / 2 PM Pacific Wednesdays - Fridays.
+**Can you send me 3 times over the next week that work for a 45 minute Zoom call?** I’m online Monday - Friday, and available until 8 PM Eastern / 5 PM Pacific on Wednesday and Thursday, and until 4 PM Eastern / 1 PM Pacific Monday, Tuesday and Friday.
 
 I'm so looking forward to getting to know you and supporting you as you embark on this journey.
 
