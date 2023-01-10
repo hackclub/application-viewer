@@ -28,6 +28,7 @@ export default async (req, res) => {
       "Venue": appDB["School Name"],
       "Location": appDB["School Address"],
       "Leader Phone": appDB["Leader Phone"].join(","),
+      "Leader Address": appDB["Leader Address"].join(","),
       "Leader(s)": appDB["Full Name"].join(","),
       "Leaders' Emails": appDB["Leaders Emails"].join(","),
       "Applied": new Date().toISOString().slice(0, 10),
