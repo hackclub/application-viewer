@@ -15,3 +15,4 @@ yarn-error.log*
 # secrets
 .env
 .vercel
+.env.local

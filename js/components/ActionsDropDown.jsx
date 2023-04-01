@@ -3,7 +3,7 @@ import { ResponseModal } from "./ResponseModal.jsx";
 
 
 
-export const ActionsDropDown = ({ id, entry }) => {
+export const ActionsDropDown = ({ id, entry, refers="apply" }) => {
   const [appStatus, setAppStatus] = useState(entry["Status"]);
   const [open, setOpen] = useState(false);
   const [responseModal, setResponseModal] = useState({ open: false, type: "" });
@@ -43,7 +43,7 @@ export const ActionsDropDown = ({ id, entry }) => {
         <div className="item-key"><b>teacher:</b> sends teacher rejection email, changes status to rejected, adds "teacher" to note</div>
       </>
     }
-    { responseModal.open && <ResponseModal {...{ id, entry, setAppStatus, setResponseModal, responseModal }}/> }
+    { responseModal.open && <ResponseModal {...{ id, entry, setAppStatus, setResponseModal, responseModal, refers }}/> }
   </>
 }
 

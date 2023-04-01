@@ -1,9 +1,9 @@
-import { Application } from '../js/components/Application.jsx'
-import { ActionsDropDown } from '../js/components/ActionsDropDown.jsx'
-import { Auth } from '../js/components/Auth.jsx'
-import applicationTemplate from '../js/application-template.js'
+import { Application } from '../../js/components/Application.jsx'
+import { ActionsDropDown } from '../../js/components/ActionsDropDown.jsx'
+import { Auth } from '../../js/components/Auth.jsx'
+import applicationTemplate from '../../js/application-template.js'
 import { useState } from 'react'
-import airtable from '../utils/airtable'
+import airtable from '../../utils/airtable'
 import { getSession, useSession } from 'next-auth/client'
 
 const ApplicationDropDown = ({ template, content, name }) => {
@@ -45,7 +45,11 @@ export default function Home({
         </div>
       ))}
       <hr />
-      <ActionsDropDown id={trackedApp.id} entry={trackedApp.fields} />
+      <ActionsDropDown
+        id={trackedApp.id}
+        entry={trackedApp.fields}
+        refers="turnover"
+      />
     </>
   ) : (
     <Auth />
@@ -60,19 +64,17 @@ export async function getServerSideProps(ctx) {
 
   try {
     const application = {}
-    const applicationRaw = (
-      await airtable.find('Application Database', recordID)
-    ).fields
+    const applicationRaw = (await airtable.find('Turnover Database', recordID))
+      .fields
     const includedKeys = applicationTemplate.clubs
       .map(x => x.items.map(x => x.key))
       .flat()
     for (const key in applicationRaw) {
       if (includedKeys.includes(key)) application[key] = applicationRaw[key]
     }
-
     let trackedApp = await airtable.find(
       'Application Tracker',
-      `{App ID}='${recordID}'`
+      `{Turnover Database}='${recordID}'`
     )
 
     let leaders = await Promise.all(
@@ -80,6 +82,7 @@ export async function getServerSideProps(ctx) {
         const leader = {}
         const leaderRaw = (await airtable.find('Prospective Leaders', id))
           .fields
+        if (applicationRaw['Alumni'].includes(leaderRaw['Email'])) return []
         const includedKeys = applicationTemplate.leaders
           .map(x => x.items.map(x => x.key))
           .flat()
@@ -91,6 +94,8 @@ export async function getServerSideProps(ctx) {
         return leader
       })
     )
+    leaders = leaders.filter(i => !Array.isArray(i))
+    console.log(leaders)
 
     return {
       props: { query, application, leaders, trackedApp, session },

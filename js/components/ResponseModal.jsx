@@ -17,7 +17,7 @@ const EMAILS_SUBJECTS = {
   teacher: "Regarding Your Hack Club Application",
 }
 
-export const ResponseModal = ({ id, entry, setAppStatus, setResponseModal, responseModal }) => {
+export const ResponseModal = ({ id, entry, setAppStatus, setResponseModal, responseModal, refers }) => {
 	const [formStatus, setFormStatus] = useState("ready");
 	const [to, setTo] = useState(entry["Leaders' Emails"], 'to')
 	const [responseEmail, setResponseEmail] = useState(responseModal.type !== "" ? EMAILS[responseModal.type](entry["Leader(s)"]) : "")
@@ -47,14 +47,16 @@ export const ResponseModal = ({ id, entry, setAppStatus, setResponseModal, respo
 	    if (responseModal.type === "accept") {
 	      res = await postData("/api/acceptTrackedApp", { 
 	        recordID: id,
-	        email
+	        email,
+			refers
 	      })
 	      pendingStatus = "awaiting onboarding"
 	    } else { // reject | teacher
 	      res = await postData("/api/rejectTrackedApp", { 
 	        recordID: id,
 	        teacher: responseModal.type === "teacher",
-	        email
+	        email,
+			refers
 	      })
 	      pendingStatus = "rejected"
 	    }
