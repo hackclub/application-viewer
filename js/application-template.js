@@ -28,8 +28,7 @@ export default {
             'pt-BR': {
               label:
                 'Há quanto tempo você e seus co-líderes se conhecem e como vocês se conheceram?',
-              sublabel:
-                '(Não tem problema se for liderar seu clube sozinho.)'
+              sublabel: '(Não tem problema se for liderar seu clube sozinho.)'
             }
           },
           type: 'paragraph',
@@ -261,7 +260,7 @@ export default {
           optional: false
         },
         {
-          key: 'Address',
+          key: 'Address Formatted',
           label: 'Your full address (where we can ship you stickers)',
           type: 'paragraph',
           translations: {
@@ -423,7 +422,8 @@ export default {
                     href="https://www.quora.com/When-have-you-most-successfully-hacked-a-non-computer-system-to-your-advantage"
                     style={{ color: '#338eda' }}
                   >
-                    {' '}Aqui estão alguns exemplos do que estamos buscando
+                    {' '}
+                    Aqui estão alguns exemplos do que estamos buscando
                   </a>
                   .
                 </>
@@ -444,7 +444,7 @@ export default {
             'pt-BR': {
               label:
                 'Conte-nos sobre algo que você fez que foi pessoalmente significativo para você.',
-                sublabel: '(coloque links, se possível)'
+              sublabel: '(coloque links, se possível)'
             }
           },
           optional: false,
@@ -458,8 +458,7 @@ export default {
           type: 'paragraph',
           translations: {
             'pt-BR': {
-              label:
-                'O que você aprendeu recentemente?',
+              label: 'O que você aprendeu recentemente?',
               sublabel:
                 'Não precisa ser relacionado ao Hack Club nem ter relação com programação. :)'
             }
