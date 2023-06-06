@@ -28,6 +28,7 @@ export default async (req, res) => {
       "Venue": appDB["School Name"],
       "Location": appDB["School Address"],
       "Leader Phone": appDB["Leader Phone"].join(","),
+      "Leader Birthday": appDB["Leader Birthdays"].join(","),
       "Leader Address": appDB["Leader Address"].join(","),
       "Leader(s)": appDB["Full Name"].join(","),
       "Leaders' Emails": appDB["Leaders Emails"].join(","),
