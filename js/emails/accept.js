@@ -1,6 +1,6 @@
 
 export const accept = (names) => 
-`Hi ${names},
+({`Hi ${names},
 
 
 I just want to say that I really enjoyed reading your application, and I’m happy to share that we’re moving forward! Congratulations!
@@ -36,6 +36,6 @@ Email: [thomas@hackclub.com](thomas@hackclub.com)
 Hack Club is an [open source](https://github.com/hackclub/hackclub) and [financially transparent](https://bank.hackclub.com/hq/) 501(c)(3) nonprofit.
 
 Our EIN is 81-2908499. By the students, for the students.
-[Clubs](https://hackclub.com/) • [Slack](https://hackclub.com/slack/) • [Bank](https://hackclub.com/bank/) • [Hackathons](https://hackathons.hackclub.com/)`
+[Clubs](https://hackclub.com/) • [Slack](https://hackclub.com/slack/) • [Bank](https://hackclub.com/bank/) • [Hackathons](https://hackathons.hackclub.com/)`})
 
 
