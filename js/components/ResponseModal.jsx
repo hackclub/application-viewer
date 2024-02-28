@@ -20,11 +20,11 @@ const EMAILS_SUBJECTS = {
 export const ResponseModal = ({ id, entry, setAppStatus, setResponseModal, responseModal, refers }) => {
 	const [formStatus, setFormStatus] = useState("ready");
 	const [to, setTo] = useState(entry["Leaders' Emails"], 'to')
+	const [from, setFrom] = useStickyState('from', 'clubs@hackclub.com')	
 	const [responseEmail, setResponseEmail] = useState(responseModal.type !== "" ? EMAILS[responseModal.type](entry["Leader(s)"], from) : "")
 	const [subject, setSubject] = useState(`${EMAILS_SUBJECTS[responseModal.type]}: ${entry["Venue"]}`)
 	const [bcc, setBcc] = useStickyState('bcc', '')
 	const [cc, setCc] = useStickyState('cc', 'clubs@hackclub.com')
-	const [from, setFrom] = useStickyState('from', 'clubs@hackclub.com')
 
 	const onRespond = async () => {
 	    // if accept, create channel, generate invite link
