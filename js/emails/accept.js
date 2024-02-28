@@ -35,7 +35,7 @@ export const accept = (names, from) => {
   Our EIN is 81-2908499. By the students, for the students.
   [Clubs](https://hackclub.com/) • [Slack](https://hackclub.com/slack/) • [Bank](https://hackclub.com/bank/) • [Hackathons](https://hackathons.hackclub.com/)`
       )
-    }  } else if(from == "sahiti@hackclub.com") {
+    } else if(from == "sahiti@hackclub.com") {
         return(`Sahiti email template`)
     } else if(from == "jasper@hackclub.com") {
         return(`Jasper email template`)
