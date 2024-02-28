@@ -1,5 +1,6 @@
 export const accept = (names, from) => {
-    if (from === "thomas@hackclub.com") {
+    console.log(from)
+    if (from == "thomas@hackclub.com") {
       return (
         `Hi ${names},
   
