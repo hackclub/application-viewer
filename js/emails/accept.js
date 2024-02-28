@@ -1,6 +1,8 @@
 
 export const accept = (names) => 
-({`Hi ${names},
+({
+    
+    'thomas@hackclub.com': `Hi ${names},
 
 
 I just want to say that I really enjoyed reading your application, and I’m happy to share that we’re moving forward! Congratulations!
