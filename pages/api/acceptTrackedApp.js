@@ -37,7 +37,7 @@ export default async (req, res) => {
 
     const ambassadorFromAddress = (email) => {
       return {
-        "holly@hackclub.com": 'HQ'
+        "thomas@hackclub.com": 'HQ'
       }[email?.toLowerCase()]
     }
 

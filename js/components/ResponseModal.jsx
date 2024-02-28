@@ -20,7 +20,7 @@ const EMAILS_SUBJECTS = {
 export const ResponseModal = ({ id, entry, setAppStatus, setResponseModal, responseModal, refers }) => {
 	const [formStatus, setFormStatus] = useState("ready");
 	const [to, setTo] = useState(entry["Leaders' Emails"], 'to')
-	const [responseEmail, setResponseEmail] = useState(responseModal.type !== "" ? EMAILS[responseModal.type](entry["Leader(s)"]) : "")
+	const [responseEmail, setResponseEmail] = useState(responseModal.type !== "" ? EMAILS[responseModal.type][to](entry["Leader(s)"]) : "")
 	const [subject, setSubject] = useState(`${EMAILS_SUBJECTS[responseModal.type]}: ${entry["Venue"]}`)
 	const [bcc, setBcc] = useStickyState('bcc', '')
 	const [cc, setCc] = useStickyState('cc', 'clubs@hackclub.com')
