@@ -73,6 +73,42 @@ Hack Club is an [open source](https://github.com/hackclub/hackclub) and [financi
 )
     } else if(from == "arpan@hackclub.com") {
         return(`Arpan email template`)
+    } else if(from == "sarah@hackclub.com") {
+        return(`Hi ${names},
+  
+I really enjoyed learning all about you through your application and I’m happy to share that we’re moving forward! Congratulations and welcome to Hack Club!
+  
+I’m Sarah from Hack Club HQ in Vermont, and I’ll be your point of contact at HQ. Come to me for anything from marketing advice to thinking about starting a hackathon (like [Assemble](https://assemble.hackclub.com/), which was run by [@sampoder](https://hackclub.slack.com/team/USNPNJXNX), 17, from Singapore). 
+
+For inspiration for your club meets, I recommend checking out this video of Sahiti's Hack Club in Georgia, USA.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/xXIxwV7bQTw?si=ovsguK-lfGOUD4OG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+Let’s set up a call for us to meet over Zoom. We’ll get to know each other, I’ll set you up with all of the different Hack Club resources, and we’ll talk through the next steps for your club.
+  
+**Can you send me 3 times over the next week that work for a 45-minute Zoom call?** I’m online Monday - Friday, and available until 8 PM Eastern / 5 PM Pacific on Wednesday and Thursday, and until 4 PM Eastern / 1 PM Pacific Monday, Tuesday, and Friday.
+  
+  I’m so looking forward to getting to know you and supporting you as you embark on this journey. Cheers!
+  
+  Sarah
+  (p.s. I just put a package with stickers in the mail to you! DM me on Slack when you get it!)
+  --
+  
+  **Sarah Dowden**
+  
+  Club Ops Lead, Hack Club
+  
+  Hack Club Slack:[@Sarah](https://hackclub.slack.com/team/U06L79991V0) (join the Slack [here](https://hackclub.com/slack/))
+  
+  Email: [sarah@hackclub.com](sarah@hackclub.com)
+  
+  <img src="https://assets.hackclub.com/flag-standalone.png" alt="Hack Club Flag" width="100px" />
+  
+  Hack Club is an [open source](https://github.com/hackclub/hackclub) and [financially transparent](https://bank.hackclub.com/hq/) 501(c)(3) nonprofit.
+  
+  Our EIN is 81-2908499. By the students, for the students.
+  [Clubs](https://hackclub.com/) • [Slack](https://hackclub.com/slack/) • [HCB](https://hackclub.com/hcb/) • [Hackathons](https://hackathons.hackclub.com/)
+        `)
     }
     
     else {
