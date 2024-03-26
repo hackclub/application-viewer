@@ -77,7 +77,7 @@ Hack Club is an [open source](https://github.com/hackclub/hackclub) and [financi
         return(`
 Hi ${names},
   
-I really enjoyed learning all about you through your application and I’m happy to share that we’re moving forward! Congratulations and welcome to Hack Club!
+I really enjoyed learning about you through your application and I’m happy to share that we’re moving forward! Congratulations and welcome to Hack Club!
   
 I’m Sarah from Hack Club HQ in Vermont, and I’ll be your point of contact at HQ. Come to me for anything from marketing advice to thinking about starting a hackathon (like [Assemble](https://assemble.hackclub.com/), which was run by [@sampoder](https://hackclub.slack.com/team/USNPNJXNX), 17, from Singapore). 
 
@@ -86,7 +86,7 @@ For inspiration for your club meets, I recommend checking out this video of Sahi
   
 Let’s set up a call for us to meet over Zoom. We’ll get to know each other, I’ll set you up with all of the different Hack Club resources, and we’ll talk through the next steps for your club.
   
-**Can you send me 3 times over the next week that work for a 45-minute Zoom call?** I’m online Monday - Friday, and available until 8 PM Eastern / 5 PM Pacific on Wednesday and Thursday, and until 4 PM Eastern / 1 PM Pacific Monday, Tuesday, and Friday.
+**Can you send me 3 times over the next week that work for a 45-minute Zoom call?** I’m online Monday - Friday, and available until 8 PM Eastern / 5 PM Pacific on Tuesda and Thursday, and until 4 PM Eastern / 1 PM Pacific Wednesday and Friday.
   
   I’m so looking forward to getting to know you and supporting you as you embark on this journey. Cheers!
   
