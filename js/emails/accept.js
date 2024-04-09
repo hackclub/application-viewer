@@ -86,7 +86,7 @@ For inspiration for your club meets, I recommend checking out this video of Sahi
   
 Let’s set up a call for us to meet over Zoom. We’ll get to know each other, I’ll set you up with all of the different Hack Club resources, and we’ll talk through the next steps for your club.
   
-**Can you send me 3 times over the next week that work for a 45-minute Zoom call?** I’m online Monday - Friday, and available until 8 PM Eastern / 5 PM Pacific on Tuesda and Thursday, and until 4 PM Eastern / 1 PM Pacific Wednesday and Friday.
+**Can you send me 3 times over the next week that work for a 45-minute Zoom call?** I’m online Monday - Friday, and available until 8 PM Eastern / 5 PM Pacific on Tuesday and Thursday, and until 4 PM Eastern / 1 PM Pacific Wednesday and Friday.
   
   I’m so looking forward to getting to know you and supporting you as you embark on this journey. Cheers!
   
