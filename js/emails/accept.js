@@ -49,9 +49,9 @@ I’m Jasper from Hack Club HQ in Vermont, and I’ll be your point of contact a
 
 I would love to set up a call for us to meet over Zoom! We'll get to know each other, I'll set you up with all of the different Hack Club resources, and we'll talk through the next steps for your club.
 
-**Can you send me 3 times over the next week that work for a 20-30 minute Zoom call?** I’m online Monday - Friday, and typically available between 4pm Eastern Time (1 PM Pacific) and 9 PM Eastern Time (6 PM Pacific). Let me know if these times don’t work for you, and we can make a time that works for you!
+**Can you please use [this link](https://hack.af/jm-club-onboarding) [(https://hack.af/jm-club-onboarding)](https://hack.af/jm-club-onboarding) to schedule some time with me over the next week or so that will work for a 20-30 minute Zoom call?** I’m online Monday - Friday, and typically available between 4pm Eastern Time (1 PM Pacific) and 9 PM Eastern Time (6 PM Pacific). Let me know if these times don’t work for you, and we can make a time that works for you!
 
-I'm so looking forward to getting to know you and supporting you as you embark on this journey.
+I'm so looking forward to getting to know you and supporting you and your new Hack Club!
 
 Jasper
 
