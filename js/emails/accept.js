@@ -36,7 +36,42 @@ export const accept = (names, from) => {
   [Clubs](https://hackclub.com/) • [Slack](https://hackclub.com/slack/) • [HCB](https://hackclub.com/hcb/) • [Hackathons](https://hackathons.hackclub.com/)`
       )
     } else if(from == "sahiti@hackclub.com") {
-        return(`Sahiti email template`)
+        return(
+            `Hey ${names},
+            
+I just want to say that I really enjoyed reading your application, and I’m happy to share that we’re moving forward! Congratulations!
+
+I’m Sahiti from Hack Club HQ (currently in Georgia), and I’ll be your point of contact at HQ. Come to me for anything from marketing advice to thinking about starting a hackathon (like [Assemble](https://assemble.hackclub.com/), which was run by [@sampoder](https://hackclub.slack.com/team/USNPNJXNX), 17, from Singapore).
+
+<img src="https://cloud-m91g7djkn-hack-club-bot.vercel.app/0img_9182.jpg" alt="Sahiti at Hack Club HQ" width="440px" />
+
+Let's set up a call for us to meet over Zoom. We'll get to know each other, I'll set you up with all of the different Hack Club resources, and we'll talk through the next steps for your club.
+
+**Can you send me 3 times over the next week that work for a 45 minute Zoom call?** I’m online on weekdays from 10 AM to 4 PM on most days.
+
+I'm so looking forward to getting to know you and supporting you as you embark on this journey.
+
+Cheers!
+Sahiti
+
+(p.s. Hack Club HQ just put a package with stickers in the mail to you! DM me on Slack when you get it!)
+
+--
+
+**Sahiti Dasari**
+
+Clubs Support Team, Hack Club  
+Hack Club Slack: [@sahiti](https://hackclub.slack.com/team/U03RU99SGKA) (join the Slack [here](https://hackclub.com/slack/))  
+Email: [sahiti@hackclub.com](sahiti@hackclub.com)
+
+<img src="https://assets.hackclub.com/flag-standalone.png" alt="Hack Club Flag" width="100px" />
+
+Hack Club is an [open source](https://github.com/hackclub/hackclub) and [financially transparent](https://bank.hackclub.com/hq/) 501(c)(3) nonprofit. Our EIN is 81-2908499. By the students, for the students.
+
+[Clubs](https://hackclub.com/) • [Slack](https://hackclub.com/slack/) • [Bank](https://hackclub.com/bank/) • [Hackathons](https://hackathons.hackclub.com/)
+
+            
+            `)
     } else if(from == "jasper@hackclub.com") {
         return (
         `Hi ${names},
