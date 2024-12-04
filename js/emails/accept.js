@@ -2,33 +2,29 @@ export const accept = (names, from) => {
     console.log(from)
     if (from == "jared@hackclub.com") {
       return (
-        `Hi ${names},
+        `Hello ${names},
   
-  I just want to say that I really enjoyed reading your application, and I’m happy to share that we’re moving forward! Congratulations!
+  Thanks for applying, I enjoyed reading through your application.  I'm happy to share we're moving forward and want to welcome you as a club leader!
   
-  I’m Jared from Hack Club HQ in Vermont, and I’ll be your point of contact at HQ. Come to me for anything from marketing advice to thinking about starting a hackathon (like [Assemble](https://assemble.hackclub.com/), which was run by [@sampoder](https://hackclub.slack.com/team/USNPNJXNX), 17, from Singapore).
+  I’m Jared! I'll be your main point of contact here at Hack Club HQ, which is located in Vermont. Come to me for any support or advice you may need for your club! This can include anything from planning activities, structuring meetings, or trying to explain to teachers why 'hacking' is actually a good thing! Anyway, here's one [example](https://www.youtube.com/watch?v=xXIxwV7bQTw) of life as a club leader! (That's [@sahiti](https://hackclub.slack.com/team/U03RU99SGKA), from Atlanta).
   
   <img src="https://cloud-1nqzned0w-hack-club-bot.vercel.app/0pxl_20240820_214330093.mp.jpg" alt="Toast smelling Jared" width="240px" />
   
-  Let’s set up a call for us to meet over Zoom. We’ll get to know each other, I’ll set you up with all of the different Hack Club resources, and we’ll talk through the next steps for your club.
+  Let’s set up a call for us to meet over Zoom. We’ll get to know each other, I’ll review all the different Hack Club resources, and we’ll talk through the next steps for your club. Here's a [link](https://calendly.com/jared-hackclub/45min) to schedule a call with me. Just pick a time that works best for you!
   
-  **Can you send me 3 times over the next week that work for a 45-minute Zoom call?** I’m online Monday - Friday and available until 8 PM Eastern / 5 PM Pacific on Monday and Tuesday, and until 4 PM Eastern / 1 PM Pacific Wednesday, Thursday and Friday.
-  
-  I’m so looking forward to getting to know you and supporting you as you embark on this journey. Cheers!
+  I’m looking forward to meeting you and providing support as you lead your club!
   
   Jared
-  (p.s. I just put a package with stickers in the mail to you! DM me on Slack when you get it!)
+  (p.s. I just put a package with stickers in the mail for you! DM me on Slack when you get it!)
+  (p.s.s. Check-out [High Seas](https://highseas.hackclub.com/?utm_medium=hc-channel&utm_campaign=clubs&utm_source=clubs) if you want to earn prizes for working on your coding projects!)
   --
   
   **Jared Senesac**
-  
   Club Operations Lead, Hack Club
-  
-  Hack Club Slack:[@Jared](https://hackclub.slack.com/team/U07HEH4N8UV) (join the Slack [here](https://hackclub.com/slack/))
-  
+  Hack Club Slack:[@Jared](https://hackclub.slack.com/team/U07HEH4N8UV) (join the Slack [here](https://highseas.hackclub.com/?utm_medium=hc-channel&utm_campaign=clubs&utm_source=clubs))
   Email: [jared@hackclub.com](jared@hackclub.com)
   
-  <img src="https://assets.hackclub.com/flag-standalone.png" alt="Hack Club Flag" width="100px" />
+  <img src="https://assets.hackclub.com/flag-orpheus-left.svg" alt="Orpheus Flag" width="200px" />
   
   Hack Club is an [open source](https://github.com/hackclub/hackclub) and [financially transparent](https://bank.hackclub.com/hq/) 501(c)(3) nonprofit.
   
