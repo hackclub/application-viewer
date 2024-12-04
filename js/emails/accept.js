@@ -6,7 +6,7 @@ export const accept = (names, from) => {
   
   I just want to say that I really enjoyed reading your application, and I’m happy to share that we’re moving forward! Congratulations!
   
-  I’m Jared from Hack Club HQ in Vermont, and I’ll be your point of contact at HQ. Come to me for anything from marketing advice to thinking about starting a hackathon (like [Assemble](https://assemble.hackclub.com/), which was run by [@sampoder](https://hackclub.slack.com/team/USNPNJXNX), 17, from Singapore).
+  I’m Jared! I'll be your point of contact from Hack Club HQ, located in Vermont. Come to me for anything from marketing advice to thinking about starting a hackathon (like [Assemble](https://assemble.hackclub.com/), which was run by [@sampoder](https://hackclub.slack.com/team/USNPNJXNX), 17, from Singapore).
   
   <img src="https://cloud-1nqzned0w-hack-club-bot.vercel.app/0pxl_20240820_214330093.mp.jpg" alt="Toast smelling Jared" width="240px" />
   
