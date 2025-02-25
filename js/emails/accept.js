@@ -17,8 +17,6 @@ export const accept = (names, from) => {
   Jared
   (p.s. I just put a package with stickers in the mail to you! DM me on Slack when you get it!)
 
-  (p.s.s. Check out [High Seas](https://highseas.hackclub.com/?utm_medium=hc-channel&utm_campaign=clubs&utm_source=clubs) to earn prizes for your coding projects)  --
-  
   **Jared Senesac**
   
   Club Operations Lead, Hack Club
