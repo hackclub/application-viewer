@@ -151,7 +151,7 @@ I'm Afonso from Hack Club HQ (currently in Portugal) in Vermont and also a club 
 
 ^ that's me at Cloudflare Lisbon, during Scrapyard Lisbon! (don't tell anyone, i'm singing in that picture)
 
-For inspiration for your club meets, I getting a quick look at this video of Sahiti's Hack Club in Georgia, USA. - (featuring the Blot!)
+For inspiration for your club meets, I recommend you check out this video of Sahiti's Hack Club in Georgia, USA. - (featuring the Blot!)
   <a href="https://www.youtube.com/watch?v=xXIxwV7bQTw"> <img src="https://cloud-pwc47mjn8-hack-club-bot.vercel.app/0screenshot_2024-03-21_at_10.37.40_am.png" alt="Sahiti's Hack Club" width="250px" /></a>
 
 Let's book a call for us to meet over Zoom! We'll get to know each other, I'll talk to you about all the resources Hack Club has to offer (not only for your Club!) and we'll talk about the next steps for your club. Here's a quick [link](https://afonsobeato.fillout.com/onboarding) so we can book a call!
