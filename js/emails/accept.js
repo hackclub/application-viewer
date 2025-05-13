@@ -139,6 +139,39 @@ Let’s set up a call for us to meet over Zoom. We’ll get to know each other, 
   Our EIN is 81-2908499. By the students, for the students.
   [Clubs](https://hackclub.com/) • [Slack](https://hackclub.com/slack/) • [HCB](https://hackclub.com/hcb/) • [Hackathons](https://hackathons.hackclub.com/)
         `)
+    } else if(from == "afonso@hackclub.com") {
+        return(`
+Hey ${names}!
+  
+It was amazing reading your application and discovering more about your club, and I'm really happy to say that you're in! Welcome to the club (also known as the Hack Club)!
+  
+I'm Afonso from Hack Club HQ (currently in Portugal) in Vermont and also a club leader, and I'll be your point of contact here at HQ! Come to me for anything, from planning hackathons (I was the lead organizer for [Scrapyard Lisbon](https://scrapyard.hackclub.com/)) to building out your club.
+
+<img src="https://files.catbox.moe/8rzv7x.jpg" width=350px>
+
+^ that's me at Cloudflare Lisbon, during Scrapyard Lisbon! (don't tell anyone, i'm singing in that picture)
+
+For inspiration for your club meets, I recommend you check out this video of Sahiti's Hack Club in Georgia, USA. - (featuring the Blot!)
+  <a href="https://www.youtube.com/watch?v=xXIxwV7bQTw"> <img src="https://cloud-pwc47mjn8-hack-club-bot.vercel.app/0screenshot_2024-03-21_at_10.37.40_am.png" alt="Sahiti's Hack Club" width="250px" /></a>
+
+Let's book a call for us to meet over Zoom! We'll get to know each other, I'll talk to you about all the resources Hack Club has to offer (not only for your Club!) and we'll talk about the next steps for your club. Here's a quick [link](https://afonsobeato.fillout.com/onboarding) so we can book a call!
+  
+Leaders, welcome to the ship! So looking foward to meeting you and helping yall!
+
+Afonso
+(p.s. I just put a package with stickers in the mail to you! DM me on Slack when you get it!)
+  
+  **Afonso Beato**
+  Club Onboarding and Community Relations @ Hack Club
+  Hack Club Slack: [@afonso](https://hackclub.slack.com/team/U07ULNFPQ4T) (join us [here!](https://hackclub.com/slack/))
+  Email: [afonso@hackclub.com](afonso@hackclub.com)
+  
+  <img src="https://hackclub.com/stickers/orphmoji_yippee.png" alt="Orpheus Yipeee!" width="100px" />
+  
+  Hack Club is an [open source](https://github.com/hackclub/hackclub) and [financially transparent](https://bank.hackclub.com/hq/) 501(c)(3) nonprofit. 
+  Our EIN is 81-2908499. By the students, for the students.
+  [Clubs](https://hackclub.com/) • [Slack](https://hackclub.com/slack/) • [HCB](https://hackclub.com/hcb/) • [Hackathons](https://hackathons.hackclub.com/)
+        `)
     }
     
     else {
