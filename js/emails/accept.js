@@ -145,9 +145,9 @@ Let’s set up a call for us to meet over Zoom. We’ll get to know each other, 
       return (
         `Hi ${names},
   
-I just want to say that I GENUINELY enjoyed reading your application! I’m happy to share that we’re moving forward! Congratulations!!
+I just want to say that I GENUINELY enjoyed reading your application! I’m happy to share we’re moving forward! Congratulations!!
   
-I’m Karthik from Hack Club HQ, and I stay in Singapore. I’ll be your point of contact at HQ. Come to me for literally anything, right from general advice on how to work with your club members all the way to thinking about starting a hackathon (like [Counterspell](https://counterspell.hackclub.com/), which was run by myself and a few others from Hack Club HQ).
+I’m Karthik from Hack Club HQ, and I stay in Singapore. I’ll be your point of contact at HQ. Come to me for literally anything, from general advice on how to work with your club members all the way to thinking about starting a hackathon (like [Counterspell](https://counterspell.hackclub.com/), which was run by myself and a few others from Hack Club HQ).
   
 <img src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/ff6527d0a953fb1fdd382ebe6e1d3c446bb4605e_20250513_174205.jpg" alt="Karthik with a peace sign :P" width="200px" />
   
