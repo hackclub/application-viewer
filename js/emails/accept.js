@@ -145,36 +145,29 @@ Let’s set up a call for us to meet over Zoom. We’ll get to know each other, 
       return (
         `Hi ${names},
   
-  I just want to say that I really enjoyed reading your application, and I’m happy to share that we’re moving forward! Congratulations!
+I just want to say that I GENUINELY enjoyed reading your application! I’m happy to share that we’re moving forward! Congratulations!!
   
-  I’m Thomas from Hack Club HQ in Vermont, and I’ll be your point of contact at HQ. Come to me for anything from marketing advice to thinking about starting a hackathon (like [Assemble](https://assemble.hackclub.com/), which was run by [@sampoder](https://hackclub.slack.com/team/USNPNJXNX), 17, from Singapore).
+I’m Karthik from Hack Club HQ, and I stay in Singapore. I’ll be your point of contact at HQ. Come to me for literally anything, right from general advice on how to work with your club members all the way to thinking about starting a hackathon (like [Counterspell](https://counterspell.hackclub.com/), which was run by myself and a few others from Hack Club HQ).
   
-  <img src="https://cloud-o1y7sksn6-hack-club-bot.vercel.app/0img_2271.jpg" alt="Thomas Waving" width="240px" />
+<img src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/ff6527d0a953fb1fdd382ebe6e1d3c446bb4605e_20250513_174205.jpg" alt="Karthik with a peace sign :P" width="200px" />
   
-  Let’s set up a call for us to meet over Zoom. We’ll get to know each other, I’ll set you up with all of the different Hack Club resources, and we’ll talk through the next steps for your club.
-  
-  **Can you send me 3 times over the next week that work for a 45-minute Zoom call?** I’m online Monday - Friday, and available until 8 PM Eastern / 5 PM Pacific on Wednesday and Thursday, and until 4 PM Eastern / 1 PM Pacific Monday, Tuesday, and Friday.
-  
-  I’m so looking forward to getting to know you and supporting you as you embark on this journey. Cheers!
-  
-  Thomas
-  (p.s. I just put a package with stickers in the mail to you! DM me on Slack when you get it!)
-  --
-  
-  **Thomas Stubblefield**
-  
-  Club Team, Hack Club
-  
-  Hack Club Slack:[@Thomas](https://hackclub.slack.com/archives/D040S0P4T6F) (join the Slack [here](https://hackclub.com/slack/))
-  
-  Email: [thomas@hackclub.com](thomas@hackclub.com)
-  
-  <img src="https://assets.hackclub.com/flag-standalone.png" alt="Hack Club Flag" width="100px" />
-  
-  Hack Club is an [open source](https://github.com/hackclub/hackclub) and [financially transparent](https://bank.hackclub.com/hq/) 501(c)(3) nonprofit.
-  
-  Our EIN is 81-2908499. By the students, for the students.
-  [Clubs](https://hackclub.com/) • [Slack](https://hackclub.com/slack/) • [HCB](https://hackclub.com/hcb/) • [Hackathons](https://hackathons.hackclub.com/)`
+Let’s set up a call for us to meet over Zoom. We’ll get to know each other, I’ll set you up with all of the different Hack Club resources, and we’ll talk through the next steps for your club.
+ 
+Feel free to schedule a meeting [here](https://hack.club/karthik-cal) whenever you are available. 
+
+I am so stoked to get to know you and supporting you every step of the way from here!
+
+Thanks and regards,  
+**Karthik Sankar**
+
+Club Onboarding and Program Development @ Hack Club | [@Karthik](https://hackclub.slack.com/team/U04K5EPMZM1) on Slack | [karthik@hackclub.com](karthik@hackclub.com)
+
+<img src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/a523c764cefabe5fa38403705f8cee3a4e995809_hack_club.png" alt="Hack Club Flag" width="200px" />
+
+Hack Club is an [open source](https://github.com/hackclub/hackclub) and [financially transparent](https://bank.hackclub.com/hq/) 501(c)(3) nonprofit.
+Our EIN is 81-2908499. By the students, for the students.
+
+[Clubs](https://hackclub.com/) • [Slack](https://hackclub.com/slack/) • [HCB](https://hackclub.com/hcb/) • [Hackathons](https://hackathons.hackclub.com/)`
       )
     }    
   };
