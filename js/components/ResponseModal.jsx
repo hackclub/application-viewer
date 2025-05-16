@@ -17,13 +17,6 @@ const EMAILS_SUBJECTS = {
 	teacher: "Regarding Your Hack Club Application",
 }
 
-const getFirstNames = (fullNames) => {
-	if (!fullNames) return "";
-	return fullNames.split(",")
-		.map(name => name.trim().split(" ")[0])
-		.join(", ");
-};
-
 const formatLeaderNames = (leaderNames) => {
 	if (!leaderNames) return "";
 
@@ -41,7 +34,7 @@ export const ResponseModal = ({ id, entry, setAppStatus, setResponseModal, respo
 	const [formStatus, setFormStatus] = useState("ready");
 	const [to, setTo] = useState(entry["Leaders' Emails"], 'to')
 	const [from, setFrom] = useStickyState('from', 'clubs@hackclub.com')
-	const [responseEmail, setResponseEmail] = useState(responseModal.type !== "" ? EMAILS[responseModal.type](getFirstNames(entry["Leader(s)"]), from) : "")
+	const [responseEmail, setResponseEmail] = useState(responseModal.type !== "" ? EMAILS[responseModal.type](entry["Leader(s)"], from) : "")
 	const [subject, setSubject] = useState(
 		responseModal.type === "accept"
 			? `${EMAILS_SUBJECTS[responseModal.type]}: ${formatLeaderNames(entry["Leader(s)"])}`
