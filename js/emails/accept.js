@@ -158,9 +158,11 @@ Feel free to schedule a meeting [here](https://hack.club/karthik-cal) whenever y
 I am so stoked to get to know you and supporting you every step of the way from here!
 
 Thanks and regards,  
-**Karthik Sankar**
-Club Onboarding and Program Development @ Hack Club | [@Karthik](https://hackclub.slack.com/team/U04K5EPMZM1) on Slack | [karthik@hackclub.com](karthik@hackclub.com)
+**Karthik Sankar** <br />
+Club Onboarding and Program Development @ Hack Club | [@Karthik](https://hackclub.slack.com/team/U04K5EPMZM1) on Slack | [karthik@hackclub.com](karthik@hackclub.com) <br />
 <img src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/a523c764cefabe5fa38403705f8cee3a4e995809_hack_club.png" alt="Hack Club Flag" width="200px" />
+
+P.S. I'll drop some stickers in the mail for you, DM me on Slack when you get it! :)
 
 Hack Club is an [open source](https://github.com/hackclub/hackclub) and [financially transparent](https://bank.hackclub.com/hq/) 501(c)(3) nonprofit.
 Our EIN is 81-2908499. By the students, for the students.
