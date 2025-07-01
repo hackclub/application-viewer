@@ -10,7 +10,7 @@ export const accept = (names, from) => {
   
   <img src="https://cloud-1nqzned0w-hack-club-bot.vercel.app/0pxl_20240820_214330093.mp.jpg" alt="Toast smelling Jared" width="240px" />
   
-  Let’s set-up a call for us to meet over Zoom. We’ll get to know each other, I’ll review Hack Club resources, and discuss the next steps for your club. Here’s a [link](https://calendly.com/jared-hackclub/45min) to schedule a call with me. Just pick a time that works best for you!
+  Let’s set-up a call for us to meet over Zoom. We’ll get to know each other, I’ll review Hack Club resources, and discuss the next steps for your club. Here’s a [link](https://calendar.app.google/BbBXmWfV7nq2wo4cA) to schedule a call with me. Just pick a time that works best for you!
   
   I’m looking forward to meeting you and supporting your club!
   
