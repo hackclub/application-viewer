@@ -14,7 +14,7 @@ export default async (req, res) => {
     const emailVerified = await checkEmail({ address: email.from })
     if (!emailVerified) {
       await sendVerification({ address: email.from })
-      res.send({ ok: false, err: 'verify email', email: email.from})
+      res.send({ ok: false, err: 'verify email', email: email.from })
       return
     }
 
@@ -55,6 +55,33 @@ export default async (req, res) => {
     promises.push(airtable.patch('Application Tracker', recordID, fields))
 
     promises.push(sendEmail(email));
+
+    const referralCode = trackedApp.fields["Referral Code"];
+    console.log(`Processing referral code: ${referralCode}`);
+    if (referralCode) {
+      console.log(`Found referral code: ${referralCode}, incrementing referral count...`);
+
+      try {
+        const referralRecord = await airtable.find('Referrals', `{referralCode}='${referralCode}'`);
+
+        if (referralRecord) {
+          const currentCount = referralRecord.fields.referralCount || 0;
+          const newCount = currentCount + 1;
+
+          promises.push(
+            airtable.patch('Referrals', referralRecord.id, {
+              "referralCount": newCount,
+            })
+          );
+
+          console.log(`Incremented referral count from ${currentCount} to ${newCount} for referral code ${referralCode}`);
+        } else {
+          console.log(`No referral record found for code: ${referralCode}`);
+        }
+      } catch (referralError) {
+        console.error(`Error updating referral count for code ${referralCode}:`, referralError);
+      }
+    }
 
     // update slack thread
     const channel = 'C02F9GD407J' /* #application-conspiracy */

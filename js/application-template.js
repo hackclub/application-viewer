@@ -10,7 +10,7 @@ export default {
       items: [
         {
           key: 'President',
-          label: 'Who would you like your Point of Contact to be?',
+          label: 'Who should we reach out to?',
           type: 'select',
           optionsKey: 'Leaders Emails',
           optional: false,
@@ -28,12 +28,11 @@ export default {
             'pt-BR': {
               label:
                 'Há quanto tempo você e seus co-líderes se conhecem e como vocês se conheceram?',
-              sublabel: '(Não tem problema se for liderar seu clube sozinho.)'
+              sublabel: '(Não tem problema se for liderar seu clube sozinho!)'
             }
           },
           type: 'paragraph',
-          sublabel: "(It's also okay if you are running the club by yourself.)",
-          optional: false,
+          optional: true,
           words: 50
         }
       ]
@@ -47,32 +46,60 @@ export default {
       },
       items: [
         {
-          key: 'School Name',
-          label: 'Where are you planning to run your Hack Club?',
+          key: 'Club Name',
+          label: "What do you want to call your Hack Club?",
           translations: {
             'pt-BR': {
-              label: 'Onde você está planejando criar seu Hack Club?',
-              sublabel: '(Coloque o nome do local.)',
-              placeholder: 'Escola Hacker Feliz'
+              label: 'Como você quer chamar seu Hack Club?',
+              sublabel: '(Exemplo: "Hack Club da Escola Feliz" ou "Hackers Unidos")',
+              placeholder: 'Hack Club da Escola Feliz'
             }
           },
-          sublabel: '(Give us the name.)',
-          placeholder: 'Happy Hack High School',
+          sublabel: 'This will be the official name of your club (e.g., "Happy High Hack Club" or "The Code Crusaders")',
+          placeholder: 'Happy High Hack Club',
           type: 'string',
           optional: false
         },
         {
           key: 'Venue Type',
-          label: 'What type of venue is this?',
+          label: 'What type of venue will your Hack Club take place in?',
           translations: {
             'pt-BR': {
               label: 'Que tipo de local é este?',
+              options: [
+                'Ensino médio',
+                'Faculdade/Universidade',
+                'Espaço Maker',
+                'Algo mais'
+              ],
               sublabel:
                 '(Pode ser uma escola, espaço maker ou qualquer outro lugar.)'
             }
           },
+          type: 'select',
+          placeholder: 'Happy Hack High School',
+          options: [
+            'High School',
+            'Makerspace',
+            'Something Else'
+          ],
+          optional: false
+        },
+        {
+          key: 'School Name',
+          label: "What's the name of your venue?",
+          translations: {
+            'pt-BR': {
+              label: 'Onde você está planejando criar seu Hack Club?',
+              sublabel:
+                '(Coloque o nome do local. Exemplo: "Escola Hacker Feliz")',
+              placeholder: 'Escola Hacker Feliz'
+            }
+          },
+          sublabel:
+            "(It doesn't have to be a high school! Instead, you can also add the name of your makerspace here)",
+          placeholder: 'Happy Hack High School',
           type: 'string',
-          sublabel: '(It can be a high school, makerspace, or something else.)',
           optional: false
         },
         {
@@ -86,13 +113,17 @@ export default {
             }
           },
           optional: false,
-          sublabel:
-            'Please include city, state / province, country, and postal code.'
+          sublabel: 'City, State / Province, Postal Code, Country'
         }
       ]
     },
     {
       header: 'Idea',
+      label: (
+        <span style={{ fontSize: '20px' }}>
+          Answer these questions so we can personalize your club experience.
+        </span>
+      ),
       translations: {
         'pt-BR': {
           header: 'Ideia'
@@ -113,8 +144,7 @@ export default {
         },
         {
           key: 'Success',
-          label:
-            'What will your club do? What would a successful club look like?',
+          label: 'Describe what your club meetings will look like.',
           type: 'paragraph',
           translations: {
             'pt-BR': {
@@ -165,7 +195,7 @@ export default {
         {
           key: 'What Is New',
           label:
-            'Has your school had coding clubs before? What’s going to be new about your Hack Club?',
+            'Has your school had coding clubs before? What\'s going to be new about your Hack Club?',
           type: 'paragraph',
           translations: {
             'pt-BR': {
@@ -189,7 +219,7 @@ export default {
         {
           key: 'Hear About HC',
           label:
-            'How did you hear about Hack Club? (i.e. from a friend, an event, a teacher, a website or twitter)',
+            'How did you hear about Hack Club? (i.e. from a friend, an event, a teacher, a website or Twitter)',
           type: 'paragraph',
           translations: {
             'pt-BR': {
@@ -198,6 +228,41 @@ export default {
             }
           },
           optional: false
+        },
+        {
+          key: 'Referral Code',
+          label: 'Referral Code',
+          type: 'string',
+          sublabel: (
+            <>
+              Get this from your friends in other clubs who might've ran /referclub in{' '}
+              <a
+                href="https://hackclub.slack.com/archives/C02PA5G01ND"
+                style={{ color: '#338eda' }}
+                target="_blank"
+              >
+                #leaders
+              </a>
+            </>
+          ),
+          translations: {
+            'pt-BR': {
+              label: 'Código de Referência',
+              sublabel: (
+                <>
+                  Obtenha isso de seus amigos em outros clubes que podem ter executado /referclub em{' '}
+                  <a
+                    href="https://hackclub.slack.com/archives/C02PA5G01ND"
+                    style={{ color: '#338eda' }}
+                    target="_blank"
+                  >
+                    #leaders
+                  </a>
+                </>
+              )
+            }
+          },
+          optional: true
         }
       ]
     }
@@ -248,17 +313,38 @@ export default {
         },
         {
           key: 'Phone',
-          label:
-            'Phone number (include country code if not in the United States)',
           type: 'string',
           inputType: 'tel',
           translations: {
             'pt-BR': {
-              label: 'Número de telefone (inclua +55 antes se for do Brasil)'
             }
           },
           optional: false
         },
+        {
+          key: 'Slack ID',
+          label: 'What is your Slack ID?',
+          type: 'string',
+          sublabel: 'You can get this from #what-is-my-slack-id on Slack, if you are a member of the Hack Club Slack.',
+          translations: {
+            'pt-BR': {
+              label: 'Qual é o seu ID do Slack?',
+              sublabel: 'Você pode obter isso no canal #what-is-my-slack-id no Slack, se você for um membro do Hack Club Slack.'
+            }
+          },
+          optional: true
+        }
+      ]
+    },
+    {
+      header: 'Mailing address',
+      label: 'The address where we can ship you stickers!',
+      translations: {
+        'pt-BR': {
+          header: 'Endereço de correspondência'
+        }
+      },
+      items: [
         {
           key: 'Address Formatted',
           label: 'Your full address (where we can ship you stickers)',
@@ -273,71 +359,77 @@ export default {
           optional: false,
           sublabel:
             'Please include city, state / province, country, and postal code.'
-        }
-      ]
-    },
-    {
-      header: 'Stats',
-      label:
-        'Demographic stats are collected to share in aggregate with donors and will not be used as part of application review.',
-      translations: {
-        'pt-BR': {
-          header: 'Estatísticas',
-          label:
-            'Estatísticas demográficas são coletadas apenas para compartilharmos com nossos doadores e não vão influenciar a análise de sua inscrição.'
-        }
-      },
-      items: [
+        },
         {
-          key: 'Gender',
-          label: 'Gender',
-          type: 'select',
+          key: 'Address Line 1',
+          label: 'Street address',
+          type: 'string',
+          placeholder: '15 Falls Road',
           translations: {
             'pt-BR': {
-              label: 'Gênero',
-              options: [
-                'Feminino',
-                'Masculino',
-                'Não-binário',
-                'Agênero',
-                'Outro'
-              ]
+              label: 'Endereço (linha 1)'
             }
           },
-          options: [
-            'Female',
-            'Male',
-            'Non-binary / genderqueer',
-            'Agender',
-            'Other'
-          ],
           optional: false
         },
         {
-          key: 'Ethnicity',
-          label: 'Ethnicity',
-          type: 'select',
+          key: 'Address Line 2',
+          label: 'Address (line 2)',
+          type: 'string',
+          placeholder: 'Apt #123',
           translations: {
             'pt-BR': {
-              label: 'Etnia',
-              options: [
-                'Hispânico',
-                'Branco',
-                'Preto',
-                'Indígena',
-                'Asiático',
-                'Outra etnia'
-              ]
+              label: 'Endereço (linha 2)'
             }
           },
-          options: [
-            'Hispanic or Latino',
-            'White',
-            'Black',
-            'Native American or American Indian',
-            'Asian or Pacific Islander',
-            'Other Ethnicity'
-          ],
+          optional: true
+        },
+        {
+          key: 'Address City',
+          label: 'City',
+          placeholder: 'Ithaca',
+          type: 'string',
+          translations: {
+            'pt-BR': {
+              label: 'Cidade'
+            }
+          },
+          optional: false
+        },
+        {
+          key: 'Address State',
+          label: 'State',
+          type: 'string',
+          placeholder: 'NY',
+          translations: {
+            'pt-BR': {
+              label: 'Estado'
+            }
+          },
+          optional: false
+        },
+        {
+          key: 'Address Zip',
+          label: 'Zip code',
+          type: 'string',
+          placeholder: '14850',
+          translations: {
+            'pt-BR': {
+              label: 'CEP'
+            }
+          },
+          optional: false
+        },
+        {
+          key: 'Address Country',
+          label: 'Country',
+          placeholder: 'United States',
+          type: 'countrySelect',
+          translations: {
+            'pt-BR': {
+              label: 'País'
+            }
+          },
           optional: false
         }
       ]
@@ -363,6 +455,18 @@ export default {
           optional: true
         },
         {
+          key: 'GitHub',
+          label: 'GitHub link',
+          placeholder: 'https://',
+          type: 'string',
+          translations: {
+            'pt-BR': {
+              label: 'Link do GitHub'
+            }
+          },
+          optional: true
+        },
+        {
           key: 'Twitter',
           label: 'Twitter link',
           placeholder: 'https://',
@@ -375,13 +479,15 @@ export default {
           optional: true
         },
         {
-          key: 'GitHub',
-          label: 'GitHub link',
+          key: 'Other',
+          label: 'Other Technical Links',
           placeholder: 'https://',
           type: 'string',
+          sublabel: '(Gitlab, Sourcehut, other site where your code lives)',
           translations: {
             'pt-BR': {
-              label: 'Link do GitHub'
+              label: 'Link do ',
+              sublabel: '(Gitlab, Sourcehut, outro site onde seu código reside)'
             }
           },
           optional: true
@@ -389,56 +495,20 @@ export default {
       ]
     },
     {
-      header: 'Skills',
-      header: 'Presence',
+      header: 'Hacker Details',
+      label:
+        'We want to get to know you! Please answer these questions like you\'re telling them to a friend',
       translations: {
         'pt-BR': {
-          header: 'Habilidades'
+          header: 'Habilidades',
+          label:
+            'Queremos te conhecer! Por favor responda essas perguntas como se estivesse contando-as para um amigo'
         }
       },
       items: [
         {
-          key: 'Hacker Story',
-          label: (
-            <>
-              Please tell us about the time you most successfully hacked some
-              (non-computer) system to your advantage.{' '}
-              <a
-                href="https://www.quora.com/When-have-you-most-successfully-hacked-a-non-computer-system-to-your-advantage"
-                style={{ color: '#338eda' }}
-              >
-                Here are examples of what we’re looking for
-              </a>
-              .
-            </>
-          ),
-          translations: {
-            'pt-BR': {
-              label: (
-                <>
-                  Por favor nos conte alguma vez que você hackeou com sucesso
-                  algum sistema (não computacional) para obter alguma vantagem.
-                  <a
-                    href="https://www.quora.com/When-have-you-most-successfully-hacked-a-non-computer-system-to-your-advantage"
-                    style={{ color: '#338eda' }}
-                  >
-                    {' '}
-                    Aqui estão alguns exemplos do que estamos buscando
-                  </a>
-                  .
-                </>
-              )
-            }
-          },
-          plainText:
-            'Please tell us about the time you most successfully hacked some (non-computer) system to your advantage.',
-          type: 'paragraph',
-          optional: false,
-          characters: [450, 1200]
-        },
-        {
           key: 'Achievement',
-          label: `Tell us about something you made which was personally meaningful to you?`,
+          label: `Tell us about something you made which was personally meaningful to you.`,
           type: 'paragraph',
           translations: {
             'pt-BR': {
@@ -468,23 +538,93 @@ export default {
           sublabel: `Don't make it about Hack Club! Doesn't have to be about coding.`
         },
         {
-          key: 'Technicality',
-          label:
-            'Are you technical? (You are a programmer who can teach without outside assistance)',
-          type: 'select',
-          optional: false,
+          key: 'Hacker Story',
+          label: "If you had unlimited time, money, and resources, what's the most ridiculous/awesome thing you'd build? Go wild with your imagination!",
           translations: {
             'pt-BR': {
-              label:
-                'Você tem habilidades técnicas? (Você é um programador que consegue ensinar sem assistência externa)',
-              sublabel: `(Tudo bem se não!)`,
-              options: ['Sim', 'Não']
+              label: "Se você tivesse tempo, dinheiro e recursos ilimitados, qual seria a coisa mais ridícula/incrível que você construiria? Solte a imaginação!"
             }
           },
-          sublabel: `(It's okay if not!)`,
-          options: ['Yes', 'No']
+          plainText: "If you had unlimited time, money, and resources, what's the most ridiculous/awesome thing you'd build? Go wild with your imagination!",
+          type: 'paragraph',
+          optional: false,
+          characters: [450, 1200]
+        }
+      ]
+    },
+    {
+      header: 'Optional Stats',
+      label:
+        'We care about being as inclusive as possible. Sharing this information helps us achieve that goal.',
+      translations: {
+        'pt-BR': {
+          header: 'Estatísticas',
+          label:
+            'Nós nos importamos em ser o mais inclusivos possíveis. Compartilhando essas informações, você nos ajuda a tornar isso possível'
+        }
+      },
+      items: [
+        {
+          key: 'Gender',
+          label: 'Gender',
+          optional: true,
+          type: 'select',
+          options: [
+            'Male',
+            'Female',
+            'Non-binary/non-conforming',
+            'Prefer not to respond'
+          ],
+          translations: {
+            'pt-BR': {
+              label: 'Pronomes',
+              options: [
+                'Macho',
+                'Fêmea',
+                'Não binário/não conforme',
+                'Prefiro não responder'
+              ]
+            }
+          },
+          optional: true
+        },
+        {
+          key: 'Ethnicity',
+          label: 'Ethnicity',
+          type: 'select',
+          translations: {
+            'pt-BR': {
+              label: 'Etnia',
+              options: [
+                'Origem hispânica, latina ou espanhola',
+                'Branco',
+                'Afro-americano',
+                'índio americano ou nativo do Alasca',
+                'Asiático',
+                'índio asiático',
+                'Nativo havaiano ou outro ilhéu do Pacífico',
+                'Outra etnia',
+                'Prefiro não dizer'
+              ]
+            }
+          },
+          options: [
+            'Hispanic, Latino or Spanish origin',
+            'White',
+            'Black, African American',
+            'American Indian or Alaska native',
+            'Asian',
+            'Asian Indian',
+            'Native Hawaiian or Other Pacific Islander',
+            'Other Ethnicity',
+            'Prefer not to say'
+          ],
+          optional: true
         }
       ]
     }
-  ]
+  ],
+  metaData: {
+    maximumAge: 20 /**IN YEARS*/
+  }
 }
