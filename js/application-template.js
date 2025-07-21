@@ -313,6 +313,7 @@ export default {
         },
         {
           key: 'Phone',
+          label: 'Phone Number',
           type: 'string',
           inputType: 'tel',
           translations: {

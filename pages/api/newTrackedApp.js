@@ -27,6 +27,7 @@ export default async (req, res) => {
     const appTracked = await airtable.create('Application Tracker', {
       "Club Name": appDB["Club Name"],
       "Referral Code": appDB["Referral Code"],
+      "Slack IDs": appDB["Leader Slack"].join(","),
       "Venue": appDB["School Name"],
       "Location": appDB["School Address"],
       "Leader Phone": appDB["Leader Phone"].join(","),
