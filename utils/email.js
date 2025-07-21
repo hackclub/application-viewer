@@ -1,5 +1,5 @@
 import AWS from 'aws-sdk'
-import {Converter} from 'showdown'
+import { Converter } from 'showdown'
 
 AWS.config.update({
   accessKeyId: process.env.SES_ACCESS_KEY_ID,
