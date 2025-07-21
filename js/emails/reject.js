@@ -8,5 +8,5 @@ We’d love to answer any questions you have, just reply to this email.
 
 Thank you for your interest!
 
-— Sahiti @ Hack Club HQ
+— Jared @ Hack Club HQ
 `
