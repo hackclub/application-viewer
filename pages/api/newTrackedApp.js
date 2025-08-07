@@ -24,22 +24,17 @@ export default async (req, res) => {
       return
     }
 
-    const safeJoin = (field, delimiter = ",") => {
-      if (!field || !Array.isArray(field)) return "";
-      return field.join(delimiter);
-    };
-
     const appTracked = await airtable.create('Application Tracker', {
       "Club Name": appDB["Club Name"],
       "Referral Code": appDB["Referral Code"],
-      "Slack IDs": safeJoin(appDB["Leader Slack"]),
+      "Slack IDs": appDB["Leader Slack"] ? appDB["Leader Slack"].join(",") : "",
       "Venue": appDB["School Name"],
       "Location": appDB["School Address"],
-      "Leader Phone": safeJoin(appDB["Leader Phone"]),
-      "Leader Birthday": safeJoin(appDB["Leader Birthdays"]),
-      "Leader Address": safeJoin(appDB["Leader Address"]),
-      "Leader(s)": safeJoin(appDB["Full Name"]),
-      "Leaders' Emails": safeJoin(appDB["Leaders Emails"]),
+      "Leader Phone": appDB["Leader Phone"] ? appDB["Leader Phone"].join(",") : "",
+      "Leader Birthday": appDB["Leader Birthdays"] ? appDB["Leader Birthdays"].join(",") : "",
+      "Leader Address": appDB["Leader Address"] ? appDB["Leader Address"].join(",") : "",
+      "Leader(s)": appDB["Full Name"] ? appDB["Full Name"].join(",") : "",
+      "Leaders' Emails": appDB["Leaders Emails"] ? appDB["Leaders Emails"].join(",") : "",
       "Applied": new Date().toISOString().slice(0, 10),
       "Status": "applied",
       "App ID": dbRecordID,
