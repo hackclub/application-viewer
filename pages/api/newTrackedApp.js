@@ -24,23 +24,27 @@ export default async (req, res) => {
       return
     }
 
+    const safeJoin = (field, delimiter = ",") => {
+      if (!field || !Array.isArray(field)) return "";
+      return field.join(delimiter);
+    };
+
     const appTracked = await airtable.create('Application Tracker', {
       "Club Name": appDB["Club Name"],
       "Referral Code": appDB["Referral Code"],
-      "Slack IDs": appDB["Leader Slack"].join(","),
+      "Slack IDs": safeJoin(appDB["Leader Slack"]),
       "Venue": appDB["School Name"],
       "Location": appDB["School Address"],
-      "Leader Phone": appDB["Leader Phone"].join(","),
-      "Leader Birthday": appDB["Leader Birthdays"].join(","),
-      "Leader Address": appDB["Leader Address"].join(","),
-      "Leader(s)": appDB["Full Name"].join(","),
-      "Leaders' Emails": appDB["Leaders Emails"].join(","),
+      "Leader Phone": safeJoin(appDB["Leader Phone"]),
+      "Leader Birthday": safeJoin(appDB["Leader Birthdays"]),
+      "Leader Address": safeJoin(appDB["Leader Address"]),
+      "Leader(s)": safeJoin(appDB["Full Name"]),
+      "Leaders' Emails": safeJoin(appDB["Leaders Emails"]),
       "Applied": new Date().toISOString().slice(0, 10),
       "Status": "applied",
       "App ID": dbRecordID,
     })
 
-    // const channel = 'GLG8GQAKU' /* #application-committee */
     const channel = 'C02F9GD407J' /* #application-conspiracy */
     const text = transcript('application-committee.new-application', {
       url: appTracked.fields["Application Link"],
@@ -55,6 +59,8 @@ export default async (req, res) => {
     res.send(200)
   } catch (err) {
     console.error(err)
-    res.send(err).status(500)
+    if (!res.headersSent) {
+      res.status(500).send(err)
+    }
   }
 }
