@@ -69,6 +69,33 @@ Hack Club is an [open source](https://github.com/hackclub/hackclub) and [financi
 
             
             `)
+    } else if(from == "jenin@hackclub.com") {
+    return(`Hello ${names},
+
+Your club leader application got accepted! Welcome to the community, we’re so excited to have you on board.  
+
+I’m Jenin from the clubs team at HQ. I’m here to help with anything you need for your club, whether that’s planning activities, running meetings, or anything in between! You can always ask questions in the [leaders](https://hackclub.slack.com/archives/C02PA5G01ND) channel too. Here’s a [peek](https://www.youtube.com/watch?v=xXIxwV7bQTw) at what being a club leader is like, featuring Sahiti from Atlanta!  
+
+Let’s set up a Zoom call so we can meet. I’ll walk you through Hack Club resources and we’ll talk about the next steps for your club. Here’s my [calendar link](https://calendar.app.google/qduoxp75UkPPhzvT9) — pick a time that works best for you!  
+
+I’m really looking forward to meeting you and supporting your club!  
+
+Jenin :)  
+
+(p.s. I just put a package with stickers in the mail to you! DM me on Slack when you get it!)  
+
+--
+
+**Jenin**  
+Clubs Team @ HQ  
+
+Hack Club Slack: [@Jenin](https://hackclub.slack.com/team/U0926UASBJ7) (join the Slack [here](http://hackclub.com/slack))  
+
+<img src="https://assets.hackclub.com/flag-standalone.png" alt="Hack Club Flag" width="100px" />
+
+Hack Club is an [open source](https://github.com/hackclub/hackclub) and [financially transparent](https://bank.hackclub.com/hq/) 501(c)(3) nonprofit. Our EIN is 81-2908499. By the students, for the students.  
+
+[Clubs](https://hackclub.com/) • [Slack](https://hackclub.com/slack/) • [HCB](https://hackclub.com/hcb/) • [Hackathons](https://hackathons.hackclub.com/)`)
     } else if(from == "arpan@hackclub.com") {
         return(`Hey ${names},
 
