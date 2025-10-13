@@ -76,7 +76,7 @@ Your club leader application got accepted! Welcome to the community, we’re so 
 
 I’m Jenin from the clubs team at HQ. I’m here to help with anything you need for your club, whether that’s planning activities, running meetings, or anything in between! You can always ask questions in the [leaders](https://hackclub.slack.com/archives/C02PA5G01ND) channel too. Here’s a [peek](https://www.youtube.com/watch?v=xXIxwV7bQTw) at what being a club leader is like, featuring Sahiti from Atlanta!  
 
-Let’s set up a Zoom call so we can meet. I’ll walk you through Hack Club resources and we’ll talk about the next steps for your club. Here’s my [calendar link](https://calendar.app.google/rX2tnKKsS8mbhCy18) — pick a time that works best for you!  
+Let’s set up a Zoom call so we can meet. I’ll walk you through Hack Club resources and we’ll talk about the next steps for your club. Here’s my [calendar link](https://forms.hackclub.com/jenin-onboarding) — pick a time that works best for you!  
 
 I’m really looking forward to meeting you and supporting your club!  
 
