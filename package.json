@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "set NODE_OPTIONS=--openssl-legacy-provider && next -p 3001",
+    "dev": "NODE_OPTIONS='--openssl-legacy-provider' next -p 3001",
     "build": "NODE_OPTIONS='--openssl-legacy-provider' next build",
     "start": "next start",
     "lint": "next lint"

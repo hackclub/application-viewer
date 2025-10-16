@@ -6,17 +6,20 @@ import { useState } from 'react'
 import airtable from '../utils/airtable'
 import { getSession, useSession } from 'next-auth/client'
 
-const ApplicationDropDown = ({ template, content, name }) => {
-  const [open, setOpen] = useState(false)
-
+const CollapsibleSection = ({ title, children, defaultOpen = true }) => {
+  const [isOpen, setIsOpen] = useState(defaultOpen)
+  
   return (
-    <>
-      <div className="application-link" onClick={() => setOpen(!open)}>
-        <span>{name}</span>
-        <span className="app-link-arrow noselect">{open ? '▽' : '▷'}</span>
-      </div>
-      {open && <Application template={template} content={content} />}
-    </>
+    <div className="section">
+      <h2 
+        className={`section-header ${!isOpen ? 'collapsed' : ''}`}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        {title}
+        <span className="toggle-arrow">▷</span>
+      </h2>
+      {isOpen && children}
+    </div>
   )
 }
 
@@ -29,23 +32,28 @@ export default function Home({
 }) {
   return true ? ( // was session
     <>
-      <ApplicationDropDown
-        template={applicationTemplate.clubs}
-        content={application}
-        name={'Club'}
-      />
-      {leaders.map((leader, i) => (
-        <div key={i}>
-          <hr />
-          <ApplicationDropDown
-            template={applicationTemplate.leaders}
-            content={leader}
-            name={`Leader ${i}`}
-          />
+      <div className="main-layout">
+        <div className="content-column">
+          <div className="section">
+            <h2 className="section-header">the breakdown (literally me)</h2>
+            <Application template={applicationTemplate.clubs} content={application} />
+          </div>
+          
+          {leaders.map((leader, i) => (
+            <CollapsibleSection 
+              key={i} 
+              title={`Leader ${i + 1}`}
+              defaultOpen={i === 0}
+            >
+              <Application template={applicationTemplate.leaders} content={leader} />
+            </CollapsibleSection>
+          ))}
         </div>
-      ))}
-      <hr />
-      <ActionsDropDown id={trackedApp.id} entry={trackedApp.fields} />
+        
+        <div className="decisions-column">
+          <ActionsDropDown id={trackedApp.id} entry={trackedApp.fields} />
+        </div>
+      </div>
     </>
   ) : (
     <Auth />
