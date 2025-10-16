@@ -65,7 +65,7 @@ export const ResponseModal = ({ id, entry, setAppStatus, setResponseModal, respo
 			if (res.err === "verify email") {
 				alert(`We sent you a verification link to ${res.email}, once you click it, come back here and press send again.`)
 			} else {
-				alert('Something went wrong. Please grab an adult.')
+				alert('Something went wrong D:')
 			}
 		} else {
 			setAppStatus(pendingStatus)
@@ -74,44 +74,56 @@ export const ResponseModal = ({ id, entry, setAppStatus, setResponseModal, respo
 		setFormStatus("ready")
 	}
 
-	return <div className="response-modal">
-		<fieldset>
-			<legend>Email settings</legend>
-			<label htmlFor="from">Sender email</label>
-			<input name="from" className="from" placeholder="from" type="email" value={from} onInput={e => setFrom(e.target.value)} />
-			<br />
-			<label htmlFor="to">Recipients (comma seperated)</label>
-			<input name="to" className="to" placeholder="to (comma seperated)" type="text" value={to} onInput={e => setTo(e.target.value)} />
-			<br />
-			<label htmlFor="cc">CC (comma seperated)</label>
-			<input name="cc" className="cc" placeholder="cc (comma seperated)" type="text" value={cc} onInput={e => setCc(e.target.value)} />
-			<br />
-			<label htmlFor="bcc">BCC (comma seperated)</label>
-			<input className="bcc" placeholder="BCC (comma seperated)" type="text" value={bcc} onInput={e => setBcc(e.target.value)} />
-			<br />
-			<label htmlFor="subject">Subject</label>
-			<input className="subject" placeholder="subject" type="text" value={subject} onInput={e => setSubject(e.target.value)} />
-		</fieldset>
-		<fieldset>
-			<legend>Message</legend>
-			Here is the <b>{responseModal.type}</b> email you will respond with:
-			<textarea className="response-email" value={responseEmail} onInput={(e) => setResponseEmail(e.target.value)}></textarea>
-		</fieldset>
-		<div className="response-modal-buttons">
-			<button
-				className="action-button"
-				style={{ background: formStatus == "loading" ? "#333" : "blue" }}
-				disabled={formStatus !== "ready"}
-				onClick={onRespond}>
-				send
-			</button>
-			<button
-				className="action-button"
-				style={{ background: formStatus == "loading" ? "#333" : "grey" }}
-				disabled={formStatus !== "ready"}
-				onClick={() => setResponseModal({ open: false, type: "" })}>
-				cancel
-			</button>
+	return <div className="response-modal" onClick={() => setResponseModal({ open: false, type: "" })}>
+		<div className="response-modal-content" onClick={e => e.stopPropagation()}>
+			<fieldset>
+				<legend>Email settings</legend>
+				<label htmlFor="from">Sender email</label>
+				<input name="from" className="from" placeholder="from" type="email" value={from} onInput={e => setFrom(e.target.value)} />
+				<br />
+				<label htmlFor="to">Recipients (comma seperated)</label>
+				<input name="to" className="to" placeholder="to (comma seperated)" type="text" value={to} onInput={e => setTo(e.target.value)} />
+				<br />
+				<label htmlFor="cc">CC (comma seperated)</label>
+				<input name="cc" className="cc" placeholder="cc (comma seperated)" type="text" value={cc} onInput={e => setCc(e.target.value)} />
+				<br />
+				<label htmlFor="bcc">BCC (comma seperated)</label>
+				<input className="bcc" placeholder="BCC (comma seperated)" type="text" value={bcc} onInput={e => setBcc(e.target.value)} />
+				<br />
+				<label htmlFor="subject">Subject</label>
+				<input className="subject" placeholder="subject" type="text" value={subject} onInput={e => setSubject(e.target.value)} />
+			</fieldset>
+			<fieldset>
+				<legend>Message</legend>
+				Here is the <b>{responseModal.type}</b> email you will respond with:
+				<textarea className="response-email" value={responseEmail} onInput={(e) => setResponseEmail(e.target.value)}></textarea>
+			</fieldset>
+			<div className="response-modal-buttons">
+				<button
+					className="action-button accept"
+					disabled={formStatus !== "ready"}
+					onClick={onRespond}
+					style={{ 
+						background: formStatus === "loading" ? "#94a3b8" : "linear-gradient(135deg, #48bb78 0%, #38a169 100%)",
+						border: "none",
+						color: "white",
+						cursor: formStatus === "loading" ? "not-allowed" : "pointer"
+					}}>
+					{formStatus === "loading" ? "Sending..." : "send it"}
+				</button>
+				<button
+					className="action-button"
+					disabled={formStatus !== "ready"}
+					onClick={() => setResponseModal({ open: false, type: "" })}
+					style={{ 
+						background: "linear-gradient(135deg, #6b7280 0%, #4b5563 100%)",
+						border: "none",
+						color: "white",
+						cursor: formStatus === "loading" ? "not-allowed" : "pointer"
+					}}>
+					nah
+				</button>
+			</div>
 		</div>
 	</div>
 }

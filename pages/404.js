@@ -19,10 +19,20 @@ const getDino = () => {
   }
 }
 const NotFound = () => (
-  <>
-    <h1>404, club not found</h1>
-    <img src={getDino()} />
-  </>
+  <div className="not-found-container">
+    <h2 className="not-found-title">
+      no clue what you're looking for
+    </h2>
+    <p>but here's a dinosaur to hopefully make you happier, i guess!</p>
+    <img 
+      src={getDino()} 
+      alt="Hack Club Dinosaur" 
+      className="not-found-image"
+    />
+    <h6>this happens to the best of us, if you think you're in the right space, send a message over in #hq-clubs</h6>
+    <h6>otherwise, i appreciate the grind</h6>
+    <h6 className="not-found-gray-text">application-viewer v2, made by lynn with ❤️</h6>
+  </div>
 )
 
 export default NotFound
