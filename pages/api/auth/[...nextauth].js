@@ -12,8 +12,7 @@ const options = {
   providers: [
     Providers.Slack({
       clientId: process.env.AUTH_SLACK_CLIENT_ID,
-      clientSecret: process.env.AUTH_SLACK_CLIENT_SECRET,
-      scope: 'identity.basic identity.email identity.avatar'
+      clientSecret: process.env.AUTH_SLACK_CLIENT_SECRET
     })
   ],
   callbacks: {
