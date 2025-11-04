@@ -20,18 +20,19 @@ const options = {
       try {
         // Get the Slack user ID
         const slackId = user.id
+        console.log(`Sign-in attempt by Slack ID: ${slackId}`)
         
         // Check if this Slack ID exists in the Ambassadors table
-        const ambassadors = await airtable.get('Ambassadors')
-        const isAmbassador = ambassadors.some(ambassador => 
-          ambassador.fields.slack_id === slackId
-        )
+        // Use filterByFormula to query directly instead of fetching all records
+        const ambassador = await airtable.find('Ambassadors', `{slack_id}='${slackId}'`)
         
-        console.log(`Sign-in attempt by Slack ID: ${slackId}, Is Ambassador: ${isAmbassador}`)
+        const isAmbassador = !!ambassador
+        console.log(`Is Ambassador: ${isAmbassador}`)
         
         return isAmbassador
       } catch (error) {
         console.error('Error checking ambassador status:', error)
+        // In case of error, deny access for security
         return false
       }
     },
@@ -49,21 +50,29 @@ const options = {
   // a separate secret is defined explicitly for encrypting the JWT.
   secret: process.env.SECRET,
 
-  // Database is optional for OAuth providers
-  database: {
-    type: 'postgres',
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    ssl: true,
-    extra: {
-      ssl: {
-        rejectUnauthorized: false
+  // Use JWT instead of database sessions to avoid database timeouts
+  session: {
+    jwt: true,
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
+
+  // Database is optional - comment out if not needed to avoid connection timeouts
+  ...(process.env.DB_HOST && {
+    database: {
+      type: 'postgres',
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT,
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
+      ssl: true,
+      extra: {
+        ssl: {
+          rejectUnauthorized: false
+        }
       }
     }
-  }
+  })
 }
 
 export default NextAuth(options)
