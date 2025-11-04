@@ -554,72 +554,28 @@ export default {
       ]
     },
     {
-      header: 'Optional Stats',
+      header: 'Optional Info',
       label:
         'We care about being as inclusive as possible. Sharing this information helps us achieve that goal.',
       translations: {
         'pt-BR': {
-          header: 'Estatísticas',
+          header: 'Informações Opcionais',
           label:
             'Nós nos importamos em ser o mais inclusivos possíveis. Compartilhando essas informações, você nos ajuda a tornar isso possível'
         }
       },
       items: [
         {
-          key: 'Gender',
-          label: 'Gender',
-          optional: true,
-          type: 'select',
-          options: [
-            'Male',
-            'Female',
-            'Non-binary/non-conforming',
-            'Prefer not to respond'
-          ],
+          key: 'Pronouns',
+          label: 'Pronouns',
+          type: 'string',
+          placeholder: 'e.g., she/her, he/him, they/them',
           translations: {
             'pt-BR': {
               label: 'Pronomes',
-              options: [
-                'Macho',
-                'Fêmea',
-                'Não binário/não conforme',
-                'Prefiro não responder'
-              ]
+              placeholder: 'ex: ela/dela, ele/dele, elu/delu'
             }
           },
-          optional: true
-        },
-        {
-          key: 'Ethnicity',
-          label: 'Ethnicity',
-          type: 'select',
-          translations: {
-            'pt-BR': {
-              label: 'Etnia',
-              options: [
-                'Origem hispânica, latina ou espanhola',
-                'Branco',
-                'Afro-americano',
-                'índio americano ou nativo do Alasca',
-                'Asiático',
-                'índio asiático',
-                'Nativo havaiano ou outro ilhéu do Pacífico',
-                'Outra etnia',
-                'Prefiro não dizer'
-              ]
-            }
-          },
-          options: [
-            'Hispanic, Latino or Spanish origin',
-            'White',
-            'Black, African American',
-            'American Indian or Alaska native',
-            'Asian',
-            'Asian Indian',
-            'Native Hawaiian or Other Pacific Islander',
-            'Other Ethnicity',
-            'Prefer not to say'
-          ],
           optional: true
         }
       ]

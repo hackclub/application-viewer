@@ -6,7 +6,7 @@ import transcript from "../../utils/transcript";
 import { checkEmail, sendVerification, sendEmail } from "../../utils/email";
 
 export default async (req, res) => {
-  const { recordID, teacher, email } = req.body
+  const { recordID, rejectionReason, email } = req.body
 
   try {
     ensureMethod({ req, method: 'POST' })
@@ -18,28 +18,27 @@ export default async (req, res) => {
       return
     }
 
-    const trackedApp = await airtable.find('Application Tracker', recordID)
+    const clubRecord = await airtable.find('Clubs', recordID)
 
-    const currentEntryNote = trackedApp.fields["Notes"];
+    const currentEntryNote = clubRecord.fields["notes"];
 
     const note = currentEntryNote
-      ? `${currentEntryNote}\nUpdated with webhook: ${teacher ? "teacher" : "reject"}`
-      : `Updated with webhook: ${teacher ? "teacher" : "reject"}`
+      ? `${currentEntryNote}\nRejected: ${rejectionReason || "reject"}`
+      : `Rejected: ${rejectionReason || "reject"}`
 
     const promises = []
-    promises.push(airtable.patch('Application Tracker', recordID, {
-      "Notes": note,
-      "Status": "rejected",
-      "Date Responded": new Date().toISOString().slice(0, 10)
+    promises.push(airtable.patch('Clubs', recordID, {
+      "notes": note,
+      "Application Status": "rejected"
     }))
 
     // send email
     promises.push(sendEmail(email));
 
     const channel = 'C02F9GD407J' /* #application-conspiracy */
-    const timestamp = trackedApp.fields["Application Committee Timestamp"];
+    const tsMatch = currentEntryNote?.match(/Slack TS: (\d+\.\d+)/)
+    const timestamp = tsMatch ? tsMatch[1] : null
     if (timestamp) {
-      // applications created before #application-conspiracy were created don't have this field
       promises.push(slackReact({channel, timestamp, name: 'no_entry'}))
       promises.push(slackReact({channel, timestamp, name: 'white_check_mark', addOrRemove: 'remove'}))
       promises.push(slackPostMessage({channel, timestamp, text: transcript('application-committee.rejected')}))

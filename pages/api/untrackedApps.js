@@ -2,11 +2,14 @@ import airtable from '../../utils/airtable'
 
 export default async function handler(req, res) {
   try {
-    const submitted = await airtable.get('Application Database', {view: 'Submitted'})
-    const trackedSubmitted = await airtable.get('Application Tracker')
-    const trackedSubmittedIDs = trackedSubmitted.map(record => record.get('App ID'))
-
-    const untracked = submitted.filter(app => !trackedSubmittedIDs.includes(app.id) )
+    // Get all records from Clubs table where Application Status is empty or null
+    const allLeaders = await airtable.get('Clubs')
+    
+    // Filter for untracked applications (those without Application Status set)
+    const untracked = allLeaders.filter(record => {
+      const status = record.fields['Application Status']
+      return !status || status === ''
+    })
 
     res.status(200).json(untracked);
   } catch (e) {

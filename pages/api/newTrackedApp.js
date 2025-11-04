@@ -10,50 +10,36 @@ export default async (req, res) => {
 
     const { dbRecordID } = req.body
 
-    const appDB = (await airtable.find('Application Database', dbRecordID)).fields;
-    const possibleDuplicateTracker = await airtable.find('Application Tracker', `{App ID}='${dbRecordID}'`)
-    if (possibleDuplicateTracker) {
-      // uh oh... we're not in kansas anymore
+    // Fetch the club record from Clubs table
+    const clubRecord = await airtable.find('Clubs', dbRecordID)
+    if (!clubRecord) {
+      res.status(404).send('Record not found')
+      return
+    }
 
-      //(msw) I expect this record to not
-      // already exist. if it does, something weird happened and I don't want this
-      // script running by itself without human oversight– let's just skip and
-      // return a 200
+    const appDB = clubRecord.fields
 
+    // Check if already tracked (Application Status is set)
+    if (appDB['Application Status']) {
       res.send(200)
       return
     }
 
-    const safeJoin = (field, delimiter = ",") => {
-      if (!field || !Array.isArray(field)) return "";
-      return field.join(delimiter);
-    };
-
-    const appTracked = await airtable.create('Application Tracker', {
-      "Club Name": appDB["Club Name"],
-      "Referral Code": appDB["Referral Code"],
-      "Slack IDs": safeJoin(appDB["Leader Slack"]),
-      "Venue": appDB["School Name"],
-      "Location": appDB["School Address"],
-      "Leader Phone": safeJoin(appDB["Leader Phone"]),
-      "Leader Birthday": safeJoin(appDB["Leader Birthdays"]),
-      "Leader Address": safeJoin(appDB["Leader Address"]),
-      "Leader(s)": safeJoin(appDB["Full Name"]),
-      "Leaders' Emails": safeJoin(appDB["Leaders Emails"]),
-      "Applied": new Date().toISOString().slice(0, 10),
-      "Status": "applied",
-      "App ID": dbRecordID,
+    // Update the record to mark as tracked/applied
+    await airtable.patch('Clubs', dbRecordID, {
+      "Application Status": "applied",
     })
 
     const channel = 'C02F9GD407J' /* #application-conspiracy */
     const text = transcript('application-committee.new-application', {
-      url: appTracked.fields["Application Link"],
-      location: appTracked.fields["Location"],
+      url: `https://application-viewer.vercel.app/${dbRecordID}`,
+      location: `${appDB['venue_address_city']}, ${appDB['venue_address_state']}`,
     })
     const slackMessage = await slackPostMessage({ channel, text })
 
-    await airtable.patch('Application Tracker', appTracked.id, {
-      "Application Committee Timestamp": slackMessage.ts
+    // Store the slack message timestamp in notes or a dedicated field
+    await airtable.patch('Clubs', dbRecordID, {
+      "notes": appDB['notes'] ? `${appDB['notes']}\nSlack TS: ${slackMessage.ts}` : `Slack TS: ${slackMessage.ts}`
     })
 
     res.send(200)

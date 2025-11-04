@@ -1,19 +1,47 @@
 import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
+import airtable from '../../../utils/airtable'
+
+// Debug: Check if env vars are loaded
+console.log('AUTH_SLACK_CLIENT_ID:', process.env.AUTH_SLACK_CLIENT_ID ? 'Set ✓' : 'Missing ✗')
+console.log('AUTH_SLACK_CLIENT_SECRET:', process.env.AUTH_SLACK_CLIENT_SECRET ? 'Set ✓' : 'Missing ✗')
 
 const options = {
   theme: 'light',
   // Configure one or more authentication providers
   providers: [
-    Providers.Email({
-      server: process.env.EMAIL_SERVER,
-      from: process.env.EMAIL_FROM,
-      maxAge: 10 * 24 * 60 * 60 // 10 days
+    Providers.Slack({
+      clientId: process.env.AUTH_SLACK_CLIENT_ID,
+      clientSecret: process.env.AUTH_SLACK_CLIENT_SECRET,
+      scope: 'identity.basic identity.email identity.avatar'
     })
   ],
   callbacks: {
-    async signIn({ email }) {
-      return email.endsWith('@hackclub.com')
+    async signIn(user, account, profile) {
+      try {
+        // Get the Slack user ID
+        const slackId = user.id
+        
+        // Check if this Slack ID exists in the Ambassadors table
+        const ambassadors = await airtable.get('Ambassadors')
+        const isAmbassador = ambassadors.some(ambassador => 
+          ambassador.fields.slack_id === slackId
+        )
+        
+        console.log(`Sign-in attempt by Slack ID: ${slackId}, Is Ambassador: ${isAmbassador}`)
+        
+        return isAmbassador
+      } catch (error) {
+        console.error('Error checking ambassador status:', error)
+        return false
+      }
+    },
+    async session(session, token) {
+      // Add Slack ID to session
+      if (token.sub) {
+        session.slackId = token.sub
+      }
+      return session
     }
   },
 
@@ -22,9 +50,7 @@ const options = {
   // a separate secret is defined explicitly for encrypting the JWT.
   secret: process.env.SECRET,
 
-  // A database is optional, but required to persist accounts in a database
-  // It's also REQUIRED for email sign-in.
-  // database: process.env.DATABASE_URL
+  // Database is optional for OAuth providers
   database: {
     type: 'postgres',
     host: process.env.DB_HOST,

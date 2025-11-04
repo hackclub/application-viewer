@@ -4,7 +4,7 @@ import { ResponseModal } from "./ResponseModal.jsx";
 
 
 export const ActionsDropDown = ({ id, entry, refers="apply" }) => {
-  const [appStatus, setAppStatus] = useState(entry["Status"]);
+  const [appStatus, setAppStatus] = useState(entry["Application Status"]);
   const [responseModal, setResponseModal] = useState({ open: false, type: "" });
 
   const setModal = (open, type) => {
@@ -39,12 +39,6 @@ export const ActionsDropDown = ({ id, entry, refers="apply" }) => {
         style={{ width: '100%', padding: '0.5rem 1rem', fontSize: '0.9rem' }}>
         reject
       </button>
-      <button 
-        className="action-button teacher"
-        onClick={() => setModal(true, "teacher")}
-        style={{ width: '100%', padding: '0.5rem 1rem', fontSize: '0.9rem' }}>
-        teacher
-      </button>
     </div> 
     
     <div className="item">
@@ -52,11 +46,8 @@ export const ActionsDropDown = ({ id, entry, refers="apply" }) => {
         <div style={{ marginBottom: '0.25rem' }}>
           <strong>accept:</strong> welcome email + leader books call
         </div>
-        <div style={{ marginBottom: '0.25rem' }}>
-          <strong>reject:</strong> rejection email, add a reason!
-        </div>
         <div>
-          <strong>teacher:</strong> teacher rejection email
+          <strong>reject:</strong> rejection email, select reason (Adult/AI/Low Effort)
         </div>
       </div>
     </div>

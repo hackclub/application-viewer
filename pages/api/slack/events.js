@@ -29,7 +29,8 @@ export default async (req, res) => {
           const { user, text, channel, ts } = event
           await slackReact({ channel, timestamp: ts, name: 'beachball' })
           const cleanedText = text.replace(mentionSubstring, '').trim()
-          const club = await airtable.find('Application Tracker', `{Check-In Pass}='${cleanedText}'`)
+          // Note: Check-In Pass field may need to be added to the new Clubs schema
+          const club = await airtable.find('Clubs', `{Check-In Pass}='${cleanedText}'`)
           if (club) {
             await Promise.all([
               slackReact({ channel, timestamp: ts, name: 'white_check_mark' }),

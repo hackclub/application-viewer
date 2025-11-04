@@ -37,20 +37,20 @@ const createUniqueChannel = async (name, retrying=false) => {
 }
 
 export default async (recordID) => {
-  // given an application recordID, create a slack channel & save it
+  // given a club recordID, create a slack channel & save it
   if (!recordID) throw new Error('No recordID in body')
 
-  const application = await airtable.find('Application Tracker', recordID);
+  const clubRecord = await airtable.find('Clubs', recordID);
 
-  if (!application) throw new Error('No application found with that recordID')
+  if (!clubRecord) throw new Error('No club found with that recordID')
 
-  if (!application.fields['Slack Channel ID'] || application.fields['Slack Channel ID'].length == 0) {
-    const responseData = await createUniqueChannel(application.fields['Venue'])
+  if (!clubRecord.fields['Slack Channel ID'] || clubRecord.fields['Slack Channel ID'].length == 0) {
+    const responseData = await createUniqueChannel(clubRecord.fields['venue_name'])
 
     return responseData.channel.id;
   } else {
     console.log('Slack channel already exists, not creating a new one');
-    return application.fields['Slack Channel ID'];
+    return clubRecord.fields['Slack Channel ID'];
   }
 
 }

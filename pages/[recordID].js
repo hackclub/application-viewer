@@ -30,7 +30,7 @@ export default function Home({
   trackedApp,
   session
 }) {
-  return true ? ( // was session
+  return session ? (
     <>
       <div className="main-layout">
         <div className="content-column">
@@ -64,50 +64,159 @@ export async function getServerSideProps(ctx) {
   const { query } = ctx
   const { recordID } = query
   const session = await getSession(ctx)
-  // add authentication
+  
+  // Check if user is authenticated
+  if (!session) {
+    return {
+      props: { query, application: {}, leaders: [], trackedApp: { id: recordID, fields: {} }, session: null },
+      notFound: false
+    }
+  }
 
   try {
-    const application = {}
-    const applicationRaw = (
-      await airtable.find('Application Database', recordID)
-    ).fields
-    const includedKeys = applicationTemplate.clubs
-      .map(x => x.items.map(x => x.key))
-      .flat()
-    for (const key in applicationRaw) {
-      if (includedKeys.includes(key)) application[key] = applicationRaw[key]
+    // Fetch the club record from the Clubs table
+    const clubRecord = await airtable.find('Clubs', recordID)
+    const clubRaw = clubRecord.fields
+    
+    // Map club fields to the expected format
+    const application = {
+      'Club Name': clubRaw['club_name'] || null,
+      'Venue Type': clubRaw['venue_type'] || null,
+      'School Name': clubRaw['venue_name'] || null,
+      'School Address': [
+        clubRaw['venue_address_line_1'],
+        clubRaw['venue_address_line_2'],
+        clubRaw['venue_address_city'],
+        clubRaw['venue_address_state'],
+        clubRaw['venue_address_country'],
+        clubRaw['venue_address_zip']
+      ].filter(Boolean).join(', ') || null,
+      'Why': clubRaw['club_app_why'] || null,
+      'Success': clubRaw['club_app_meetings'] || null,
+      'Get Out Of HC': clubRaw['club_app_personal'] || null,
+      'Status': clubRaw['club_app_steps'] || null,
+      'What Is New': clubRaw['club_app_history'] || null,
+      'Hear About HC': clubRaw['referral_type'] || null,
+      'Referral Code': clubRaw['referral_code'] || null,
+      'Leaders Relationship': null // Not present in new structure
     }
-
-    let trackedApp = await airtable.find(
-      'Application Tracker',
-      `{App ID}='${recordID}'`
-    )
-
-    let leaders = await Promise.all(
-      applicationRaw['Prospective Leaders'].map(async id => {
-        const leader = {}
-        const leaderRaw = (await airtable.find('Prospective Leaders', id))
-          .fields
-        const includedKeys = applicationTemplate.leaders
-          .map(x => x.items.map(x => x.key))
-          .flat()
-
-        for (const key in leaderRaw) {
-          if (includedKeys.includes(key)) leader[key] = leaderRaw[key]
+    
+    // Fetch the main leader from the Leaders table
+    let leaders = []
+    
+    console.log('Club data:', { 
+      rel_leader: clubRaw['rel_leader'], 
+      rel_co_leaders: clubRaw['rel_co_leaders'] 
+    })
+    
+    if (clubRaw['rel_leader'] && clubRaw['rel_leader'][0]) {
+      try {
+        const leaderRecord = await airtable.find('Leaders', clubRaw['rel_leader'][0])
+        console.log('Main leader record:', leaderRecord)
+        if (leaderRecord) {
+          const leaderRaw = leaderRecord.fields
+        const mainLeader = {
+          'Full Name': leaderRaw['name'] || `${leaderRaw['first_name'] || ''} ${leaderRaw['last_name'] || ''}`.trim() || null,
+          'Birthday': leaderRaw['birthday'] || leaderRaw['dob'] || leaderRaw['date_of_birth'] || null,
+          'School Year': leaderRaw['year'] || leaderRaw['graduation_year'] || null,
+          'Phone': leaderRaw['phone'] || leaderRaw['phone_number'] || null,
+          'Slack ID': leaderRaw['slack_id'] || null,
+          'Address Formatted': [
+            leaderRaw['address_line_1'],
+            leaderRaw['address_line_2'],
+            leaderRaw['address_city'] || leaderRaw['city'],
+            leaderRaw['address_state'] || leaderRaw['state'],
+            leaderRaw['address_country'] || leaderRaw['country'],
+            leaderRaw['address_zip'] || leaderRaw['zip']
+          ].filter(Boolean).join(', ') || null,
+          'Address Line 1': leaderRaw['address_line_1'] || null,
+          'Address Line 2': leaderRaw['address_line_2'] || null,
+          'Address City': leaderRaw['address_city'] || leaderRaw['city'] || null,
+          'Address State': leaderRaw['address_state'] || leaderRaw['state'] || null,
+          'Address Zip': leaderRaw['address_zip'] || leaderRaw['zip'] || null,
+          'Address Country': leaderRaw['address_country'] || leaderRaw['country'] || null,
+          'Website': leaderRaw['link_personal_website'] || leaderRaw['website'] || null,
+          'GitHub': leaderRaw['link_github'] || leaderRaw['github'] || null,
+          'Twitter': leaderRaw['link_social_media'] || leaderRaw['twitter'] || null,
+          'Other': leaderRaw['link_other'] || null,
+          'Achievement': leaderRaw['app_build'] || null,
+          'New Fact': leaderRaw['app_learning'] || null,
+          'Hacker Story': leaderRaw['app_evidence'] || null,
+          'Pronouns': leaderRaw['pronouns'] || null
         }
+        leaders.push(mainLeader)
+        console.log('Added main leader:', mainLeader['Full Name'])
+      }
+      } catch (err) {
+        console.error('Error fetching main leader:', err)
+      }
+    }
+    
+    // Get co-leaders if they exist
+    if (clubRaw['rel_co_leaders'] && clubRaw['rel_co_leaders'].length > 0) {
+      console.log(`Fetching ${clubRaw['rel_co_leaders'].length} co-leaders...`)
+      for (const coLeaderId of clubRaw['rel_co_leaders']) {
+        try {
+          const coLeaderRecord = await airtable.find('Leaders', coLeaderId)
+          console.log('Co-leader record:', coLeaderRecord)
+          if (coLeaderRecord) {
+            const leaderRaw = coLeaderRecord.fields
+          const coLeader = {
+            'Full Name': leaderRaw['name'] || `${leaderRaw['first_name'] || ''} ${leaderRaw['last_name'] || ''}`.trim() || null,
+            'Birthday': leaderRaw['birthday'] || leaderRaw['dob'] || leaderRaw['date_of_birth'] || null,
+            'School Year': leaderRaw['year'] || leaderRaw['graduation_year'] || null,
+            'Phone': leaderRaw['phone'] || leaderRaw['phone_number'] || null,
+            'Slack ID': leaderRaw['slack_id'] || null,
+            'Address Formatted': [
+              leaderRaw['address_line_1'],
+              leaderRaw['address_line_2'],
+              leaderRaw['address_city'] || leaderRaw['city'],
+              leaderRaw['address_state'] || leaderRaw['state'],
+              leaderRaw['address_country'] || leaderRaw['country'],
+              leaderRaw['address_zip'] || leaderRaw['zip']
+            ].filter(Boolean).join(', ') || null,
+            'Address Line 1': leaderRaw['address_line_1'] || null,
+            'Address Line 2': leaderRaw['address_line_2'] || null,
+            'Address City': leaderRaw['address_city'] || leaderRaw['city'] || null,
+            'Address State': leaderRaw['address_state'] || leaderRaw['state'] || null,
+            'Address Zip': leaderRaw['address_zip'] || leaderRaw['zip'] || null,
+            'Address Country': leaderRaw['address_country'] || leaderRaw['country'] || null,
+            'Website': leaderRaw['link_personal_website'] || leaderRaw['website'] || null,
+            'GitHub': leaderRaw['link_github'] || leaderRaw['github'] || null,
+            'Twitter': leaderRaw['link_social_media'] || leaderRaw['twitter'] || null,
+            'Other': leaderRaw['link_other'] || null,
+            'Achievement': leaderRaw['app_build'] || null,
+            'New Fact': leaderRaw['app_learning'] || null,
+            'Hacker Story': leaderRaw['app_evidence'] || null,
+            'Pronouns': leaderRaw['pronouns'] || null
+          }
+          leaders.push(coLeader)
+          console.log('Added co-leader:', coLeader['Full Name'])
+        }
+        } catch (err) {
+          console.error('Error fetching co-leader:', err)
+        }
+      }
+    }
+    
+    console.log(`Total leaders fetched: ${leaders.length}`)
 
-        return leader
-      })
-    )
+    // Create a tracked app object for compatibility
+    let trackedApp = {
+      id: recordID,
+      fields: {
+        'Club Status': clubRaw['Club Status'] || null,
+        'Application Status': clubRaw['Application Status'] || null,
+        'Notes': clubRaw['notes'] || null,
+        'Ambassador': clubRaw['rel_ambassador'] || null
+      }
+    }
 
     return {
       props: { query, application, leaders, trackedApp, session },
       notFound: false
     }
   } catch (e) {
-    // console.log(e)
-    // res.statusCode = 302
-    // res.setHeader('Location', `/`)
     console.error(e)
     return { notFound: true }
   }

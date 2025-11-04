@@ -18,9 +18,9 @@ export default async (req, res) => {
       return
     }
 
-    const trackedApp = await airtable.find('Application Tracker', recordID)
+    const clubRecord = await airtable.find('Clubs', recordID)
 
-    const currentEntryNote = trackedApp.fields["Notes"];
+    const currentEntryNote = clubRecord.fields["notes"];
 
     const note = currentEntryNote
       ? `${currentEntryNote}\nUpdated with webhook: accept`
@@ -41,22 +41,32 @@ export default async (req, res) => {
       }[email?.toLowerCase()]
     }
 
-    const ambassador = ambassadorFromPlus(email.from) || ambassadorFromAddress(email.from)
+    const ambassadorName = ambassadorFromPlus(email.from) || ambassadorFromAddress(email.from)
 
     const promises = []
     let fields = {
-      "Notes": note,
-      "Status": "awaiting onboarding",
-      "Date Responded": new Date().toISOString().slice(0, 10)
+      "notes": note,
+      "Application Status": "accepted",
+      "Club Status": "onboarding"
     }
-    if (ambassador) {
-      fields["Ambassador"] = ambassador
+    
+    // Find ambassador record if specified
+    if (ambassadorName) {
+      try {
+        const ambassadorRecord = await airtable.find('Ambassadors', `{name}='${ambassadorName}'`)
+        if (ambassadorRecord) {
+          fields["rel_ambassador"] = [ambassadorRecord.id]
+        }
+      } catch (err) {
+        console.error(`Error finding ambassador ${ambassadorName}:`, err)
+      }
     }
-    promises.push(airtable.patch('Application Tracker', recordID, fields))
+    
+    promises.push(airtable.patch('Clubs', recordID, fields))
 
     promises.push(sendEmail(email));
 
-    const referralCode = trackedApp.fields["Referral Code"];
+    const referralCode = clubRecord.fields["referral_code"];
     console.log(`Processing referral code: ${referralCode}`);
     if (referralCode) {
       console.log(`Found referral code: ${referralCode}, incrementing referral count...`);
@@ -83,11 +93,11 @@ export default async (req, res) => {
       }
     }
 
-    // update slack thread
+    // update slack thread - extract timestamp from notes
     const channel = 'C02F9GD407J' /* #application-conspiracy */
-    const timestamp = trackedApp.fields["Application Committee Timestamp"];
+    const tsMatch = currentEntryNote?.match(/Slack TS: (\d+\.\d+)/)
+    const timestamp = tsMatch ? tsMatch[1] : null
     if (timestamp) {
-      // applications created before #application-conspiracy was created don't have this field
       promises.push(slackReact({ channel, timestamp, name: 'white_check_mark' }))
       promises.push(slackReact({ channel, timestamp, name: 'no_entry', addOrRemove: 'remove' }))
     }

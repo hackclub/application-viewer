@@ -2,27 +2,36 @@ import { useState } from "react";
 import useStickyState from "../../utils/useStickyState";
 import { accept } from "/js/emails/accept.js";
 import { reject } from "/js/emails/reject.js";
-import { teacher } from "/js/emails/teacher.js";
 import { postData } from "/js/postData.js";
 
 const EMAILS = {
 	accept,
 	reject,
-	teacher,
 }
 
 const EMAILS_SUBJECTS = {
 	accept: "Welcome to Hack Club",
 	reject: "Regarding Your Hack Club Application",
-	teacher: "Regarding Your Hack Club Application",
 }
+
+const REJECTION_REASONS = [
+	"Reject - Adult",
+	"Reject - AI",
+	"Reject - Low Effort Answers"
+]
 
 export const ResponseModal = ({ id, entry, setAppStatus, setResponseModal, responseModal, refers }) => {
 	const [formStatus, setFormStatus] = useState("ready");
-	const [to, setTo] = useState(entry["Leaders' Emails"], 'to')
+	const [rejectionReason, setRejectionReason] = useState(REJECTION_REASONS[0]);
+	
+	// Map new field names to old expected format
+	const leaderEmail = entry["submission_email"] || entry["leader_email"] || ""
+	const leaderName = entry["calc_contact"] || `${entry["leader_first_name"] || ""} ${entry["leader_last_name"] || ""}`.trim()
+	
+	const [to, setTo] = useState(leaderEmail, 'to')
 	const [from, setFrom] = useStickyState('from', 'clubs@hackclub.com')
-	const [responseEmail, setResponseEmail] = useState(responseModal.type !== "" ? EMAILS[responseModal.type](entry["Leader(s)"], from) : "")
-	const [subject, setSubject] = useState(`${EMAILS_SUBJECTS[responseModal.type]}: ${entry["Leader(s)"]}`)
+	const [responseEmail, setResponseEmail] = useState(responseModal.type !== "" ? EMAILS[responseModal.type](leaderName, from) : "")
+	const [subject, setSubject] = useState(`${EMAILS_SUBJECTS[responseModal.type]}: ${leaderName}`)
 	const [bcc, setBcc] = useStickyState('bcc', '')
 	const [cc, setCc] = useStickyState('cc', 'clubs@hackclub.com')
 
@@ -50,11 +59,11 @@ export const ResponseModal = ({ id, entry, setAppStatus, setResponseModal, respo
 				email,
 				refers
 			})
-			pendingStatus = "awaiting onboarding"
-		} else { // reject | teacher
+			pendingStatus = "accepted"
+		} else { // reject
 			res = await postData("/api/rejectTrackedApp", {
 				recordID: id,
-				teacher: responseModal.type === "teacher",
+				rejectionReason,
 				email,
 				refers
 			})
@@ -78,6 +87,21 @@ export const ResponseModal = ({ id, entry, setAppStatus, setResponseModal, respo
 		<div className="response-modal-content" onClick={e => e.stopPropagation()}>
 			<fieldset>
 				<legend>Email settings</legend>
+				{responseModal.type === "reject" && (
+					<>
+						<label htmlFor="rejectionReason">Rejection Reason</label>
+						<select 
+							name="rejectionReason" 
+							className="rejection-reason" 
+							value={rejectionReason} 
+							onChange={e => setRejectionReason(e.target.value)}
+							style={{ marginBottom: '1rem', padding: '0.5rem', width: '100%' }}>
+							{REJECTION_REASONS.map(reason => (
+								<option key={reason} value={reason}>{reason}</option>
+							))}
+						</select>
+					</>
+				)}
 				<label htmlFor="from">Sender email</label>
 				<input name="from" className="from" placeholder="from" type="email" value={from} onInput={e => setFrom(e.target.value)} />
 				<br />
