@@ -5,9 +5,12 @@ import airtable from '../../../utils/airtable'
 // Debug: Check if env vars are loaded
 console.log('AUTH_SLACK_CLIENT_ID:', process.env.AUTH_SLACK_CLIENT_ID ? 'Set ✓' : 'Missing ✗')
 console.log('AUTH_SLACK_CLIENT_SECRET:', process.env.AUTH_SLACK_CLIENT_SECRET ? 'Set ✓' : 'Missing ✗')
+console.log('NEXTAUTH_URL:', process.env.NEXTAUTH_URL || 'Not set - using auto-detect')
+console.log('NODE_ENV:', process.env.NODE_ENV)
 
 const options = {
   theme: 'light',
+  debug: process.env.NODE_ENV === 'development',
   // Configure one or more authentication providers
   providers: [
     Providers.Slack({
