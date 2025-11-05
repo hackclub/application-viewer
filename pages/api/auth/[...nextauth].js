@@ -20,29 +20,31 @@ const options = {
   ],
   callbacks: {
     async signIn(user, account, profile) {
-      try {
-        // Get the Slack user ID
-        const slackId = user.id
-        console.log(`Sign-in attempt by Slack ID: ${slackId}`)
-        
-        // Check if this Slack ID exists in the Ambassadors table
-        // Use filterByFormula to query directly instead of fetching all records
-        const ambassador = await airtable.find('Ambassadors', `{slack_id}='${slackId}'`)
-        
-        const isAmbassador = !!ambassador
-        console.log(`Is Ambassador: ${isAmbassador}`)
-        
-        return isAmbassador
-      } catch (error) {
-        console.error('Error checking ambassador status:', error)
-        // In case of error, deny access for security
-        return false
+      const slackId = user.id
+      console.log(`[AUTH] Sign-in: ${user.name}, Slack ID: ${slackId}`)
+      
+      // Allow sign-in to complete quickly - we'll check ambassador status on page load
+      // This prevents OAuth callback timeout issues
+      return true
+    },
+    async jwt(token, user, account, profile) {
+      // Add user info to JWT on first sign in
+      if (user) {
+        token.slackId = user.id
+        token.name = user.name
+        token.email = user.email
       }
+      return token
     },
     async session(session, token) {
-      // Add Slack ID to session
-      if (token.sub) {
-        session.slackId = token.sub
+      // Add Slack ID and info to session
+      if (token) {
+        session.slackId = token.slackId
+        session.user = {
+          name: token.name,
+          email: token.email,
+          image: token.picture
+        }
       }
       return session
     }

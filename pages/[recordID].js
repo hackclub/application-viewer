@@ -28,8 +28,23 @@ export default function Home({
   application,
   leaders,
   trackedApp,
-  session
+  session,
+  accessDenied
 }) {
+  if (accessDenied) {
+    return (
+      <div style={{ padding: '4rem 2rem', textAlign: 'center', maxWidth: '600px', margin: '0 auto' }}>
+        <h1 style={{ color: '#ec3750', fontSize: '2rem', marginBottom: '1rem' }}>Access Denied</h1>
+        <p style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>
+          You are signed in as <strong>{session?.user?.name}</strong>, but you don't have permission to view this application.
+        </p>
+        <p style={{ color: '#666' }}>
+          Only Hack Club Ambassadors can access the application viewer. If you believe this is an error, please contact the team.
+        </p>
+      </div>
+    )
+  }
+  
   return session ? (
     <>
       <div className="main-layout">
@@ -71,6 +86,31 @@ export async function getServerSideProps(ctx) {
       props: { query, application: {}, leaders: [], trackedApp: { id: recordID, fields: {} }, session: null },
       notFound: false
     }
+  }
+  
+  // Check if user is an ambassador
+  try {
+    const slackId = session.slackId
+    if (slackId) {
+      const ambassador = await airtable.find('Ambassadors', `{slack_id}='${slackId}'`)
+      if (!ambassador) {
+        console.log(`[ACCESS DENIED] ${session.user?.name} (${slackId}) is not an ambassador`)
+        return {
+          props: { 
+            query, 
+            application: {}, 
+            leaders: [], 
+            trackedApp: { id: recordID, fields: {} }, 
+            session,
+            accessDenied: true 
+          },
+          notFound: false
+        }
+      }
+      console.log(`[ACCESS GRANTED] Ambassador ${session.user?.name} (${slackId})`)
+    }
+  } catch (error) {
+    console.error('[AUTH CHECK] Error:', error)
   }
 
   try {
