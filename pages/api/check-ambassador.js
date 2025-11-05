@@ -13,7 +13,8 @@ export default async function handler(req, res) {
     console.log(`[CHECK] Checking ambassador status for Slack ID: ${slackId}`)
     
     // Check if this Slack ID exists in the Ambassadors table
-    const ambassador = await airtable.find('Ambassadors', `{slack_id}='${slackId}'`)
+    // Note: Field name in Airtable is "Slack ID" with capital letters and space
+    const ambassador = await airtable.find('Ambassadors', `{Slack ID}='${slackId}'`)
     
     const isAmbassador = !!ambassador
     console.log(`[CHECK] Is Ambassador: ${isAmbassador}`)

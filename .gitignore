@@ -16,3 +16,7 @@ yarn-error.log*
 .env
 .vercel
 .env.local
+
+# SSL certificates
+.cert/
+*.pem
