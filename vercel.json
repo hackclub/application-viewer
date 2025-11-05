@@ -1,0 +1,10 @@
+{
+  "functions": {
+    "pages/[recordID].js": {
+      "maxDuration": 120
+    },
+    "pages/api/**/*.js": {
+      "maxDuration": 120
+    }
+  }
+}

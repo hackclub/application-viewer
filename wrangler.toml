@@ -1,0 +1,16 @@
+name = "application-viewer"
+compatibility_date = "2024-11-05"
+
+# Cloudflare Pages configuration for Next.js
+pages_build_output_dir = ".vercel/output/static"
+
+[env.production]
+vars = { NODE_ENV = "production" }
+
+# Environment variables (set these in Cloudflare dashboard)
+# AUTH_SLACK_CLIENT_ID
+# AUTH_SLACK_CLIENT_SECRET
+# NEXTAUTH_URL
+# SECRET
+# AIRTABLE
+# BOUNCER_SLACK_TOKEN
