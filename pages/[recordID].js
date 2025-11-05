@@ -89,6 +89,9 @@ export async function getServerSideProps(ctx) {
   }
   
   try {
+    const startTime = Date.now()
+    console.log('[TIMING] Starting page load...')
+    
     // Parallel fetch: Check ambassador AND fetch club data at the same time
     const slackId = session.slackId
     
@@ -96,6 +99,8 @@ export async function getServerSideProps(ctx) {
       slackId ? airtable.find('Ambassadors', `{Slack ID}='${slackId}'`).catch(() => null) : Promise.resolve(null),
       airtable.find('Clubs', recordID)
     ])
+    
+    console.log(`[TIMING] Fetched club + ambassador check in ${Date.now() - startTime}ms`)
     
     // Check ambassador status
     if (slackId && !ambassadorCheck) {
@@ -155,10 +160,12 @@ export async function getServerSideProps(ctx) {
     
     if (leaderIds.length > 0) {
       try {
+        const leaderStartTime = Date.now()
         // Fetch all leaders at once in parallel
         const leaderRecords = await Promise.all(
           leaderIds.map(id => airtable.find('Leaders', id).catch(() => null))
         )
+        console.log(`[TIMING] Fetched ${leaderIds.length} leader(s) in ${Date.now() - leaderStartTime}ms`)
         
         // Process each leader record
         for (const leaderRecord of leaderRecords) {
@@ -212,6 +219,8 @@ export async function getServerSideProps(ctx) {
       }
     }
 
+    console.log(`[TIMING] Total page load time: ${Date.now() - startTime}ms`)
+    
     return {
       props: { query, application, leaders, trackedApp, session },
       notFound: false

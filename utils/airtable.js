@@ -2,8 +2,8 @@ import Bottleneck from 'bottleneck'
 import AirtablePlus from 'airtable-plus'
 
 const limiter = new Bottleneck({
-  maxConcurrent: 3,
-  minTime: 500
+  maxConcurrent: 5,
+  minTime: 200 // Reduced from 500ms to 200ms for faster requests
 })
 
 const baseID = 'appUfrUFraxH3D5Ob'
@@ -77,7 +77,7 @@ const create = async (table, fields) => {
 
 export default {
   get: (...args) => limiter.schedule(() => get(...args)),
-  find,
+  find: (...args) => limiter.schedule(() => find(...args)),
   patch: (...args) => limiter.schedule(() => patch(...args)),
   create: (...args) => limiter.schedule(() => create(...args)),
 }
