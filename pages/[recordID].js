@@ -88,41 +88,31 @@ export async function getServerSideProps(ctx) {
     }
   }
   
-  // Check if user is an ambassador
   try {
+    // Parallel fetch: Check ambassador AND fetch club data at the same time
     const slackId = session.slackId
-    console.log('[AUTH CHECK] Checking session:', { slackId, user: session.user })
     
-    if (slackId) {
-      // Note: Field name in Airtable is "Slack ID" with capital letters and space
-      const ambassador = await airtable.find('Ambassadors', `{Slack ID}='${slackId}'`)
-      console.log('[AUTH CHECK] Ambassador lookup result:', ambassador ? 'Found' : 'Not found')
-      
-      if (!ambassador) {
-        console.log(`[ACCESS DENIED] ${session.user?.name} (${slackId}) is not an ambassador`)
-        return {
-          props: { 
-            query, 
-            application: {}, 
-            leaders: [], 
-            trackedApp: { id: recordID, fields: {} }, 
-            session,
-            accessDenied: true 
-          },
-          notFound: false
-        }
+    const [ambassadorCheck, clubRecord] = await Promise.all([
+      slackId ? airtable.find('Ambassadors', `{Slack ID}='${slackId}'`).catch(() => null) : Promise.resolve(null),
+      airtable.find('Clubs', recordID)
+    ])
+    
+    // Check ambassador status
+    if (slackId && !ambassadorCheck) {
+      console.log(`[ACCESS DENIED] ${session.user?.name} (${slackId}) is not an ambassador`)
+      return {
+        props: { 
+          query, 
+          application: {}, 
+          leaders: [], 
+          trackedApp: { id: recordID, fields: {} }, 
+          session,
+          accessDenied: true 
+        },
+        notFound: false
       }
-      console.log(`[ACCESS GRANTED] Ambassador ${session.user?.name} (${slackId})`)
-    } else {
-      console.log('[AUTH CHECK] No Slack ID in session')
     }
-  } catch (error) {
-    console.error('[AUTH CHECK] Error:', error)
-  }
-
-  try {
-    // Fetch the club record from the Clubs table
-    const clubRecord = await airtable.find('Clubs', recordID)
+    
     const clubRaw = clubRecord.fields
     
     // Find the exact field name for "What's going to be new"
@@ -156,16 +146,26 @@ export async function getServerSideProps(ctx) {
     }
 
     
-    // Fetch the main leader from the Leaders table
+    // Fetch all leaders in parallel (main leader + co-leaders)
     let leaders = []
+    const leaderIds = [
+      ...(clubRaw['Leader'] || []),
+      ...(clubRaw['Co-leaders'] || [])
+    ]
     
-    
-    if (clubRaw['Leader'] && clubRaw['Leader'][0]) {
+    if (leaderIds.length > 0) {
       try {
-        const leaderRecord = await airtable.find('Leaders', clubRaw['Leader'][0])
-        if (leaderRecord) {
+        // Fetch all leaders at once in parallel
+        const leaderRecords = await Promise.all(
+          leaderIds.map(id => airtable.find('Leaders', id).catch(() => null))
+        )
+        
+        // Process each leader record
+        for (const leaderRecord of leaderRecords) {
+          if (!leaderRecord) continue
+          
           const leaderRaw = leaderRecord.fields
-        const mainLeader = {
+          const leader = {
           'Full Name': `${leaderRaw['First Name'] || ''} ${leaderRaw['Last Name'] || ''}`.trim() || null,
           'Birthday': leaderRaw['DOB'] || null,
           'School Year': leaderRaw['Graduation Year'] || null,
@@ -194,54 +194,10 @@ export async function getServerSideProps(ctx) {
           'Hacker Story': leaderRaw["If you had unlimited time, money, and resources, what's the most ridiculous/awesome thing you'd build?"] || null,
           'Pronouns': leaderRaw['Pronouns'] || null
         }
-        leaders.push(mainLeader)
-      }
+          leaders.push(leader)
+        }
       } catch (err) {
-        console.error('Error fetching main leader:', err)
-      }
-    }
-    
-    // Get co-leaders if they exist
-    if (clubRaw['Co-leaders'] && clubRaw['Co-leaders'].length > 0) {
-      for (const coLeaderId of clubRaw['Co-leaders']) {
-        try {
-          const coLeaderRecord = await airtable.find('Leaders', coLeaderId)
-          if (coLeaderRecord) {
-            const leaderRaw = coLeaderRecord.fields
-          const coLeader = {
-            'Full Name': `${leaderRaw['First Name'] || ''} ${leaderRaw['Last Name'] || ''}`.trim() || null,
-            'Birthday': leaderRaw['DOB'] || null,
-            'School Year': leaderRaw['Graduation Year'] || null,
-            'Phone': leaderRaw['Phone Number'] || null,
-            'Slack ID': leaderRaw['Slack ID'] || null,
-            'Address Formatted': [
-              leaderRaw['Address Line 1'],
-              leaderRaw['Address Line 2'],
-              leaderRaw['City'],
-              leaderRaw['State/Province'],
-              leaderRaw['Country'],
-              leaderRaw['Zip/Area Code']
-            ].filter(Boolean).join(', ') || null,
-            'Address Line 1': leaderRaw['Address Line 1'] || null,
-            'Address Line 2': leaderRaw['Address Line 2'] || null,
-            'Address City': leaderRaw['City'] || null,
-            'Address State': leaderRaw['State/Province'] || null,
-            'Address Zip': leaderRaw['Zip/Area Code'] || null,
-            'Address Country': leaderRaw['Country'] || null,
-            'Website': leaderRaw['link_personal_website'] || null,
-            'GitHub': leaderRaw['link_github'] || null,
-            'Twitter': leaderRaw['link_social_media'] || null,
-            'Other': leaderRaw['link_other'] || null,
-            'Achievement': leaderRaw['Tell us about something you made which was personally meaningful to you.'] || null,
-            'New Fact': leaderRaw['What is something surprising or amusing you learned recently?'] || null,
-            'Hacker Story': leaderRaw["If you had unlimited time, money, and resources, what's the most ridiculous/awesome thing you'd build?"] || null,
-            'Pronouns': leaderRaw['Pronouns'] || null
-          }
-          leaders.push(coLeader)
-        }
-        } catch (err) {
-          console.error('Error fetching co-leader:', err)
-        }
+        console.error('Error fetching leaders:', err)
       }
     }
 
