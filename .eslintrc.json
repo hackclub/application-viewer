@@ -1,0 +1,7 @@
+{
+  "extends": ["next"],
+  "rules": {
+    "react/no-unescaped-entities": "warn",
+    "import/no-anonymous-default-export": "warn"
+  }
+}

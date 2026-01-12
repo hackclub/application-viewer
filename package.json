@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "NODE_OPTIONS='--openssl-legacy-provider' next -p 3001",
-    "dev:https": "NODE_TLS_REJECT_UNAUTHORIZED=0 NODE_OPTIONS='--openssl-legacy-provider' node server.js",
-    "build": "NODE_OPTIONS='--openssl-legacy-provider' next build",
+    "dev": "cross-env NODE_OPTIONS='--openssl-legacy-provider' next -p 3001",
+    "dev:https": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 NODE_OPTIONS='--openssl-legacy-provider' node server.js",
+    "build": "cross-env NODE_OPTIONS='--openssl-legacy-provider' next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "airtable-plus": "^1.0.4",
@@ -25,7 +27,9 @@
     "yaml-loader": "^0.6.0"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "eslint": "7.32.0",
-    "eslint-config-next": "11.1.0"
+    "eslint-config-next": "11.1.0",
+    "prettier": "^3.2.0"
   }
 }
